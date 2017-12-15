@@ -1,19 +1,18 @@
 package kr.sofac.jangsisters.network.api;
 
-import com.sofac.fxmharmony.server.type.ServerRequest;
-
 import java.util.ArrayList;
 
+import kr.sofac.jangsisters.network.api.type.ServerRequest;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.http.Multipart;
-import retrofit2.http.POST;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
 import retrofit2.http.Part;
 
-import static com.sofac.fxmharmony.Constants.PART_CONTROLLER;
+import static kr.sofac.jangsisters.config.Server.PART_CONTROLLER;
 
 /**
  * Created by Maxim on 03.08.2017.

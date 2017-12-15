@@ -1,17 +1,20 @@
 package kr.sofac.jangsisters.utils;
 
-import android.content.SharedPreferences;
-
 import android.content.Context;
-
+import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import kr.sofac.jangsisters.models.User;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.Context.USER_SERVICE;
-import static kr.sofac.jangsisters.config.PreferenceEnum.USER_ID_PREF;
+import static kr.sofac.jangsisters.config.EnumPreference.APP_PREFERENCES;
+import static kr.sofac.jangsisters.config.EnumPreference.GOOGLE_CLOUD_PREFERENCE;
+import static kr.sofac.jangsisters.config.EnumPreference.IS_AUTHORIZATION;
+import static kr.sofac.jangsisters.config.EnumPreference.USER_ID;
 
 
 /**
@@ -29,48 +32,47 @@ public class AppPreference {
     }
 
     public long getID() {
-        return preferences.getLong(USER_ID_PREF, 1L);
+        return preferences.getLong(USER_ID.toString(), 1L);
     }
 
     public void setID(Long id) {
         SharedPreferences.Editor editorUser = preferences.edit();
-        editorUser.putLong(USER_ID_PREF, id);
+        editorUser.putLong(USER_ID.toString(), id);
         editorUser.apply();
         editorUser.commit();
     }
 
     public Boolean getAuthorization() {
-        return preferences.getBoolean(IS_AUTHORIZATION, false);
+        return preferences.getBoolean(IS_AUTHORIZATION.toString(), false);
     }
 
     public void setAuthorization(Boolean isAuthorization) {
         SharedPreferences.Editor editorUser = preferences.edit();
-        editorUser.putBoolean(IS_AUTHORIZATION, isAuthorization);
+        editorUser.putBoolean(IS_AUTHORIZATION.toString(), isAuthorization);
         editorUser.apply();
         editorUser.commit();
     }
 
     public String getGoogleKey() {
-        return preferences.getString(GOOGLE_CLOUD_PREFERENCE, "");
+        return preferences.getString(GOOGLE_CLOUD_PREFERENCE.toString(), "");
     }
 
     public void setGoogleKey(String googleKey) {
         SharedPreferences.Editor editorUser = preferences.edit();
-        editorUser.putString(GOOGLE_CLOUD_PREFERENCE, googleKey);
+        editorUser.putString(GOOGLE_CLOUD_PREFERENCE.toString(), googleKey);
         editorUser.apply();
         editorUser.commit();
     }
 
-    public UserDTO getUser() {
-        return gson.fromJson(preferences.getString(APP_PREFERENCES, ""), new TypeToken<UserDTO>(){}.getType());
+    public User getUser() {
+        return gson.fromJson(preferences.getString(APP_PREFERENCES.toString(), ""), new TypeToken<User>(){}.getType());
     }
 
-    public void setUser(UserDTO userDTO) {
+    public void setUser(User user) {
         SharedPreferences.Editor editorUser = preferences.edit();
-        editorUser.putString(APP_PREFERENCES, gson.toJson(userDTO));
+        editorUser.putString(APP_PREFERENCES.toString(), gson.toJson(user));
         editorUser.apply();
         editorUser.commit();
-        setID(userDTO.getId());
     }
 
 }

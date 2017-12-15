@@ -1,5 +1,7 @@
 package kr.sofac.jangsisters.network.api;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
@@ -20,10 +22,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import timber.log.Timber;
 
-import static com.sofac.fxmharmony.Constants.BASE_URL;
-import static kr.sofac.jangsisters.config.ConfigServer.BASE_URL;
+import static kr.sofac.jangsisters.config.Server.BASE_URL;
 
 /**
  * Created by Maxim on 03.08.2017.
@@ -36,14 +36,13 @@ public class ManagerRetrofit<T> {
     private String serverResponse = serverResponseError;
     private String baseUrl = BASE_URL;
 
-    private com.sofac.fxmharmony.server.retrofit.ServiceRetrofit serviceRetrofit;
+    private ServiceRetrofit serviceRetrofit;
     private ServerRequest serverRequest;
 
     private AsyncAnswerString answerString = null;
 
-    /**
-     * Иницалиазация сервиса передачи
-     * */ {
+
+    {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
@@ -51,29 +50,47 @@ public class ManagerRetrofit<T> {
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-        serviceRetrofit = retrofit.create(com.sofac.fxmharmony.server.retrofit.ServiceRetrofit.class);
+        serviceRetrofit = retrofit.create(ServiceRetrofit.class);
     }
 
-    /**
-     * Интерфейсы обработки событий в потоке
-     */
     public interface AsyncAnswerString {
         void processFinish(Boolean isSuccess, String answerString);
     }
 
-    /**
-     * Get Callback<ResponseBody> for this Request;
-     */
     @SuppressWarnings("unchecked")
-    public void sendRequest(T object, String requestType, Callback<ResponseBody> responseBodyCallback) {
+    private void sendRequest(T object, String requestType, Callback<ResponseBody> responseBodyCallback) {
         serverRequest = new ServerRequest(requestType, object);
         logServerRequest(serverRequest);
         serviceRetrofit.getData(serverRequest).enqueue(responseBodyCallback);
     }
 
-    /**
-     * Get Callback<ResponseBody> for this Request;
-     */
+    public void sendRequest(T object, String requestType, AsyncAnswerString asyncAnswer) {
+        answerString = asyncAnswer;
+
+        sendRequest(object, requestType, new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    serverResponse = logServerResponse(response.body().string());
+                    if (serverResponseSuccess.equals(getServerResponseStringFromJSON(serverResponse).getResponseStatus())) {
+                        answerString.processFinish(true, serverResponse);
+                    } else {
+                        answerString.processFinish(false, null);
+                    }
+                } catch (IOException e) {
+                    answerString.processFinish(false, null);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                answerString.processFinish(false, null);
+                t.printStackTrace();
+            }
+        });
+    }
+
     @SuppressWarnings("unchecked")
     public void sendMultiPartRequest(T object, String requestType, ArrayList<MultipartBody.Part> partArrayList, AsyncAnswerString asyncAnswer) {
         serverRequest = new ServerRequest(requestType, object);
@@ -83,9 +100,7 @@ public class ManagerRetrofit<T> {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
 
-        com.sofac.fxmharmony.server.retrofit.ServiceRetrofit serviceUploading = com.sofac.fxmharmony.server.retrofit.ServiceGenerator.createService(com.sofac.fxmharmony.server.retrofit.ServiceRetrofit.class);
-        // finally, execute the request
-        Call<ResponseBody> call = serviceUploading.sendMultiPartRequest(
+        Call<ResponseBody> call = serviceRetrofit.sendMultiPartRequest(
                 RequestBody.create(
                         MediaType.parse("text/plain"),
                         gson.toJson(serverRequest)),
@@ -115,9 +130,6 @@ public class ManagerRetrofit<T> {
         });
     }
 
-    /**
-     * Get Callback <ResponseBody> for this Request;
-     */
     @SuppressWarnings("unchecked")
     public void sendMultiPartWithTwoObj(T object, String requestType, ArrayList<MultipartBody.Part> partArrayList, ArrayList<String> listDeletingFiles, AsyncAnswerString asyncAnswer) {
         serverRequest = new ServerRequest(requestType, object);
@@ -128,14 +140,11 @@ public class ManagerRetrofit<T> {
         Gson gson = builder.create();
 
         String stringDeleting = "";
-        for(String str : listDeletingFiles){
+        for (String str : listDeletingFiles) {
             stringDeleting = stringDeleting + ";" + str;
         }
 
-        com.sofac.fxmharmony.server.retrofit.ServiceRetrofit serviceUploading = com.sofac.fxmharmony.server.retrofit.ServiceGenerator.createService(com.sofac.fxmharmony.server.retrofit.ServiceRetrofit.class);
-
-        // finally, execute the request
-        Call<ResponseBody> call = serviceUploading.sendMultiPartWithTwoObj(
+        Call<ResponseBody> call = serviceRetrofit.sendMultiPartWithTwoObj(
                 RequestBody.create(
                         MediaType.parse("text/plain"),
                         gson.toJson(serverRequest)),
@@ -168,45 +177,9 @@ public class ManagerRetrofit<T> {
         });
     }
 
-    /**
-     * String
-     * Get AsyncAnswer with True(SUCCESS) or False(ERROR) and String <= json (body response) for this Request;
-     */
-    public void sendRequest(T object, String requestType, AsyncAnswerString asyncAnswer) {
-        answerString = asyncAnswer;
-
-        sendRequest(object, requestType, new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    serverResponse = logServerResponse(response.body().string());
-                    if (serverResponseSuccess.equals(getServerResponseStringFromJSON(serverResponse).getResponseStatus())) {
-                        answerString.processFinish(true, serverResponse);
-                    } else {
-                        answerString.processFinish(false, null);
-                    }
-                } catch (IOException e) {
-                    answerString.processFinish(false, null);
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                answerString.processFinish(false, null);
-                t.printStackTrace();
-            }
-        });
-    }
 
 
-    /**
-     * //////// Вспомогательные методы ////////
-     */
-
-    /**
-     * Получение ServerResponse из String JSON
-     */
+    /***/
     private ServerResponse<String> getServerResponseStringFromJSON(String stringJSON) {
         Type typeServerResponse = new TypeToken<ServerResponse>() {
         }.getType();
@@ -218,21 +191,17 @@ public class ManagerRetrofit<T> {
         return new ServerResponse<>(serverResponseError, "");
     }
 
-
-    /**
-     * Логирование данных передачи
-     */
     private void logServerRequest(ServerRequest serverRequest) {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        Timber.e(">>>>>>>>>>>>>>>>> \n" + gson.toJson(serverRequest));
+        Log.e("SERVER_REQUEST", "\n\n>>>>>>>>>>>>>>>>> \n" + gson.toJson(serverRequest));
     }
 
     /**
      * Логирование данных приема
      */
     private String logServerResponse(String serverResponse) {
-        Timber.e("<<<<<<<<<<<<<<<< \n" + serverResponse);
+        Log.e("SERVER_RESPONSE", "\n\n<<<<<<<<<<<<<<<< \n" + serverResponse);
         return serverResponse;
     }
 
