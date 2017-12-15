@@ -36,6 +36,7 @@ public class MainActivity extends BaseActivity {
 
 
     public void onClickPublish(View v) {
-        Toast.makeText(this, "发布", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Home", Toast.LENGTH_LONG).show();
     }
+
 }
