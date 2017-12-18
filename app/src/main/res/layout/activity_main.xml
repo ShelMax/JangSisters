@@ -30,7 +30,7 @@
                 android:layout_gravity="end"
                 android:layout_marginRight="5dp"
                 android:id="@+id/filter"
-                android:background="@drawable/ic_filter_list_white_24dp"/>
+                android:background="@drawable/filter"/>
 
         </android.support.v7.widget.Toolbar>
 

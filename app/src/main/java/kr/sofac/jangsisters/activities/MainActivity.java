@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         toolbarTitle.setText("MAIN");
         getSupportActionBar().setTitle(null);
-        toolbar.setNavigationIcon(R.drawable.ic_add_white_24dp);
+        toolbar.setNavigationIcon(R.drawable.add);
         toolbar.setNavigationOnClickListener(view -> {
             // add click
         });
