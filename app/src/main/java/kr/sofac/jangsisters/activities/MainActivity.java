@@ -3,31 +3,43 @@ package kr.sofac.jangsisters.activities;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.views.fragments.HomeFragment;
-import kr.sofac.jangsisters.views.widget.MainNavigateTabBar;
+
 
 public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.mainTabBar) MainNavigateTabBar mNavigateTabBar;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.drawer) DrawerLayout drawer;
-    @BindView(R.id.navigation_view) NavigationView navigationView;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
+    @BindView(R.id.tabs)
+    TabLayout tabLayout;
+    @BindView(R.id.navigation_view)
+    NavigationView navigationView;
+    @BindView(R.id.drawer)
+    DrawerLayout drawer;
+
+    private ViewPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,34 +48,46 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         initToolbar();
 
-        mNavigateTabBar.onRestoreInstanceState(savedInstanceState);
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
 
-        mNavigateTabBar.addTab(HomeFragment.class, new MainNavigateTabBar.TabParam(R.drawable.cart, R.drawable.cart_selected, "SHOP"));
-        mNavigateTabBar.addTab(HomeFragment.class, new MainNavigateTabBar.TabParam(R.drawable.magnify, R.drawable.magnify_selected, "SEARCH"));
-        mNavigateTabBar.addTab(null, new MainNavigateTabBar.TabParam(0, 0, "HOME"));
-        mNavigateTabBar.addTab(HomeFragment.class, new MainNavigateTabBar.TabParam(R.drawable.information, R.drawable.information_selected, "INFO"));
-        mNavigateTabBar.addTab(HomeFragment.class, new MainNavigateTabBar.TabParam(R.drawable.account, R.drawable.account_selected, "PROFILE"));
-}
+        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.selector_shop));
+        tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.selector_search));
+        tabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.selector_home));
+        tabLayout.getTabAt(3).setIcon(getResources().getDrawable(R.drawable.selector_chat));
+        tabLayout.getTabAt(4).setIcon(getResources().getDrawable(R.drawable.selector_profile));
+
+    }
+
 
     private void initToolbar() {
+
+        toolbar.setNavigationIcon(R.drawable.add);
+        toolbar.setNavigationOnClickListener(view -> {
+            // add click
+        });
+
         toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setTitle("MAIN");
+        toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.add);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
                 toolbar, R.string.open, R.string.close) {
             @Override
             public boolean onOptionsItemSelected(MenuItem item) {
-                if(item.getItemId() == R.id.filter) {
+                if (item.getItemId() == R.id.filter) {
                     drawer.closeDrawer(Gravity.RIGHT);
                 }
                 return false;
             }
         };
+
         drawer.addDrawerListener(toggle);
+
         navigationView.setNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.nav_fruits:
                     navigationView.setCheckedItem(R.id.nav_fruits);
                     break;
@@ -77,6 +101,7 @@ public class MainActivity extends BaseActivity {
             drawer.closeDrawer(Gravity.RIGHT);
             return false;
         });
+
     }
 
     @Override
@@ -87,7 +112,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.filter:
                 drawer.openDrawer(Gravity.RIGHT);
                 break;
@@ -97,16 +122,51 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mNavigateTabBar.onSaveInstanceState(outState);
+    private void setupViewPager(ViewPager viewPager) {
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new HomeFragment(), "SHOP");
+        adapter.addFragment(new HomeFragment(), "SEARCH");
+        adapter.addFragment(new HomeFragment(), "HOME");
+        adapter.addFragment(new HomeFragment(), "INFO");
+        adapter.addFragment(new HomeFragment(), "PROFILE");
+        viewPager.setAdapter(adapter);
     }
 
-
-    public void onClickPublish(View v) {
-        Toast.makeText(this, "Home", Toast.LENGTH_LONG).show();
+    @OnClick(R.id.tab_home)
+    public void onViewClicked() {
+        tabLayout.getTabAt(2).select();
     }
+
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+
+        ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return null;
+        }
+    }
+
 
 }

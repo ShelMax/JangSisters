@@ -1,6 +1,6 @@
 package kr.sofac.jangsisters.views.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 
 /**
  * Created by Maxim on 15.12.2017.
