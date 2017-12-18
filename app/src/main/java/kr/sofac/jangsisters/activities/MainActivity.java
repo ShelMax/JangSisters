@@ -1,11 +1,15 @@
 package kr.sofac.jangsisters.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,10 +27,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.mainTabBar) MainNavigateTabBar mNavigateTabBar;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer) DrawerLayout drawer;
-    @BindView(R.id.filter) ImageView filter;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    @BindView(R.id.navigation_view)
-    NavigationView navigationView;
+    @BindView(R.id.navigation_view) NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,6 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initToolbar();
-
 
         mNavigateTabBar.onRestoreInstanceState(savedInstanceState);
 
@@ -46,23 +46,22 @@ public class MainActivity extends BaseActivity {
 }
 
     private void initToolbar() {
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setTitle("MAIN");
         setSupportActionBar(toolbar);
-        toolbarTitle.setText("MAIN");
-        getSupportActionBar().setTitle(null);
-        toolbar.setNavigationIcon(R.drawable.add);
-        toolbar.setNavigationOnClickListener(view -> {
-            // add click
-        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.add);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
                 toolbar, R.string.open, R.string.close) {
             @Override
             public boolean onOptionsItemSelected(MenuItem item) {
-                drawer.closeDrawer(Gravity.RIGHT);
+                if(item.getItemId() == R.id.filter) {
+                    drawer.closeDrawer(Gravity.RIGHT);
+                }
                 return false;
             }
         };
         drawer.addDrawerListener(toggle);
-        filter.setOnClickListener(view -> drawer.openDrawer(Gravity.RIGHT));
         navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.nav_fruits:
@@ -78,6 +77,24 @@ public class MainActivity extends BaseActivity {
             drawer.closeDrawer(Gravity.RIGHT);
             return false;
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.filter:
+                drawer.openDrawer(Gravity.RIGHT);
+                break;
+            case R.id.home:
+                Log.i("TAG", "ADD");
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

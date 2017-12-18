@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single"
-        android:id="@+id/menu_home">
+    <group android:checkableBehavior="single" android:id="@+id/group_soups">
         <item
             android:id="@+id/nav_soups"
             android:title="Soups"/>
+    </group>
+
+    <group android:checkableBehavior="single" android:id="@+id/group_fruits">
         <item
             android:id="@+id/nav_fruits"
             android:title="Fruits"/>
+
+    </group>
+
+    <group android:checkableBehavior="single" android:id="@+id/group_vegetables">
 
         <item
             android:id="@+id/nav_vegetables"
@@ -16,10 +22,10 @@
 
     </group>
 
-    <group android:checkableBehavior="single"
-        android:id="@+id/menu_group_setting">
+    <group android:checkableBehavior="single" android:id="@+id/group_sweets">
         <item
             android:id="@+id/nav_sweets"
             android:title="Sweets"/>
     </group>
+
 </menu>

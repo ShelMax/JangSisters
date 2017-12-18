@@ -45,6 +45,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.date.setText(items.get(position).getDate());
         holder.comments.setText(String.valueOf(items.get(position).getComments()));
         holder.likes.setText(String.valueOf(items.get(position).getLikes()));
+        holder.description.setText(items.get(position).getDescription());
     }
 
     @Override
@@ -61,6 +62,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         @BindView(R.id.item_post_date) TextView date;
         @BindView(R.id.item_post_comments) TextView comments;
         @BindView(R.id.item_post_likes) TextView likes;
+        @BindView(R.id.item_post_description) TextView description;
 
         ViewHolder(View itemView) {
             super(itemView);

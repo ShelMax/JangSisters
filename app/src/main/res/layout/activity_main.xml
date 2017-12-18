@@ -14,25 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="@color/colorAccent"
-            android:id="@+id/toolbar">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/toolbar_title"
-                android:textColor="#fff"
-                android:gravity="center"
-                android:textStyle="bold"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginRight="5dp"
-                android:id="@+id/filter"
-                android:background="@drawable/filter"/>
-
-        </android.support.v7.widget.Toolbar>
+            android:id="@+id/toolbar"/>
 
         <FrameLayout
             android:id="@+id/main_container"
@@ -78,12 +60,13 @@
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
-        android:background="#303030"
+        android:background="@color/navigation_back_uncheked"
         app:itemTextColor="#fff"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="right"
-        app:menu="@menu/menu"
+        app:menu="@menu/menu_home"
+        app:itemBackground="@drawable/navigation_back"
         android:choiceMode="singleChoice"
         android:id="@+id/navigation_view" />
 

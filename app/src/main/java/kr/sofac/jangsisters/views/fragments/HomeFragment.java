@@ -31,11 +31,11 @@ public class HomeFragment extends BaseFragment {
                 "http://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg",
                 "Mark", 2,15, "10 october 2018","How to eat hamburger", "Blablabla fgf gfgjfkgjfkg fjg kfjg fkgj fjggjkfgjkfgjkdfjgksd fgjdkfgjsdklfgjklsdfjgkls",
                 new ArrayList<>()));
-        items.add(new Post("https://18008579627329362eda2218-rg2mjh9f0tf5llf.netdna-ssl.com/wp-content/uploads/2017/05/keto-meal-chicken-avocado-300x200.jpg",
+        items.add(new Post("http://sp00kje.nl/wp-content/uploads/2017/07/585be1aa1600002400bdf2a6.jpeg",
                 "http://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg",
                 "Mark1", 22,151,"11 october 2018", "How to eat sushi", "Blablabla fgf gfgjfkgjfkg fjg kfjg fkgj fjggjkfgjkfgjkdfjgksd fgjdkfgjsdklfgjklsdfjgkls",
                 new ArrayList<>()));
-        items.add(new Post("https://18008579627329362eda2218-rg2mjh9f0tf5llf.netdna-ssl.com/wp-content/uploads/2017/05/keto-meal-chicken-avocado-300x200.jpg",
+        items.add(new Post("https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg",
                 "http://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg",
                 "Mark2", 21,152, "12 october 2018","How to eat pasta", "Blablabla fgf gfgjfkgjfkg fjg kfjg fkgj fjggjkfgjkfgjkdfjgksd fgjdkfgjsdklfgjklsdfjgkls",
                 new ArrayList<>()));

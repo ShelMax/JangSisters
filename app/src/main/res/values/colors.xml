@@ -9,6 +9,8 @@
 
     <color name="tab_text_normal">#212121</color>
     <color name="comui_tab_text_color">#ff333333</color>
+    <color name="navigation_back_uncheked">#303030</color>
+    <color name="navigation_back_cheked">#8C7242</color>
 
 
 </resources>

@@ -2,4 +2,5 @@
     <string name="app_name">JangSisters</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="filter">filter</string>
 </resources>
