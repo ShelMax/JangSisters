@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_home">
+        <item
+            android:id="@+id/nav_soups"
+            android:title="Soups"/>
+        <item
+            android:id="@+id/nav_fruits"
+            android:title="Fruits"/>
+
+        <item
+            android:id="@+id/nav_vegetables"
+            android:title="Vegetables"/>
+
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_group_setting">
+        <item
+            android:id="@+id/nav_sweets"
+            android:title="Sweets"/>
+    </group>
+</menu>

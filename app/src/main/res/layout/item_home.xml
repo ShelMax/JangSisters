@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_post_image"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_post_likes_image"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/item_post_separator2"
+        android:layout_alignBottom="@id/item_post_separator2"
+        android:src="@drawable/ic_favorite_border_white_24dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_post_comments_image"
+        android:layout_toRightOf="@id/item_post_author_image"
+        android:layout_alignBottom="@id/item_post_author_image"
+        android:layout_marginLeft="5dp"
+        android:src="@drawable/ic_mode_comment_white_24dp"/>
+
+    <ImageView
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:id="@+id/item_post_author_image"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="140dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_post_date"
+        android:textColor="#fff"
+        android:layout_alignBottom="@id/item_post_author"
+        android:layout_toRightOf="@id/item_post_separator"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:layout_toRightOf="@id/item_post_likes_image"
+        android:layout_alignBottom="@id/item_post_comments"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/item_post_likes"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_post_comments"
+        android:layout_toRightOf="@id/item_post_comments_image"
+        android:layout_marginLeft="5dp"
+        android:textColor="#fff"
+        android:layout_alignBottom="@id/item_post_author_image"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="|"
+        android:layout_toRightOf="@id/item_post_author"
+        android:layout_marginLeft="5dp"
+        android:layout_alignBottom="@id/item_post_author"
+        android:id="@+id/item_post_separator"
+        android:textColor="#fff"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="|"
+        android:id="@+id/item_post_separator2"
+        android:layout_marginLeft="5dp"
+        android:layout_alignBottom="@id/item_post_comments"
+        android:layout_toRightOf="@id/item_post_comments"
+        android:textColor="#fff"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/item_post_author_image"
+        android:layout_alignTop="@id/item_post_author_image"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/item_post_author"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/item_post_author_image"
+        android:layout_below="@id/item_post_author_image"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#fff"
+        android:id="@+id/item_post_title"/>
+
+</RelativeLayout>
