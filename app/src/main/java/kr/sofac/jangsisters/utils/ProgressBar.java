@@ -12,7 +12,7 @@ import kr.sofac.jangsisters.R;
 
 public class ProgressBar {
 
-    ProgressDialog pd;
+    private ProgressDialog pd;
 
     public ProgressBar(Context context) {
         this.pd = new ProgressDialog(context, R.style.MyTheme);
@@ -22,7 +22,6 @@ public class ProgressBar {
 
     public void showView() {
         pd.show();
-
     }
 
     public void dismissView() {
