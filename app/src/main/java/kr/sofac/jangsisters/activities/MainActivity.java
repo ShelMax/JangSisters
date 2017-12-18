@@ -57,14 +57,7 @@ public class MainActivity extends BaseActivity {
                 toolbar, R.string.open, R.string.close) {
             @Override
             public boolean onOptionsItemSelected(MenuItem item) {
-                if (item != null && item.getItemId() == android.R.id.home) {
-                    if (drawer.isDrawerOpen(Gravity.RIGHT)) {
-                        drawer.closeDrawer(Gravity.RIGHT);
-                    }
-                    else {
-                        drawer.openDrawer(Gravity.RIGHT);
-                    }
-                }
+                drawer.closeDrawer(Gravity.RIGHT);
                 return false;
             }
         };
@@ -73,6 +66,13 @@ public class MainActivity extends BaseActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.nav_fruits:
+                    navigationView.setCheckedItem(R.id.nav_fruits);
+                    break;
+                case R.id.nav_soups:
+                    navigationView.setCheckedItem(R.id.nav_soups);
+                    break;
+                case R.id.nav_sweets:
+                    navigationView.setCheckedItem(R.id.nav_sweets);
                     break;
             }
             drawer.closeDrawer(Gravity.RIGHT);
