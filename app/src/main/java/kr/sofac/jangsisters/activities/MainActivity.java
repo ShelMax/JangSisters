@@ -25,7 +25,6 @@ import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.views.fragments.HomeFragment;
 
-
 public class MainActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
@@ -143,8 +142,6 @@ public class MainActivity extends BaseActivity {
 
 
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
@@ -193,12 +190,6 @@ public class MainActivity extends BaseActivity {
             return null;
         }
     }
-
-
-
-
-
-
 
 
 }

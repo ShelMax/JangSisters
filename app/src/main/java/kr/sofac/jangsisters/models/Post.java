@@ -14,10 +14,11 @@ public class Post {
     private String title;
     private String description;
     private List<Category> categories;
+    private List<Ingredient> ingredients;
 
     public Post(int id, String imageURL, String authorURL, String postAuthor, int postLikes,
                 int postComments, String date, String postTitle, String postDescription,
-                List<Category> postCategories) {
+                List<Category> postCategories, List<Ingredient> ingredients) {
         this.id = id;
         this.imageURL = imageURL;
         this.authorURL = authorURL;
@@ -28,6 +29,7 @@ public class Post {
         this.title = postTitle;
         this.description = postDescription;
         this.categories = postCategories;
+        this.ingredients = ingredients;
 
     }
 
@@ -69,5 +71,9 @@ public class Post {
 
     public int getId() {
         return id;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
     }
 }

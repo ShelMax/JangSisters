@@ -1,8 +1,10 @@
 package kr.sofac.jangsisters.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,12 +21,15 @@ import kr.sofac.jangsisters.views.adapters.CategoryAdapter;
 
 public class PostDetailedActivity extends BaseActivity {
 
+    //TODO Toolbar (back, title, dots)
+
     @BindView(R.id.post_detailed_image) ImageView postImage;
     @BindView(R.id.post_detailed_author_image) ImageView authorImage;
     @BindView(R.id.post_detailed_categories_list) RecyclerView categoriesList;
     @BindView(R.id.post_detailed_title) TextView title;
     @BindView(R.id.post_detailed_date) TextView date;
     @BindView(R.id.post_detailed_author) TextView author;
+    @BindView(R.id.post_detailed_toolbar) Toolbar toolbar;
 
     private Post post;
     private LinearLayoutManager layoutManager;
@@ -36,12 +41,21 @@ public class PostDetailedActivity extends BaseActivity {
         ButterKnife.bind(this);
         getPost();
 
+        initToolbar();
+
         Glide.with(this).load(post.getImageURL()).into(postImage);
         Glide.with(this).load(post.getAuthorURL()).apply(RequestOptions.circleCropTransform()).into(authorImage);
         title.setText(post.getTitle());
         date.setText(post.getDate());
         author.setText(post.getAuthor());
         initCategories();
+    }
+
+    private void initToolbar() {
+        toolbar.setTitle(post.getTitle());
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationIcon(R.drawable.arrow_left_white);
+        setSupportActionBar(toolbar);
     }
 
     private void initCategories() {
@@ -57,14 +71,14 @@ public class PostDetailedActivity extends BaseActivity {
 
     @OnClick(R.id.post_detailed_category_left)
     public void onLeftClick(){
-        if(layoutManager.findFirstVisibleItemPosition()!=0)
-            layoutManager.scrollToPosition(layoutManager.findFirstVisibleItemPosition() - 1);
+        if(layoutManager.findFirstCompletelyVisibleItemPosition()!=0)
+            layoutManager.scrollToPosition(layoutManager.findFirstCompletelyVisibleItemPosition() - 1);
     }
 
     @OnClick(R.id.post_detailed_category_right)
     public void onRightClick(){
-        if(layoutManager.findLastVisibleItemPosition()!=post.getCategories().size())
-            layoutManager.scrollToPosition(layoutManager.findLastVisibleItemPosition() + 1);
+        if(layoutManager.findLastCompletelyVisibleItemPosition()!=post.getCategories().size())
+            layoutManager.scrollToPosition(layoutManager.findLastCompletelyVisibleItemPosition() + 1);
     }
 
 }
