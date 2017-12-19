@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Post {
 
+    private int id;
     private String imageURL;
     private String authorURL;
     private String author;
@@ -12,11 +13,12 @@ public class Post {
     private String date;
     private String title;
     private String description;
-    private List<String> categories;
+    private List<Category> categories;
 
-    public Post(String imageURL, String authorURL, String postAuthor, int postLikes,
+    public Post(int id, String imageURL, String authorURL, String postAuthor, int postLikes,
                 int postComments, String date, String postTitle, String postDescription,
-                List<String> postCategories) {
+                List<Category> postCategories) {
+        this.id = id;
         this.imageURL = imageURL;
         this.authorURL = authorURL;
         this.author = postAuthor;
@@ -57,11 +59,15 @@ public class Post {
         return description;
     }
 
-    public List<String> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
     public String getAuthorURL() {
         return authorURL;
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Post;
+import kr.sofac.jangsisters.models.PostCallback;
 
 /**
  * Created by Maxim on 29.11.2017.
@@ -24,14 +25,16 @@ import kr.sofac.jangsisters.models.Post;
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private List<Post> items;
+    private PostCallback callback;
 
-    public PostAdapter(List<Post> items) {
+    public PostAdapter(List<Post> items, PostCallback callback) {
         this.items = items;
+        this.callback = callback;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post, parent, false);
         return new ViewHolder(v);
     }
 
@@ -46,6 +49,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.comments.setText(String.valueOf(items.get(position).getComments()));
         holder.likes.setText(String.valueOf(items.get(position).getLikes()));
         holder.description.setText(items.get(position).getDescription());
+        holder.itemView.setOnClickListener(view -> callback.postClick(position));
+        holder.ingredients.setOnClickListener(view -> callback.ingredientsClick(position));
     }
 
     @Override
@@ -63,6 +68,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         @BindView(R.id.item_post_comments) TextView comments;
         @BindView(R.id.item_post_likes) TextView likes;
         @BindView(R.id.item_post_description) TextView description;
+        @BindView(R.id.item_post_ingredients) ImageView ingredients;
 
         ViewHolder(View itemView) {
             super(itemView);

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="kr.sofac.jangsisters.activities.PostDetailedActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginEnd="64dp"
+            android:fitsSystemWindows="true">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:fitsSystemWindows="true"
+                    app:layout_collapseMode="parallax"
+                    android:scaleType="center"
+                    android:id="@+id/post_detailed_image"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:background="#2e000000" />
+
+                <ImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="140dp"
+                    android:id="@+id/post_detailed_author_image"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/post_detailed_author_image"
+                    android:layout_toRightOf="@id/post_detailed_author_image"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="#fff"
+                    tools:text="12 October 2018"
+                    android:id="@+id/post_detailed_date"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignTop="@id/post_detailed_author_image"
+                    android:layout_toRightOf="@id/post_detailed_author_image"
+                    android:id="@+id/post_detailed_author"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/post_detailed_author_image"
+                    android:layout_below="@id/post_detailed_author_image"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="#fff"
+                    android:id="@+id/post_detailed_title"/>
+
+                <ImageView
+                    android:layout_marginTop="8dp"
+                    android:layout_below="@id/post_detailed_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:fitsSystemWindows="true"
+                    app:layout_collapseMode="parallax"
+                    android:id="@+id/post_detailed_category_left"
+                    android:background="@drawable/arrow_left"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_below="@id/post_detailed_image"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:fitsSystemWindows="true"
+                    app:layout_collapseMode="parallax"
+                    android:layout_toEndOf="@id/post_detailed_category_left"
+                    android:layout_toStartOf="@+id/post_detailed_category_right"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/post_detailed_categories_list"/>
+
+                <ImageView
+                    android:layout_marginTop="8dp"
+                    android:layout_below="@id/post_detailed_image"
+                    android:layout_width="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_height="40dp"
+                    android:background="@drawable/arrow_right"
+                    android:id="@+id/post_detailed_category_right"/>
+
+                <View
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ccc"
+                    android:layout_below="@id/post_detailed_categories_list"/>
+
+            </RelativeLayout>
+
+                <android.support.v7.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:layout_collapseMode="pin"
+                    android:id="@+id/post_detailed_toolbar"/>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#4F4B4B"
+                android:text="@string/lorem"/>
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/navigation_back_uncheked">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:padding="15dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                app:srcCompat="@drawable/bookmark_white"
+                android:id="@+id/post_detailed_bookmark"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:layout_weight="1.0"
+                app:srcCompat="@drawable/heart"
+                android:id="@+id/post_detailed_like"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:layout_weight="1.0"
+                app:srcCompat="@drawable/comment"
+                android:id="@+id/post_detailed_comment"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:layout_weight="1.0"
+                app:srcCompat="@drawable/cart_white"
+                android:id="@+id/post_detailed_cart"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+
+</android.support.design.widget.CoordinatorLayout>

@@ -2,64 +2,64 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="300dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="10dp">
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:scaleType="center"
         android:id="@+id/item_post_image"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:background="#2e000000" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/item_post_likes_image"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@id/item_post_separator2"
         android:layout_alignBottom="@id/item_post_separator2"
-        app:srcCompat="@drawable/heart"/>
+        app:srcCompat="@drawable/heart"
+        android:id="@+id/item_post_likes_image"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/item_post_comments_image"
         android:layout_toRightOf="@id/item_post_author_image"
         android:layout_alignBottom="@id/item_post_author_image"
         android:layout_marginLeft="8dp"
-        app:srcCompat="@drawable/comment"/>
+        app:srcCompat="@drawable/comment"
+        android:id="@+id/item_post_comments_image"/>
 
     <ImageView
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:id="@+id/item_post_author_image"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="140dp"/>
+        android:layout_marginTop="140dp"
+        android:id="@+id/item_post_author_image"/>
 
     <TextView
-        android:id="@+id/item_post_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/item_post_author"
         android:layout_marginLeft="8dp"
         android:layout_toRightOf="@id/item_post_separator"
         android:textColor="#fff"
-        tools:text="12 October 2018" />
+        tools:text="12 October 2018"
+        android:id="@+id/item_post_date"/>
 
     <TextView
-        android:id="@+id/item_post_comments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/item_post_author_image"
         android:layout_marginLeft="8dp"
         android:layout_toRightOf="@id/item_post_comments_image"
-        android:textColor="#fff" />
+        android:textColor="#fff"
+        android:id="@+id/item_post_comments"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -77,18 +77,18 @@
         android:layout_toRightOf="@id/item_post_author"
         android:layout_marginLeft="8dp"
         android:layout_alignBottom="@id/item_post_author"
-        android:id="@+id/item_post_separator"
-        android:textColor="#fff"/>
+        android:textColor="#fff"
+        android:id="@+id/item_post_separator"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="|"
-        android:id="@+id/item_post_separator2"
         android:layout_marginLeft="8dp"
         android:layout_alignBottom="@id/item_post_comments"
         android:layout_toRightOf="@id/item_post_comments"
-        android:textColor="#fff"/>
+        android:textColor="#fff"
+        android:id="@+id/item_post_separator2"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -113,7 +113,6 @@
         android:id="@+id/item_post_title"/>
 
     <TextView
-        android:id="@+id/item_post_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/item_post_title"
@@ -122,6 +121,25 @@
         android:layout_marginTop="8dp"
         android:maxLines="2"
         android:textColor="#fff"
-        tools:text="some description " />
+        tools:text="some description"
+        android:id="@+id/item_post_description"/>
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="-40dp"
+        android:layout_marginBottom="-40dp"
+        android:background="@drawable/round_button"
+        android:padding="10dp"
+        android:id="@+id/item_post_ingredients"/>
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        app:srcCompat="@drawable/food"/>
 
 </RelativeLayout>
