@@ -11,6 +11,6 @@
     <color name="comui_tab_text_color">#ff333333</color>
     <color name="navigation_back_uncheked">#303030</color>
     <color name="navigation_back_cheked">#8C7242</color>
-
+    <color name="listDivider">#4D4D4D</color>
 
 </resources>

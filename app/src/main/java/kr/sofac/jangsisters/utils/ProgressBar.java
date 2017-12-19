@@ -15,7 +15,7 @@ public class ProgressBar {
     private ProgressDialog pd;
 
     public ProgressBar(Context context) {
-        this.pd = new ProgressDialog(context, R.style.MyTheme);
+        this.pd = new ProgressDialog(context, R.style.ProgressBarTheme);
         pd.setCancelable(false);
         pd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
