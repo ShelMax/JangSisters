@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_toolbar_shop_back"
+        android:visible="true"
+        android:title="@string/back"
+        android:icon="@drawable/arrow_left_white"
+        android:enabled="true"
+        app:showAsAction="always">
+    </item>
+
+    <item
+        android:id="@+id/menu_toolbar_shop_forward"
+        android:visible="true"
+        android:title="@string/forward"
+        android:icon="@drawable/arrow_right_white"
+        android:enabled="true"
+        app:showAsAction="always">
+    </item>
+
+    <item
+        android:id="@+id/menu_toolbar_shop_refresh"
+        android:visible="true"
+        android:title="@string/refresh"
+        android:icon="@drawable/refresh_white"
+        android:enabled="true"
+        app:showAsAction="always">
+    </item>
+
+</menu>

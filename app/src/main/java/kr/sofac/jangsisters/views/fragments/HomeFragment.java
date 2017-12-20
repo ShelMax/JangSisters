@@ -37,7 +37,7 @@ public class HomeFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
         posts = PostWrapper.getAllPosts();
-        PostAdapter adapter = new PostAdapter(posts, new PostCallback() {
+        PostAdapter adapter = new PostAdapter(posts, getActivity(), new PostCallback() {
             @Override
             public void postClick(int position) {
                 startActivity(new Intent(getActivity(), PostDetailedActivity.class)

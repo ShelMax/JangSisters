@@ -1,5 +1,7 @@
 package kr.sofac.jangsisters.views.adapters;
 
+import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,10 +28,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private List<Post> items;
     private PostCallback callback;
+    private Context context;
 
-    public PostAdapter(List<Post> items, PostCallback callback) {
+    public PostAdapter(List<Post> items, Context context, PostCallback callback) {
         this.items = items;
         this.callback = callback;
+        this.context = context;
+
     }
 
     @Override
@@ -51,6 +56,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.description.setText(items.get(position).getDescription());
         holder.itemView.setOnClickListener(view -> callback.postClick(position));
         holder.ingredients.setOnClickListener(view -> callback.ingredientsClick(position));
+        holder.categories.setAdapter(new CategoryAdapter(items.get(position).getCategories()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        holder.categories.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -69,6 +78,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         @BindView(R.id.item_post_likes) TextView likes;
         @BindView(R.id.item_post_description) TextView description;
         @BindView(R.id.item_post_ingredients) ImageView ingredients;
+        @BindView(R.id.item_post_categories) RecyclerView categories;
 
         ViewHolder(View itemView) {
             super(itemView);

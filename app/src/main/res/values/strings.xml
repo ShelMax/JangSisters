@@ -16,4 +16,7 @@ Nam vehicula ex a efficitur aliquet. Quisque blandit et augue non malesuada. Int
     <string name="like">like</string>
     <string name="comment">comment</string>
     <string name="cart">cart</string>
+    <string name="back">back</string>
+    <string name="forward">forward</string>
+    <string name="refresh">refresh</string>
 </resources>

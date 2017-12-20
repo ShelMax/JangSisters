@@ -7,8 +7,8 @@
     android:layout_marginLeft="10dp">
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:background="@drawable/round_button"
         android:id="@+id/item_category_image"/>
 
@@ -16,10 +16,10 @@
         android:id="@+id/item_category_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="13dp"
+        android:layout_marginLeft="6dp"
         android:textColor="#fff"
         android:textSize="18sp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="6dp"
         tools:text="12" />
 
 </RelativeLayout>
