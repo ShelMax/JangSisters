@@ -54,6 +54,7 @@ public class PostWrapper {
                 "http://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg",
                 "Sanya", 21, 177, "11 October 2011", "Sushi are the best",
                 "Some description", categories, ingredients));
+        posts.addAll(posts);
         return posts;
     }
 

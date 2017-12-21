@@ -24,10 +24,6 @@ import kr.sofac.jangsisters.models.Constants;
 
 public class ShopFragment extends BaseFragment {
 
-    //TODO подумать как быть с onBackPressed
-
-    //TODO перенести иконки в тулбар
-
     @BindView(R.id.shop_webview) WebView webView;
 
     private List<String> pages;

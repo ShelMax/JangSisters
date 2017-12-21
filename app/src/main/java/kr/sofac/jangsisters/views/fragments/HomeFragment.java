@@ -29,7 +29,6 @@ public class HomeFragment extends BaseFragment {
     private ListView listView;
     private List<Post> posts;
     private AlertDialog dialog;
-    private View ingredientsView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -41,7 +40,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void postClick(int position) {
                 startActivity(new Intent(getActivity(), PostDetailedActivity.class)
-                        .putExtra("postID", posts.get(position).getId()));
+                        .putExtra(getString(R.string.intent_postID), posts.get(position).getId()));
             }
 
             @Override
@@ -53,12 +52,11 @@ public class HomeFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        ingredientsView = getLayoutInflater().inflate(R.layout.dialog_post_ingredients, null);
+        View ingredientsView = getLayoutInflater().inflate(R.layout.dialog_post_ingredients, null);
         builder.setView(ingredientsView);
         dialog = builder.create();
         listView = ingredientsView.findViewById(R.id.post_ingredients_list);
         return view;
     }
-
 
 }

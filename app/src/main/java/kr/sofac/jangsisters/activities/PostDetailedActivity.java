@@ -40,7 +40,6 @@ public class PostDetailedActivity extends BaseActivity {
         setContentView(R.layout.activity_post_detailed);
         ButterKnife.bind(this);
         getPost();
-
         initToolbar();
 
         Glide.with(this).load(post.getImageURL()).into(postImage);
@@ -66,7 +65,7 @@ public class PostDetailedActivity extends BaseActivity {
     }
 
     private void getPost() {
-        post = PostWrapper.getPostById(getIntent().getExtras().getInt("postID"));
+        post = PostWrapper.getPostById(getIntent().getExtras().getInt(getString(R.string.intent_postID)));
     }
 
     @OnClick(R.id.post_detailed_category_left)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="310dp"
@@ -15,152 +15,161 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#85000000" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/item_post_separator2"
-        android:layout_alignBottom="@id/item_post_separator2"
-        app:srcCompat="@drawable/heart"
-        android:id="@+id/item_post_likes_image"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/item_post_author_image"
-        android:layout_alignBottom="@id/item_post_author_image"
-        android:layout_marginLeft="8dp"
-        app:srcCompat="@drawable/comment"
-        android:id="@+id/item_post_comments_image"/>
-
-    <ImageView
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="100dp"
-        android:id="@+id/item_post_author_image"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/item_post_author"
-        android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@id/item_post_separator"
-        android:textColor="#fff"
-        tools:text="12 October 2018"
-        android:id="@+id/item_post_date"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/item_post_author_image"
-        android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@id/item_post_comments_image"
-        android:textColor="#fff"
-        android:id="@+id/item_post_comments"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#fff"
-        android:layout_toRightOf="@id/item_post_likes_image"
-        android:layout_alignBottom="@id/item_post_comments"
-        android:layout_marginLeft="8dp"
-        android:id="@+id/item_post_likes"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="|"
-        android:layout_toRightOf="@id/item_post_author"
-        android:layout_marginLeft="8dp"
-        android:layout_alignBottom="@id/item_post_author"
-        android:textColor="#fff"
-        android:id="@+id/item_post_separator"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="|"
-        android:layout_marginLeft="8dp"
-        android:layout_alignBottom="@id/item_post_comments"
-        android:layout_toRightOf="@id/item_post_comments"
-        android:textColor="#fff"
-        android:id="@+id/item_post_separator2"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#fff"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:layout_toRightOf="@id/item_post_author_image"
-        android:layout_alignTop="@id/item_post_author_image"
-        android:layout_marginLeft="10dp"
-        android:id="@+id/item_post_author"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/item_post_author_image"
-        android:layout_below="@id/item_post_author_image"
-        android:layout_marginTop="8dp"
-        android:textStyle="bold"
-        android:textSize="19sp"
-        android:textColor="#fff"
-        android:id="@+id/item_post_title"/>
-
-    <View
-        android:layout_width="100dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/white"
-        android:layout_below="@id/item_post_title"
-        android:layout_alignLeft="@id/item_post_author_image"
-        android:id="@+id/item_post_divider" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/item_post_title"
-        android:layout_below="@id/item_post_divider"
-        android:layout_marginRight="120dp"
-        android:layout_marginTop="4dp"
-        android:minLines="1"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:textColor="#fff"
-        android:id="@+id/item_post_description"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/item_post_description"
-        android:layout_marginTop="20dp"
-        android:id="@+id/item_post_categories"
-        android:layout_alignLeft="@id/item_post_author_image"
-        android:layout_marginRight="120dp" />
+        android:background="#ab000000"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout"/>
 
     <ImageView
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="-65dp"
-        android:layout_marginBottom="-65dp"
         android:background="@drawable/round_button"
         android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintLeft_toRightOf="@+id/linearLayout"
+        app:layout_constraintRight_toRightOf="@+id/linearLayout"
         android:id="@+id/item_post_ingredients"/>
 
     <ImageView
         android:layout_width="38dp"
         android:layout_height="38dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        app:srcCompat="@drawable/food"/>
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintRight_toRightOf="@+id/linearLayout"
+        app:srcCompat="@drawable/food"
+        android:id="@+id/item_post_icon_cart"/>
 
-</RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/item_post_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/linearLayout"
+        app:layout_constraintRight_toLeftOf="@id/item_post_ingredients" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:minLines="1"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toTopOf="@id/item_post_ingredients"
+        app:layout_constraintLeft_toLeftOf="@id/item_post_categories"
+        app:layout_constraintRight_toLeftOf="@id/item_post_ingredients"
+        android:id="@+id/item_post_description"/>
+
+    <View
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@id/item_post_description"
+        app:layout_constraintLeft_toLeftOf="@id/item_post_categories"
+        android:id="@+id/item_post_divider"/>
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:textColor="#fff"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/item_post_divider"
+        app:layout_constraintLeft_toLeftOf="@id/item_post_categories"
+        android:id="@+id/item_post_title"/>
+
+    <ImageView
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/item_post_title"
+        app:layout_constraintLeft_toLeftOf="@id/item_post_categories"
+        android:id="@+id/item_post_author_image"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/item_post_author_image"
+        app:layout_constraintStart_toEndOf="@id/item_post_author_image"
+        app:srcCompat="@drawable/comment"
+        android:id="@+id/item_post_comments_image"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toBottomOf="@+id/item_post_comments_image"
+        app:layout_constraintStart_toEndOf="@+id/item_post_comments_image"
+        app:layout_constraintTop_toTopOf="@+id/item_post_comments_image"
+        tools:text="13"
+        android:id="@+id/item_post_comments"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/item_post_author"
+        android:layout_marginStart="8dp"
+        android:text="@string/separator"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toBottomOf="@+id/item_post_comments"
+        app:layout_constraintStart_toEndOf="@+id/item_post_comments"
+        app:layout_constraintTop_toTopOf="@+id/item_post_comments"
+        android:id="@+id/item_post_separator"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/item_post_comments"
+        app:layout_constraintStart_toEndOf="@+id/item_post_separator"
+        app:layout_constraintTop_toTopOf="@+id/item_post_comments"
+        app:srcCompat="@drawable/heart"
+        android:id="@+id/item_post_likes_image"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toBottomOf="@+id/item_post_likes_image"
+        app:layout_constraintStart_toEndOf="@+id/item_post_likes_image"
+        app:layout_constraintTop_toTopOf="@+id/item_post_likes_image"
+        tools:text="145"
+        android:id="@+id/item_post_likes"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="#fff"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/item_post_author_image"
+        app:layout_constraintTop_toTopOf="@id/item_post_author_image"
+        android:id="@+id/item_post_author"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/item_post_separator2"
+        app:layout_constraintBaseline_toBaselineOf="@id/item_post_author"
+        android:layout_marginStart="8dp"
+        android:textColor="#fff"
+        android:id="@+id/item_post_date"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/separator"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/item_post_author"
+        app:layout_constraintBaseline_toBaselineOf="@id/item_post_author"
+        android:textColor="#fff"
+        android:id="@+id/item_post_separator2"/>
+
+</android.support.constraint.ConstraintLayout>
