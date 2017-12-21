@@ -29,26 +29,34 @@ import kr.sofac.jangsisters.models.Constants;
 import kr.sofac.jangsisters.views.fragments.GridViewPostFragment;
 import kr.sofac.jangsisters.views.fragments.HelpFragment;
 import kr.sofac.jangsisters.views.fragments.HomeFragment;
+import kr.sofac.jangsisters.views.fragments.ProfileFragment;
 import kr.sofac.jangsisters.views.fragments.ShopFragment;
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.viewpager) ViewPager viewPager;
-    @BindView(R.id.tabs) TabLayout tabLayout;
-    @BindView(R.id.navigation_view) NavigationView navigationView;
-    @BindView(R.id.drawer) DrawerLayout drawer;
-    @BindView(R.id.tab_home) Button tabHome;
-    @BindView(R.id.search) EditText search;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
+    @BindView(R.id.tabs)
+    TabLayout tabLayout;
+    @BindView(R.id.navigation_view)
+    NavigationView navigationView;
+    @BindView(R.id.drawer)
+    DrawerLayout drawer;
+    @BindView(R.id.tab_home)
+    Button tabHome;
+    @BindView(R.id.search)
+    EditText search;
 
     private ViewPagerAdapter adapter;
     private ShopFragment shopFragment;
 
     @Override
     public void onBackPressed() {
-        if(viewPager.getCurrentItem()==0){
+        if (viewPager.getCurrentItem() == 0) {
             shopFragment.backClick();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -75,11 +83,12 @@ public class MainActivity extends BaseActivity{
         adapter.addFragment(new GridViewPostFragment(), Constants.tabNames().get(1));
         adapter.addFragment(new HomeFragment(), Constants.tabNames().get(2));
         adapter.addFragment(new HelpFragment(), Constants.tabNames().get(3));
-        adapter.addFragment(new HomeFragment(), Constants.tabNames().get(4));
+        adapter.addFragment(new ProfileFragment(), Constants.tabNames().get(4));
         viewPager.setAdapter(adapter);
     }
 
-    private void initTabLayout(){
+    private void initTabLayout() {
+
         tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.selector_shop));
@@ -91,28 +100,29 @@ public class MainActivity extends BaseActivity{
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                toolbar.setTitle(Constants.tabNames().get(tab.getPosition()));
-                search.setVisibility(View.GONE);
-                if(tab.getPosition()==2){
-                    tabHome.setSelected(true);
-                    toolbar.setNavigationIcon(R.drawable.add);
-                    toolbar.setNavigationOnClickListener(view -> {}
-                    );
+                if (tab.getPosition() == 2) {
+                    toolbar.setTitle(Constants.tabNames().get(tab.getPosition()));
+                    search.setVisibility(View.GONE);
+                    if (tab.getPosition() == 2) {
+                        tabHome.setSelected(true);
+                        toolbar.setNavigationIcon(R.drawable.add);
+                        toolbar.setNavigationOnClickListener(view -> {
+                                }
+                        );
+                    } else if (tab.getPosition() == 0) {
+                        toolbar.setNavigationIcon(R.drawable.home);
+                        toolbar.setNavigationOnClickListener(view ->
+                                shopFragment.homeClick());
+                    } else if (tab.getPosition() == 1) {
+                        search.setVisibility(View.VISIBLE);
+                    }
+                    invalidateOptionsMenu();
                 }
-                else if(tab.getPosition()==0){
-                    toolbar.setNavigationIcon(R.drawable.home);
-                    toolbar.setNavigationOnClickListener(view ->
-                            shopFragment.homeClick());
-                }
-                else if(tab.getPosition()==1){
-                    search.setVisibility(View.VISIBLE);
-                }
-                invalidateOptionsMenu();
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                if(tab.getPosition()==2){
+                if (tab.getPosition() == 2) {
                     tabHome.setSelected(false);
                 }
             }
@@ -185,6 +195,7 @@ public class MainActivity extends BaseActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
