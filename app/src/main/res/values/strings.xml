@@ -22,4 +22,5 @@ Nam vehicula ex a efficitur aliquet. Quisque blandit et augue non malesuada. Int
     <string name="separator">|</string>
     <string name="help_text">Here goes some random text saying we value our customers and blablabla and we want them to be happy and blablabla</string>
     <string name="intent_postID">postID</string>
+    <string name="help">Help Chat</string>
 </resources>

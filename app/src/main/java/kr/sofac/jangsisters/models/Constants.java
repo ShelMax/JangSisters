@@ -24,7 +24,7 @@ public class Constants {
     public static List<Integer> toolbarMenus(){
         List<Integer> menus = new ArrayList<>();
         menus.add(R.menu.menu_toolbar_shop);
-        menus.add(R.menu.menu_toolbar_home);
+        menus.add(R.menu.menu_toolbar_search);
         menus.add(R.menu.menu_toolbar_home);
         menus.add(R.menu.menu_toolbar_home);
         menus.add(R.menu.menu_toolbar_home);

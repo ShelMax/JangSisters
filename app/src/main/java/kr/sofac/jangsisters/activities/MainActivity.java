@@ -10,6 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,12 +53,16 @@ public class MainActivity extends BaseActivity {
 
     private ViewPagerAdapter adapter;
     private ShopFragment shopFragment;
+    private GridViewPostFragment gridFragment;
 
     @Override
     public void onBackPressed() {
         if (viewPager.getCurrentItem() == 0) {
             shopFragment.backClick();
-        } else {
+        } else if(viewPager.getCurrentItem() == 1){
+            gridFragment.hideSlideUp();
+        }
+        else{
             super.onBackPressed();
         }
     }
@@ -78,9 +84,10 @@ public class MainActivity extends BaseActivity {
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         shopFragment = new ShopFragment();
+        gridFragment = new GridViewPostFragment();
 
         adapter.addFragment(shopFragment, Constants.tabNames().get(0));
-        adapter.addFragment(new GridViewPostFragment(), Constants.tabNames().get(1));
+        adapter.addFragment(gridFragment, Constants.tabNames().get(1));
         adapter.addFragment(new HomeFragment(), Constants.tabNames().get(2));
         adapter.addFragment(new HelpFragment(), Constants.tabNames().get(3));
         adapter.addFragment(new ProfileFragment(), Constants.tabNames().get(4));
@@ -88,7 +95,6 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initTabLayout() {
-
         tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.selector_shop));
@@ -100,24 +106,33 @@ public class MainActivity extends BaseActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 2) {
-                    toolbar.setTitle(Constants.tabNames().get(tab.getPosition()));
-                    search.setVisibility(View.GONE);
-                    if (tab.getPosition() == 2) {
-                        tabHome.setSelected(true);
-                        toolbar.setNavigationIcon(R.drawable.add);
-                        toolbar.setNavigationOnClickListener(view -> {
-                                }
-                        );
-                    } else if (tab.getPosition() == 0) {
+                switch (tab.getPosition()){
+                    case 0:
                         toolbar.setNavigationIcon(R.drawable.home);
                         toolbar.setNavigationOnClickListener(view ->
                                 shopFragment.homeClick());
-                    } else if (tab.getPosition() == 1) {
+                        break;
+                    case 1:
+                        toolbar.setNavigationIcon(null);
                         search.setVisibility(View.VISIBLE);
-                    }
-                    invalidateOptionsMenu();
+                        break;
+                    case 2:
+                        toolbar.setTitle(Constants.tabNames().get(tab.getPosition()));
+                        search.setVisibility(View.GONE);
+                        if (tab.getPosition() == 2) {
+                            tabHome.setSelected(true);
+                            toolbar.setNavigationIcon(R.drawable.add);
+                            toolbar.setNavigationOnClickListener(view -> {
+                                    }
+                            );
+                        }
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
                 }
+                invalidateOptionsMenu();
             }
 
             @Override
@@ -132,6 +147,8 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+
+        gridFragment.onSetTextChanged(search);
     }
 
     private void initDrawerEndPosition() {
