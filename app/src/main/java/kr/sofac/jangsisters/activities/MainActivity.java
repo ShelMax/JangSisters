@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Constants;
-import kr.sofac.jangsisters.views.fragments.viewElements.GridViewPostFragment;
+import kr.sofac.jangsisters.views.fragments.containers.SearchFragment;
 import kr.sofac.jangsisters.views.fragments.containers.HelpFragment;
 import kr.sofac.jangsisters.views.fragments.containers.HomeFragment;
 import kr.sofac.jangsisters.views.fragments.containers.ProfileFragment;
@@ -51,18 +50,32 @@ public class MainActivity extends BaseActivity {
 
     private ViewPagerAdapter adapter;
     private ShopFragment shopFragment;
-    private GridViewPostFragment gridFragment;
+    private SearchFragment searchFragment;
 
     @Override
     public void onBackPressed() {
         if (viewPager.getCurrentItem() == 0) {
             shopFragment.backClick();
         } else if(viewPager.getCurrentItem() == 1){
-            gridFragment.hideSlideUp();
+            searchFragment.hideSlideUp();
         }
         else{
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            if (viewPager.getCurrentItem() == 0) {
+                shopFragment.homeClick();
+            } else if (viewPager.getCurrentItem() == 2) {
+                //todo add post
+            }
+        }else if(item.getItemId() == R.id.filter){
+            drawer.openDrawer(Gravity.END);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -82,10 +95,10 @@ public class MainActivity extends BaseActivity {
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         shopFragment = new ShopFragment();
-        gridFragment = new GridViewPostFragment();
+        searchFragment = new SearchFragment();
 
         adapter.addFragment(shopFragment, Constants.tabNames().get(0));
-        adapter.addFragment(gridFragment, Constants.tabNames().get(1));
+        adapter.addFragment(searchFragment, Constants.tabNames().get(1));
         adapter.addFragment(new HomeFragment(), Constants.tabNames().get(2));
         adapter.addFragment(new HelpFragment(), Constants.tabNames().get(3));
         adapter.addFragment(new ProfileFragment(), Constants.tabNames().get(4));
@@ -107,8 +120,6 @@ public class MainActivity extends BaseActivity {
                 switch (tab.getPosition()){
                     case 0:
                         toolbar.setNavigationIcon(R.drawable.home);
-                        toolbar.setNavigationOnClickListener(view ->
-                                shopFragment.homeClick());
                         break;
                     case 1:
                         toolbar.setNavigationIcon(null);
@@ -120,9 +131,6 @@ public class MainActivity extends BaseActivity {
                         if (tab.getPosition() == 2) {
                             tabHome.setSelected(true);
                             toolbar.setNavigationIcon(R.drawable.add);
-                            toolbar.setNavigationOnClickListener(view -> {
-                                    }
-                            );
                         }
                         break;
                     case 3:
@@ -130,7 +138,6 @@ public class MainActivity extends BaseActivity {
                     case 4:
                         break;
                 }
-                invalidateOptionsMenu();
             }
 
             @Override
@@ -146,22 +153,12 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        gridFragment.onSetTextChanged(search);
+        searchFragment.onSetTextChanged(search);
     }
 
     private void initDrawerEndPosition() {
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
-                toolbar, R.string.open, R.string.close) {
-            @Override
-            public boolean onOptionsItemSelected(MenuItem item) {
-                if (item.getItemId() == R.id.filter) {
-                    drawer.closeDrawer(Gravity.END);
-                }
-                return false;
-            }
-        };
-
-        drawer.addDrawerListener(toggle);
+        drawer.addDrawerListener(new ActionBarDrawerToggle(this, drawer,
+                toolbar, R.string.open, R.string.close));
         navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.nav_fruits:
@@ -184,33 +181,6 @@ public class MainActivity extends BaseActivity {
         tabLayout.getTabAt(2).select();
         tabHome.setSelected(true);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu newMenu) {
-        getMenuInflater().inflate(Constants.toolbarMenus().get(viewPager.getCurrentItem()), newMenu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.filter:
-                drawer.openDrawer(Gravity.END);
-                break;
-            case R.id.menu_toolbar_shop_back:
-                shopFragment.backClick();
-                break;
-            case R.id.menu_toolbar_shop_forward:
-                shopFragment.forwardClick();
-                break;
-            case R.id.menu_toolbar_shop_refresh:
-                shopFragment.refreshClick();
-                break;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

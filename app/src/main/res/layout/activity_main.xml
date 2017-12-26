@@ -107,7 +107,7 @@
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:background="@color/navigation_back_uncheked"
         android:choiceMode="singleChoice"
         app:itemBackground="@drawable/navigation_back"

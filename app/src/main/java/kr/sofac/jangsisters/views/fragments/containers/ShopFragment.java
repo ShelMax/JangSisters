@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -42,6 +46,34 @@ public class ShopFragment extends BaseFragment {
         return view;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(Constants.toolbarMenus().get(0), menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_toolbar_shop_back:
+                backClick();
+                break;
+            case R.id.menu_toolbar_shop_forward:
+                forwardClick();
+                break;
+            case R.id.menu_toolbar_shop_refresh:
+                refreshClick();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void backClick(){
         if(currentPage != 0) {
             fromNavigation = true;
@@ -59,8 +91,10 @@ public class ShopFragment extends BaseFragment {
     }
 
     public void refreshClick(){
-        fromNavigation = true;
-        webView.loadUrl(pages.get(currentPage));
+        if(currentPage != -1) {
+            fromNavigation = true;
+            webView.loadUrl(pages.get(currentPage));
+        }
     }
 
     public void homeClick() {
