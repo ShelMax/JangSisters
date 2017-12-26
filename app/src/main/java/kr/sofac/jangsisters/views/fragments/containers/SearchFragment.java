@@ -1,4 +1,4 @@
-package kr.sofac.jangsisters.views.fragments;
+package kr.sofac.jangsisters.views.fragments.containers;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,20 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
-public class ChatFragment extends BaseFragment {
+public class SearchFragment extends BaseFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_chat, container, false);
-    }
-
-    @OnClick(R.id.help)
-    void helpClick(){
-        //TODO open chat help
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
 }

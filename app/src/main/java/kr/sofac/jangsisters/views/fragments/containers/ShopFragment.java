@@ -1,4 +1,4 @@
-package kr.sofac.jangsisters.views.fragments;
+package kr.sofac.jangsisters.views.fragments.containers;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Constants;
+import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
 /**
  * Created by Sasha on 20.12.2017.

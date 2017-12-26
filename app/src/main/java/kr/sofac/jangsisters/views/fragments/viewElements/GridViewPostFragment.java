@@ -1,4 +1,4 @@
-package kr.sofac.jangsisters.views.fragments;
+package kr.sofac.jangsisters.views.fragments.viewElements;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +25,7 @@ import kr.sofac.jangsisters.activities.PostDetailedActivity;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.utils.PostWrapper;
 import kr.sofac.jangsisters.views.adapters.GridViewPostAdapter;
+import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
 /**
  * Created by Sasha on 21.12.2017.

@@ -1,4 +1,4 @@
-package kr.sofac.jangsisters.views.fragments;
+package kr.sofac.jangsisters.views.fragments.containers;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
 /**
  * Created by Sasha on 21.12.2017.

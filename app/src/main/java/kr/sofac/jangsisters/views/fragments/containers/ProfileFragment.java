@@ -1,4 +1,4 @@
-package kr.sofac.jangsisters.views.fragments;
+package kr.sofac.jangsisters.views.fragments.containers;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,13 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
-public class SearchFragment extends BaseFragment {
+public class ProfileFragment extends BaseFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    public void startAuthorization(){
+
     }
 
 }

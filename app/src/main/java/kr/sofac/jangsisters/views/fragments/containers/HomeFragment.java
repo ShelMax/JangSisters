@@ -1,4 +1,4 @@
-package kr.sofac.jangsisters.views.fragments;
+package kr.sofac.jangsisters.views.fragments.containers;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -22,6 +22,7 @@ import kr.sofac.jangsisters.models.PostCallback;
 import kr.sofac.jangsisters.utils.PostWrapper;
 import kr.sofac.jangsisters.views.adapters.PostAdapter;
 import kr.sofac.jangsisters.views.adapters.PostIngredientsAdapter;
+import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
 public class HomeFragment extends BaseFragment {
 

@@ -10,8 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,11 +26,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Constants;
-import kr.sofac.jangsisters.views.fragments.GridViewPostFragment;
-import kr.sofac.jangsisters.views.fragments.HelpFragment;
-import kr.sofac.jangsisters.views.fragments.HomeFragment;
-import kr.sofac.jangsisters.views.fragments.ProfileFragment;
-import kr.sofac.jangsisters.views.fragments.ShopFragment;
+import kr.sofac.jangsisters.views.fragments.viewElements.GridViewPostFragment;
+import kr.sofac.jangsisters.views.fragments.containers.HelpFragment;
+import kr.sofac.jangsisters.views.fragments.containers.HomeFragment;
+import kr.sofac.jangsisters.views.fragments.containers.ProfileFragment;
+import kr.sofac.jangsisters.views.fragments.containers.ShopFragment;
 
 public class MainActivity extends BaseActivity {
 
