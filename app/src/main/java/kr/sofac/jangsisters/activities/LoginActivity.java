@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 
@@ -47,14 +48,17 @@ public class LoginActivity extends BaseActivity {
     public void requestAuthorization(String email, String password) {
         if (!email.isEmpty() && !password.isEmpty()) {
             progressBar.showView();
-            new Connection<String>().signInCustomer(new SenderContainerDTO(password, email, ""), (isSuccess, answerServerResponse) -> {
-                if (isSuccess) {
-                    appPreference.setAuthorization(true);
-                } else {
-                    showToast("Some problems with sign in");
-                }
-                progressBar.dismissView();
-            });
+            new Connection<User>().signInCustomer(
+                    new SenderContainerDTO(password, email, ""),
+                    (isSuccess, answerServerResponse) -> {
+                        if (isSuccess) {
+                            User user = answerServerResponse.getDataTransferObject();
+                            appPreference.setAuthorization(true);
+                        } else {
+                            showToast("Some problems with sign in");
+                        }
+                        progressBar.dismissView();
+                    });
         } else {
             showToast("Need fill all fields!");
         }

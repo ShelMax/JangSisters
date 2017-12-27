@@ -27,7 +27,7 @@ public class Constants {
         menus.add(R.menu.menu_toolbar_search);
         menus.add(R.menu.menu_toolbar_home);
         menus.add(R.menu.menu_toolbar_home);
-        menus.add(R.menu.menu_toolbar_home);
+        menus.add(R.menu.menu_toolbar_profile);
         return menus;
     }
 

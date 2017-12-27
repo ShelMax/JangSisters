@@ -10,8 +10,9 @@
     <color name="colorTransparent">#00000000</color>
 
     <color name="navigation_back_uncheked">#303030</color>
-    <color name="navigation_back_cheked">#8C7242</color>
+    <color name="navigation_back_checked">#8C7242</color>
     <color name="listDivider">#4D4D4D</color>
+    <color name="item_followers_description">#828282</color>
 
     <!--main custom button-->
     <color name="colorMainDarkButtonBackground">#4A402F</color>

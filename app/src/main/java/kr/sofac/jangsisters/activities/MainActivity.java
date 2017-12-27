@@ -25,6 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Constants;
+import kr.sofac.jangsisters.utils.AppPreference;
 import kr.sofac.jangsisters.views.fragments.containers.SearchFragment;
 import kr.sofac.jangsisters.views.fragments.containers.HelpFragment;
 import kr.sofac.jangsisters.views.fragments.containers.HomeFragment;
@@ -51,6 +52,7 @@ public class MainActivity extends BaseActivity {
     private ViewPagerAdapter adapter;
     private ShopFragment shopFragment;
     private SearchFragment searchFragment;
+    private AppPreference appPreference;
 
     @Override
     public void onBackPressed() {
@@ -66,13 +68,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
-            if (viewPager.getCurrentItem() == 0) {
-                shopFragment.homeClick();
-            } else if (viewPager.getCurrentItem() == 2) {
-                //todo add post
-            }
-        }else if(item.getItemId() == R.id.filter){
+        if(item.getItemId() == R.id.filter){
             drawer.openDrawer(Gravity.END);
         }
         return super.onOptionsItemSelected(item);
@@ -83,16 +79,18 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        appPreference = new AppPreference(this);
         setSupportActionBar(toolbar);
-        setupViewPager(viewPager);
+        getSupportActionBar().setTitle(null);
+        setupViewPager();
         initTabLayout();
         initDrawerEndPosition();
 
         tabLayout.getTabAt(2).select();
+
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void setupViewPager() {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         shopFragment = new ShopFragment();
         searchFragment = new SearchFragment();
@@ -101,7 +99,15 @@ public class MainActivity extends BaseActivity {
         adapter.addFragment(searchFragment, Constants.tabNames().get(1));
         adapter.addFragment(new HomeFragment(), Constants.tabNames().get(2));
         adapter.addFragment(new HelpFragment(), Constants.tabNames().get(3));
-        adapter.addFragment(new ProfileFragment(), Constants.tabNames().get(4));
+        ProfileFragment profileFragment = new ProfileFragment();
+        if(appPreference.getUser() != null){
+            Bundle bundle = new Bundle();
+            bundle.putInt(getString(R.string.userID), appPreference.getUser().getId());
+            bundle.putBoolean(getString(R.string.myProfile), true);
+            profileFragment.setArguments(bundle);
+        }
+
+        adapter.addFragment(profileFragment, Constants.tabNames().get(4));
         viewPager.setAdapter(adapter);
     }
 
@@ -120,22 +126,26 @@ public class MainActivity extends BaseActivity {
                 switch (tab.getPosition()){
                     case 0:
                         toolbar.setNavigationIcon(R.drawable.home);
+                        toolbar.setNavigationOnClickListener(v -> shopFragment.homeClick());
                         break;
                     case 1:
                         toolbar.setNavigationIcon(null);
                         search.setVisibility(View.VISIBLE);
                         break;
                     case 2:
-                        toolbar.setTitle(Constants.tabNames().get(tab.getPosition()));
-                        search.setVisibility(View.GONE);
-                        if (tab.getPosition() == 2) {
-                            tabHome.setSelected(true);
-                            toolbar.setNavigationIcon(R.drawable.add);
-                        }
+                        tabHome.setSelected(true);
+                        toolbar.setNavigationIcon(R.drawable.add);
+                        toolbar.setNavigationOnClickListener(v -> {
+                            //todo add post
+                        });
                         break;
                     case 3:
                         break;
                     case 4:
+                        toolbar.setNavigationIcon(R.drawable.add);
+                        toolbar.setNavigationOnClickListener(v -> {
+                            //todo
+                        });
                         break;
                 }
             }
@@ -144,6 +154,12 @@ public class MainActivity extends BaseActivity {
             public void onTabUnselected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 2) {
                     tabHome.setSelected(false);
+                }
+                else if(tab.getPosition() == 0){
+                    getSupportActionBar().setTitle(null);
+                }
+                else if(tab.getPosition() == 1){
+                    search.setVisibility(View.GONE);
                 }
             }
 

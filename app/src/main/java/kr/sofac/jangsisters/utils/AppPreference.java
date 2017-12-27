@@ -25,9 +25,11 @@ public class AppPreference {
     private SharedPreferences preferences;
     private GsonBuilder builder = new GsonBuilder();
     private Gson gson = builder.create();
+    private SharedPreferences.Editor editor;
 
     public AppPreference(Context context) {
         preferences = context.getSharedPreferences(USER_SERVICE, MODE_PRIVATE);
+        editor = preferences.edit();
     }
 
     public Boolean getAuthorization() {
@@ -35,9 +37,9 @@ public class AppPreference {
     }
 
     public void setAuthorization(Boolean isAuthorization) {
-        SharedPreferences.Editor editorUser = preferences.edit();
-        editorUser.putBoolean(IS_AUTHORIZATION.toString(), isAuthorization);
-        editorUser.apply();
+        editor.putBoolean(IS_AUTHORIZATION.toString(), isAuthorization);
+        editor.apply();
+        editor.commit();
     }
 
     public String getGoogleKey() {
@@ -45,9 +47,9 @@ public class AppPreference {
     }
 
     public void setGoogleKey(String googleKey) {
-        SharedPreferences.Editor editorUser = preferences.edit();
-        editorUser.putString(GOOGLE_CLOUD_PREFERENCE.toString(), googleKey);
-        editorUser.apply();
+        editor.putString(GOOGLE_CLOUD_PREFERENCE.toString(), googleKey);
+        editor.apply();
+        editor.commit();
     }
 
     public User getUser() {
@@ -55,9 +57,9 @@ public class AppPreference {
     }
 
     public void setUser(User user) {
-        SharedPreferences.Editor editorUser = preferences.edit();
-        editorUser.putString(APP_PREFERENCES.toString(), gson.toJson(user));
-        editorUser.apply();
+        editor.putString(APP_PREFERENCES.toString(), gson.toJson(user));
+        editor.apply();
+        editor.commit();
     }
 
 }

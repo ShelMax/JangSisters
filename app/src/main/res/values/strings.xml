@@ -25,8 +25,12 @@ Nam vehicula ex a efficitur aliquet. Quisque blandit et augue non malesuada. Int
     <string name="intent_postID">postID</string>
     <string name="help">Help Chat</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">Search</string>
     <string name="not_have_account_registrate">Not have account? Sign up</string>
+    <string name="logout">logout</string>
+    <string name="settings">settings</string>
+    <string name="balance">Balance</string>
+    <string name="userID">userID</string>
+    <string name="myProfile">myProfile</string>
 </resources>

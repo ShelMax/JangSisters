@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.activities.PostDetailedActivity;
 import kr.sofac.jangsisters.models.Post;
-import kr.sofac.jangsisters.models.PostGridCallback;
+import kr.sofac.jangsisters.models.SimpleListCallback;
 import kr.sofac.jangsisters.utils.PostWrapper;
 import kr.sofac.jangsisters.views.adapters.GridViewPostAdapter;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
@@ -38,9 +38,9 @@ public class GridViewPostFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         posts = PostWrapper.getAllPosts();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new GridViewPostAdapter(PostWrapper.getAllPosts(), new PostGridCallback() {
+        recyclerView.setAdapter(new GridViewPostAdapter(PostWrapper.getAllPosts(), new SimpleListCallback() {
             @Override
-            public void postClick(int position) {
+            public void itemClick(int position) {
                 startActivity(new Intent(getActivity(), PostDetailedActivity.class)
                         .putExtra(getString(R.string.intent_postID), posts.get(position).getId()));
             }

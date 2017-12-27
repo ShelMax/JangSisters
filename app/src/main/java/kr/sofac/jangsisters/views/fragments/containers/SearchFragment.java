@@ -55,15 +55,6 @@ public class SearchFragment extends BaseFragment {
         super.onCreateOptionsMenu(menu,inflater);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public void onSetTextChanged(EditText search){
         this.search = search;
         search.setOnFocusChangeListener((view, focused) -> {
