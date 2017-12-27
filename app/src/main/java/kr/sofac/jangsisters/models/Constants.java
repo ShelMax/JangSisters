@@ -31,5 +31,5 @@ public class Constants {
         return menus;
     }
 
-    public static final String SHOP_URL = "https://rozetka.com.ua/";
+    public static final String SHOP_URL = "https://m.rozetka.com.ua/";
 }
