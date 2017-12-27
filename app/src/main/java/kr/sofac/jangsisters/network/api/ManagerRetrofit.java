@@ -139,9 +139,9 @@ public class ManagerRetrofit<T> {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
 
-        String stringDeleting = "";
+        StringBuilder stringDeleting = new StringBuilder();
         for (String str : listDeletingFiles) {
-            stringDeleting = stringDeleting + ";" + str;
+            stringDeleting.append(";").append(str);
         }
 
         Call<ResponseBody> call = serviceRetrofit.sendMultiPartWithTwoObj(
@@ -150,7 +150,7 @@ public class ManagerRetrofit<T> {
                         gson.toJson(serverRequest)),
                 RequestBody.create(
                         MediaType.parse("text/plain"),
-                        stringDeleting),
+                        stringDeleting.toString()),
                 partArrayList);
 
         call.enqueue(new Callback<ResponseBody>() {

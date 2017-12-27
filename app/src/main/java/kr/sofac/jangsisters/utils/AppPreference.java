@@ -14,7 +14,6 @@ import static android.content.Context.USER_SERVICE;
 import static kr.sofac.jangsisters.config.EnumPreference.APP_PREFERENCES;
 import static kr.sofac.jangsisters.config.EnumPreference.GOOGLE_CLOUD_PREFERENCE;
 import static kr.sofac.jangsisters.config.EnumPreference.IS_AUTHORIZATION;
-import static kr.sofac.jangsisters.config.EnumPreference.USER_ID;
 
 
 /**
@@ -29,17 +28,6 @@ public class AppPreference {
 
     public AppPreference(Context context) {
         preferences = context.getSharedPreferences(USER_SERVICE, MODE_PRIVATE);
-    }
-
-    public long getID() {
-        return preferences.getLong(USER_ID.toString(), 1L);
-    }
-
-    public void setID(Long id) {
-        SharedPreferences.Editor editorUser = preferences.edit();
-        editorUser.putLong(USER_ID.toString(), id);
-        editorUser.apply();
-        editorUser.commit();
     }
 
     public Boolean getAuthorization() {

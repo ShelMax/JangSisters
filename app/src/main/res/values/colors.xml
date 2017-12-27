@@ -3,14 +3,38 @@
     <color name="colorPrimary">#303030</color>
     <color name="colorPrimaryDark">#020307</color>
     <color name="colorAccent">#6b6b6b</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorLightGrey">#c1c1c1</color>
 
     <!--Transparent progressbar-->
-    <color name="transparent">#00000000</color>
+    <color name="colorTransparent">#00000000</color>
 
-    <color name="tab_text_normal">#212121</color>
-    <color name="comui_tab_text_color">#ff333333</color>
     <color name="navigation_back_uncheked">#303030</color>
     <color name="navigation_back_cheked">#8C7242</color>
     <color name="listDivider">#4D4D4D</color>
+
+    <!--main custom button-->
+    <color name="colorMainDarkButtonBackground">#4A402F</color>
+    <color name="colorMainDarkButtonBackgroundPressed">#3d3426</color>
+    <color name="colorMainDarkButtonBackgroundSelected">#3d3426</color>
+    <color name="colorMainDarkButtonText">#ffffff</color>
+
+    <!--main custom button on black background-->
+    <color name="colorMainLightButtonBackground">#8C7242</color>
+    <color name="colorMainLightButtonBackgroundPressed">#ac8d52</color>
+    <color name="colorMainLightButtonBackgroundSelected">#ab8c52</color>
+    <color name="colorMainLightButtonText">#ffffff</color>
+
+    <!--main Kakao button-->
+    <color name="colorKakaoButtonBackground">#FFE600</color>
+    <color name="colorKakaoButtonBackgroundPressed">#c9b501</color>
+    <color name="colorKakaoButtonText">#000000</color>
+
+    <!--main Facebook button-->
+    <color name="colorFacebookButtonBackground">#4367B0</color>
+    <color name="colorFacebookButtonBackgroundPressed">#314b80</color>
+    <color name="colorFacebookButtonText">#ffffff</color>
+
+
 
 </resources>

@@ -12,6 +12,7 @@ Phasellus commodo quam at ipsum ullamcorper ultricies. Aliquam malesuada congue 
 Sed tempor ornare nunc vel tempor. Phasellus consectetur venenatis purus, eget rhoncus purus ullamcorper a. Ut in ex dolor. Nunc vitae suscipit ipsum. Maecenas ac dolor mattis, gravida lectus quis, fringilla nulla. Etiam aliquam erat quis nisl dapibus, nec euismod leo ornare. Aliquam pretium molestie nisl ac tincidunt. Curabitur egestas tellus id nibh pellentesque, venenatis aliquet diam ultrices. Duis vel leo quis lorem mollis tempus eu eget neque. Ut lobortis molestie orci ut sollicitudin. Vestibulum urna tellus, sagittis ac placerat sodales, placerat ut sapien. Etiam pellentesque convallis ligula sit amet molestie. Suspendisse mollis, quam quis egestas eleifend, enim arcu dapibus nisi, eu venenatis risus sem quis dui.
 
 Nam vehicula ex a efficitur aliquet. Quisque blandit et augue non malesuada. Integer non neque ex. Maecenas consectetur sodales ex, in porttitor magna luctus in. Praesent at ante id orci consequat viverra in vitae eros. Ut nibh lorem, aliquam eu egestas vitae, malesuada in nunc. Suspendisse arcu tortor, rutrum sit amet egestas eu, volutpat id justo. Nunc congue turpis diam, vitae pulvinar urna ullamcorper accumsan. Nullam ac fermentum tellus. Maecenas nec malesuada magna. Donec dolor ligula, lacinia eu metus pellentesque, dictum molestie arcu. Integer iaculis erat vel pretium tincidunt. Sed gravida quam id volutpat consectetur.</string>
+
     <string name="bookmark">bookmark</string>
     <string name="like">like</string>
     <string name="comment">comment</string>
@@ -27,4 +28,5 @@ Nam vehicula ex a efficitur aliquet. Quisque blandit et augue non malesuada. Int
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">Search</string>
+    <string name="not_have_account_registrate">Not have account? Sign up</string>
 </resources>

@@ -71,9 +71,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:tabIndicatorColor="@color/transparent"
+            app:tabIndicatorColor="@color/colorTransparent"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/transparent" />
+            app:tabSelectedTextColor="@color/colorTransparent" />
 
         <ImageView
             android:id="@+id/imageView"
