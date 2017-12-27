@@ -48,20 +48,36 @@ public class LoginActivity extends BaseActivity {
     public void requestAuthorization(String email, String password) {
         if (!email.isEmpty() && !password.isEmpty()) {
             progressBar.showView();
-            new Connection<User>().signInCustomer(
-                    new SenderContainerDTO(password, email, ""),
-                    (isSuccess, answerServerResponse) -> {
-                        if (isSuccess) {
-                            User user = answerServerResponse.getDataTransferObject();
-                            appPreference.setAuthorization(true);
-                        } else {
-                            showToast("Some problems with sign in");
-                        }
-                        progressBar.dismissView();
-                    });
+            new Connection<User>().signInCustomer(new SenderContainerDTO(password, email, ""), (isSuccess, answerServerResponse) -> {
+                if (isSuccess) {
+                    appPreference.setUser(answerServerResponse.getDataTransferObject());
+                    if("0".equals(answerServerResponse.getDataTransferObject().getVisible())){
+                        appPreference.setAuthorization(false);
+
+                    } else {
+                        appPreference.setAuthorization(true);
+                        startLaunchActivity();
+                    }
+                } else {
+                    showToast("Some problems with sign in");
+                }
+                progressBar.dismissView();
+            });
         } else {
             showToast("Need fill all fields!");
         }
+    }
+
+    public void startLaunchActivity(){
+        Intent intent = new Intent(this, LaunchActivity.class);
+        startActivity(intent);
+        finishAffinity();
+    }
+
+    public void startVerificationActivity(){
+        Intent intent = new Intent(this, LaunchActivity.class);
+        startActivity(intent);
+        finishAffinity();
     }
 
 //    {
