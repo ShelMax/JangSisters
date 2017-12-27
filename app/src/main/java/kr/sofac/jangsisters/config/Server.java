@@ -1,8 +1,8 @@
 package kr.sofac.jangsisters.config;
 public class Server {
 
-    public final static String BASE_URL = "http://www.sofac.kr/"; // http://swfac.kr/
-    //public final static String BASE_URL = "http://192.168.0.58/"; //Zegna
+    //public final static String BASE_URL = "http://www.sofac.kr/"; // http://swfac.kr/
+    public final static String BASE_URL = "http://192.168.88.63/"; //Zegna
     //public final static String BASE_URL = "http://192.168.1.36/"; //Maxx
 
     // Path Service API JSON
