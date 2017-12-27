@@ -16,7 +16,7 @@ public class ButtonLight extends AppCompatButton {
         super(context, attrs);
         setBackground(getResources().getDrawable(R.drawable.custom_button_light));
         setTextColor(getResources().getColor(R.color.colorMainLightButtonText));
-        setMinHeight(getResources().getDimensionPixelSize(R.dimen.min_height_custom_button));
+//        setMinHeight(getResources().getDimensionPixelSize(R.dimen.min_height_custom_button));
     }
 
 }

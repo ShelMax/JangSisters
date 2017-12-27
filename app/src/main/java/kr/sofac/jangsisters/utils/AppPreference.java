@@ -38,7 +38,6 @@ public class AppPreference {
         SharedPreferences.Editor editorUser = preferences.edit();
         editorUser.putBoolean(IS_AUTHORIZATION.toString(), isAuthorization);
         editorUser.apply();
-        editorUser.commit();
     }
 
     public String getGoogleKey() {
@@ -49,7 +48,6 @@ public class AppPreference {
         SharedPreferences.Editor editorUser = preferences.edit();
         editorUser.putString(GOOGLE_CLOUD_PREFERENCE.toString(), googleKey);
         editorUser.apply();
-        editorUser.commit();
     }
 
     public User getUser() {
@@ -60,7 +58,6 @@ public class AppPreference {
         SharedPreferences.Editor editorUser = preferences.edit();
         editorUser.putString(APP_PREFERENCES.toString(), gson.toJson(user));
         editorUser.apply();
-        editorUser.commit();
     }
 
 }

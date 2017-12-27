@@ -16,7 +16,7 @@ public class ButtonKakaoTalk extends AppCompatButton {
         super(context, attrs);
         setBackground(getResources().getDrawable(R.drawable.custom_button_kakao));
         setTextColor(getResources().getColor(R.color.colorKakaoButtonText));
-        setMinHeight(getResources().getDimensionPixelSize(R.dimen.min_height_custom_button));
+//        setMinHeight(getResources().getDimensionPixelSize(R.dimen.min_height_custom_button));
     }
 
 }

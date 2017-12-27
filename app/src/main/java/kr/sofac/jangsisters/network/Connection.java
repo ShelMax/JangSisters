@@ -92,11 +92,37 @@ public class Connection<T> {
         });
     }
 
-
-    // {"dataTransferObject":{"filter":{"0":"2", "1":"4"}}, "requestType":"getListPosts"}
-    public void getListPosts(String userID, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void getListPosts(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
         answerServerResponse = async;
-        new ManagerRetrofit<String>().sendRequest(userID, new Object() {// Change type Object sending / Change data sending
+        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, new Object() {// Change type Object sending / Change data sending
+        }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
+            if (isSuccess) {
+                Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response
+                }.getType();
+                tryParsing(answerString, typeAnswer);
+            } else {
+                answerServerResponse.processFinish(false, null);
+            }
+        });
+    }
+
+    public void getListCategories(String emptyString, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+        answerServerResponse = async;
+        new ManagerRetrofit<String>().sendRequest(emptyString, new Object() {// Change type Object sending / Change data sending
+        }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
+            if (isSuccess) {
+                Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response
+                }.getType();
+                tryParsing(answerString, typeAnswer);
+            } else {
+                answerServerResponse.processFinish(false, null);
+            }
+        });
+    }
+
+    public void getPostListComments(Integer postID, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+        answerServerResponse = async;
+        new ManagerRetrofit<Integer>().sendRequest(postID, new Object() {// Change type Object sending / Change data sending
         }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
             if (isSuccess) {
                 Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response

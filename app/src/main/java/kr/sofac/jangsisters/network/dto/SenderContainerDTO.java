@@ -1,17 +1,22 @@
 package kr.sofac.jangsisters.network.dto;
 
+import java.util.HashMap;
+
 /**
  * Created by Maxim on 27.12.2017.
  */
 
 public class SenderContainerDTO {
 
-    String password;
-    String email;
-    String googleCloudKey;
-    String name;
-    String id;
-    String code;
+    private String id;
+    private Integer customer_id;
+    private String password;
+    private String email;
+    private String googleCloudKey;
+    private String name;
+    private String code;
+    private HashMap<Integer, Integer> filter;
+
 
     /**
      * signInCustomer
@@ -38,8 +43,23 @@ public class SenderContainerDTO {
     public SenderContainerDTO(String id, String code) {
         this.id = id;
         this.code = code;
-
     }
+
+    /**
+     * getListPosts
+     */
+    public SenderContainerDTO(HashMap<Integer, Integer> filter) {
+        this.filter = filter;
+    }
+
+    /**
+     * getPost
+     */
+    public SenderContainerDTO(String id, Integer customer_id) {
+        this.id = id;
+        this.customer_id = customer_id;
+    }
+
     public String getPassword() {
         return password;
     }
