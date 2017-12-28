@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,11 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Constants;
+import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
-
-/**
- * Created by Sasha on 20.12.2017.
- */
 
 public class ShopFragment extends BaseFragment {
 
@@ -54,7 +50,7 @@ public class ShopFragment extends BaseFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(Constants.toolbarMenus().get(0), menu);
+        inflater.inflate(TabManager.getTabManager().getMenuByPosition(0), menu);
         super.onCreateOptionsMenu(menu,inflater);
     }
 

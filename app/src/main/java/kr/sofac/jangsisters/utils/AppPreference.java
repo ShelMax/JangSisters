@@ -57,4 +57,8 @@ public class AppPreference {
         editor.commit();
     }
 
+    public void clearUser(){
+        editor.clear().commit();
+    }
+
 }

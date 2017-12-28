@@ -7,7 +7,6 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,7 +18,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.models.Constants;
+import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
 import kr.sofac.jangsisters.views.fragments.viewElements.GridViewPostFragment;
 
@@ -51,7 +50,7 @@ public class SearchFragment extends BaseFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(Constants.toolbarMenus().get(1), menu);
+        inflater.inflate(TabManager.getTabManager().getMenuByPosition(1), menu);
         super.onCreateOptionsMenu(menu,inflater);
     }
 

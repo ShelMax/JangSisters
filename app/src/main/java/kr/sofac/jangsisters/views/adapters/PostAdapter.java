@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -19,10 +18,6 @@ import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.PostCallback;
-
-/**
- * Created by Maxim on 29.11.2017.
- */
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
@@ -45,14 +40,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Glide.with(holder.itemView).load(items.get(position).getImageURL()).into(holder.image);
-        Glide.with(holder.itemView).load(items.get(position).getAuthorURL())
-                .apply(RequestOptions.circleCropTransform()).into(holder.authorImage);
-        holder.author.setText(items.get(position).getAuthor());
-        holder.title.setText(items.get(position).getTitle());
+        Glide.with(holder.itemView).load(items.get(position).getPostImage()).into(holder.image);
+//        Glide.with(holder.itemView).load(items.get(position).get())
+//                .apply(RequestOptions.circleCropTransform()).into(holder.authorImage);
+        holder.author.setText(items.get(position).getAuthorName());
+        holder.title.setText(items.get(position).getName());
         holder.date.setText(items.get(position).getDate());
-        holder.comments.setText(String.valueOf(items.get(position).getComments()));
-        holder.likes.setText(String.valueOf(items.get(position).getLikes()));
+        holder.comments.setText(String.valueOf(items.get(position).getCommentsCount()));
+        holder.likes.setText(String.valueOf(items.get(position).getLikesCount()));
         holder.description.setText(items.get(position).getDescription());
         holder.itemView.setOnClickListener(view -> callback.postClick(position));
         holder.ingredients.setOnClickListener(view -> callback.ingredientsClick(position));

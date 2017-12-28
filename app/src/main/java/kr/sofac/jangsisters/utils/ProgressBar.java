@@ -6,9 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
 import kr.sofac.jangsisters.R;
-/**
- * Created by Maxim on 01.09.2017.
- */
 
 public class ProgressBar {
 

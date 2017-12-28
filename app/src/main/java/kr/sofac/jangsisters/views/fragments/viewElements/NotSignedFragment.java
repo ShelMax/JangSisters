@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.activities.LoginActivity;
@@ -18,16 +19,18 @@ public class NotSignedFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_not_signed, container, false);
+        View view = inflater.inflate(R.layout.fragment_not_signed, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @OnClick(R.id.register)
-    void registerClick(){
+    public void registerClick(){
         startActivity(new Intent(getActivity(), RegistrationActivity.class));
     }
 
     @OnClick(R.id.login)
-    void loginClick(){
+    public void loginClick(){
         startActivity(new Intent(getActivity(), LoginActivity.class));
     }
 

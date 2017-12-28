@@ -1,6 +1,6 @@
 package kr.sofac.jangsisters.views.fragments.containers;
 
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,13 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.models.Constants;
+import kr.sofac.jangsisters.activities.LoginActivity;
+import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.utils.AppPreference;
 import kr.sofac.jangsisters.utils.UserWrapper;
@@ -42,11 +42,8 @@ public class ProfileFragment extends BaseFragment {
     @BindView(R.id.follow) ButtonLight follow;
     @BindView(R.id.balance) ButtonLight balance;
 
-
-
-
     private FragmentManager fragmentManager;
-    private String userID;
+    private int userID;
     private boolean myProfile;
     private GridViewPostFragment myPosts;
     private FollowersFragment followers;
@@ -61,7 +58,7 @@ public class ProfileFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
         appPreference = new AppPreference(getActivity());
-        userID = getArguments().getString(getString(R.string.userID));
+        userID = getArguments().getInt(getString(R.string.userID));
         myProfile = getArguments().getBoolean(getString(R.string.myProfile));
         if(myProfile){
             follow.setVisibility(View.GONE);
@@ -77,7 +74,7 @@ public class ProfileFragment extends BaseFragment {
                 .apply(RequestOptions.circleCropTransform())
                 .into(userImage);
         username.setText(user.getName());
-        if(appPreference.getUser().getId().equals(userID))
+        if(appPreference.getUser().getId() ==userID)
             myPosts = new GridViewPostFragment();
         followers = new FollowersFragment();
         following = new FollowersFragment();
@@ -90,7 +87,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void initTabLayout() {
-        if (appPreference.getUser().getId().equals(userID)) {
+        if (appPreference.getUser().getId() == userID) {
             tabLayout.addTab(tabLayout.newTab().setText("My posts"), true);
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
@@ -167,7 +164,7 @@ public class ProfileFragment extends BaseFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(Constants.toolbarMenus().get(4), menu);
+        inflater.inflate(TabManager.getTabManager().getMenuByPosition(4), menu);
         super.onCreateOptionsMenu(menu,inflater);
     }
 
@@ -177,14 +174,11 @@ public class ProfileFragment extends BaseFragment {
             case R.id.settings:
                 break;
             case R.id.logout:
+                appPreference.clearUser();
+                startActivity(new Intent(getActivity(), LoginActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public void startAuthorization(){
-
-    }
-
 
 }

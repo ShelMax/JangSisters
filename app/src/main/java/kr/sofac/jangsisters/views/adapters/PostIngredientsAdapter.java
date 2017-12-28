@@ -15,11 +15,11 @@ import kr.sofac.jangsisters.models.Ingredient;
 
 public class PostIngredientsAdapter extends BaseAdapter {
 
-    private List<Ingredient> ingredients;
+    private String ingredients;
     private Context context;
     private LayoutInflater inflater;
 
-    public PostIngredientsAdapter(List<Ingredient> ingredients, Context context) {
+    public PostIngredientsAdapter(String ingredients, Context context) {
         this.ingredients = ingredients;
         this.context = context;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -27,12 +27,12 @@ public class PostIngredientsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return ingredients.size();
+        return 0;
     }
 
     @Override
     public Object getItem(int i) {
-        return ingredients.get(i);
+        return null;
     }
 
     @Override
@@ -43,8 +43,8 @@ public class PostIngredientsAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         convertView = inflater.inflate(R.layout.item_post_ingredient, null);
-        TextView name = convertView.findViewById(R.id.item_post_ingredient_name);
-        name.setText(ingredients.get(i).getName());
+//        TextView name = convertView.findViewById(R.id.item_post_ingredient_name);
+//        name.setText(ingredients.get(i).getName());
         return convertView;
     }
 }

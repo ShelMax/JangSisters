@@ -18,10 +18,6 @@ import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.SimpleListCallback;
 
-/**
- * Created by Sasha on 21.12.2017.
- */
-
 public class GridViewPostAdapter extends RecyclerView.Adapter<GridViewPostAdapter.ViewHolder> {
 
     private List<Post> posts;
@@ -40,13 +36,13 @@ public class GridViewPostAdapter extends RecyclerView.Adapter<GridViewPostAdapte
 
     @Override
     public void onBindViewHolder(GridViewPostAdapter.ViewHolder holder, int position) {
-        Glide.with(holder.itemView).load(posts.get(position * 2).getImageURL()).into(holder.first);
-        holder.firstTitle.setText(posts.get(position * 2).getTitle());
+        Glide.with(holder.itemView).load(posts.get(position * 2).getPostImage()).into(holder.first);
+        holder.firstTitle.setText(posts.get(position * 2).getName());
         holder.itemView.setOnClickListener(view ->
                 callback.itemClick(position * 2));
         if(position * 2 != posts.size() - 1){
-            Glide.with(holder.itemView).load(posts.get(position * 2 + 1).getImageURL()).into(holder.second);
-            holder.secondTitle.setText(posts.get(position * 2 + 1).getTitle());
+            Glide.with(holder.itemView).load(posts.get(position * 2 + 1).getPostImage()).into(holder.second);
+            holder.secondTitle.setText(posts.get(position * 2 + 1).getName());
             holder.itemView.setOnClickListener(view -> callback.itemClick(position * 2 + 1));
         }
         else{

@@ -24,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.models.Constants;
+import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.utils.AppPreference;
 import kr.sofac.jangsisters.views.fragments.containers.SearchFragment;
 import kr.sofac.jangsisters.views.fragments.containers.HelpFragment;
@@ -54,6 +54,7 @@ public class MainActivity extends BaseActivity {
     private ShopFragment shopFragment;
     private SearchFragment searchFragment;
     private AppPreference appPreference;
+    private TabManager tabManager;
 
     @Override
     public void onBackPressed() {
@@ -81,6 +82,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         appPreference = new AppPreference(this);
+        tabManager = TabManager.getTabManager();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         setupViewPager();
@@ -88,7 +90,6 @@ public class MainActivity extends BaseActivity {
         initDrawerEndPosition();
 
         tabLayout.getTabAt(2).select();
-
     }
 
     private void setupViewPager() {
@@ -96,20 +97,21 @@ public class MainActivity extends BaseActivity {
         shopFragment = new ShopFragment();
         searchFragment = new SearchFragment();
 
-        adapter.addFragment(shopFragment, Constants.tabNames().get(0));
-        adapter.addFragment(searchFragment, Constants.tabNames().get(1));
-        adapter.addFragment(new HomeFragment(), Constants.tabNames().get(2));
-        adapter.addFragment(new HelpFragment(), Constants.tabNames().get(3));
+        adapter.addFragment(shopFragment, tabManager.getNameByPosition(0));
+        adapter.addFragment(searchFragment, tabManager.getNameByPosition(1));
+        adapter.addFragment(new HomeFragment(), tabManager.getNameByPosition(2));
+        adapter.addFragment(new HelpFragment(), tabManager.getNameByPosition(3));
+
         ProfileFragment profileFragment = new ProfileFragment();
         if(appPreference.getUser() != null){
             Bundle bundle = new Bundle();
-            bundle.putString(getString(R.string.userID), appPreference.getUser().getId());
+            bundle.putInt(getString(R.string.userID), appPreference.getUser().getId());
             bundle.putBoolean(getString(R.string.myProfile), true);
             profileFragment.setArguments(bundle);
-            adapter.addFragment(profileFragment, Constants.tabNames().get(4));
+            adapter.addFragment(profileFragment, tabManager.getNameByPosition(4));
         }
         else {
-            adapter.addFragment(new NotSignedFragment(), Constants.tabNames().get(4));
+            adapter.addFragment(new NotSignedFragment(), tabManager.getNameByPosition(4));
         }
 
         viewPager.setAdapter(adapter);
@@ -118,13 +120,9 @@ public class MainActivity extends BaseActivity {
     private void initTabLayout() {
         tabLayout.setupWithViewPager(viewPager);
 
-        //TODO порефакторить, класс вкладка
-
-        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.selector_shop));
-        tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.selector_search));
-        tabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.selector_home));
-        tabLayout.getTabAt(3).setIcon(getResources().getDrawable(R.drawable.selector_chat));
-        tabLayout.getTabAt(4).setIcon(getResources().getDrawable(R.drawable.selector_profile));
+        for(int i = 0; i<5;i++){
+            tabLayout.getTabAt(i).setIcon(getResources().getDrawable(tabManager.getDrawableByPosition(i)));
+        }
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -174,7 +172,6 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-
         searchFragment.onSetTextChanged(search);
     }
 

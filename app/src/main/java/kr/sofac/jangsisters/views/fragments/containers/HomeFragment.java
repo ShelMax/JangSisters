@@ -1,6 +1,7 @@
 package kr.sofac.jangsisters.views.fragments.containers;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,16 +15,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.activities.PostDetailedActivity;
-import kr.sofac.jangsisters.models.Constants;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.PostCallback;
-import kr.sofac.jangsisters.utils.PostWrapper;
+import kr.sofac.jangsisters.models.TabManager;
+import kr.sofac.jangsisters.network.Connection;
+import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
+import kr.sofac.jangsisters.utils.AppPreference;
+import kr.sofac.jangsisters.utils.ProgressBar;
 import kr.sofac.jangsisters.views.adapters.PostAdapter;
 import kr.sofac.jangsisters.views.adapters.PostIngredientsAdapter;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
@@ -34,28 +39,43 @@ public class HomeFragment extends BaseFragment {
     private ListView listView;
     private List<Post> posts;
     private AlertDialog dialog;
+    private PostAdapter adapter;
+    ProgressBar progressBar;
+    private AppPreference appPreference;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
-        posts = PostWrapper.getAllPosts();
-        PostAdapter adapter = new PostAdapter(posts, getActivity(), new PostCallback() {
-            @Override
-            public void postClick(int position) {
-                startActivity(new Intent(getActivity(), PostDetailedActivity.class)
-                        .putExtra(getString(R.string.intent_postID), posts.get(position).getId()));
-            }
+        appPreference = new AppPreference(getActivity());
+        progressBar = new ProgressBar(getActivity());
+        progressBar.showView();
+        new Connection<List<Post>>().getListPosts(new SenderContainerDTO(new HashMap<>()), (isSuccess, answerServerResponse) -> {
+            if(isSuccess){
+                posts = answerServerResponse.getDataTransferObject();
+                adapter = new PostAdapter(posts, getActivity(), new PostCallback() {
+                    @Override
+                    public void postClick(int position) {
+                        int userID = appPreference.getUser() == null ? 0 : appPreference.getUser().getId();
+                        startActivity(new Intent(getActivity(), PostDetailedActivity.class)
+                                .putExtra(getString(R.string.intent_postID), posts.get(position).getId())
+                                .putExtra(getString(R.string.userID), userID));
+                    }
 
-            @Override
-            public void ingredientsClick(int position) {
-                listView.setAdapter(new PostIngredientsAdapter(posts.get(position).getIngredients(), getActivity()));
-                dialog.show();
+                    @Override
+                    public void ingredientsClick(int position) {
+                        listView.setAdapter(new PostIngredientsAdapter(posts.get(position).getIngredients(), getActivity()));
+                        dialog.show();
+                    }
+                });
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                recyclerView.setAdapter(adapter);
+            }else{
+
             }
+            progressBar.dismissView();
         });
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(adapter);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View ingredientsView = getLayoutInflater().inflate(R.layout.dialog_post_ingredients, null);
         builder.setView(ingredientsView);
@@ -66,7 +86,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(Constants.toolbarMenus().get(2), menu);
+        inflater.inflate(TabManager.getTabManager().getMenuByPosition(2), menu);
         super.onCreateOptionsMenu(menu,inflater);
     }
 

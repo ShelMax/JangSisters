@@ -2,13 +2,9 @@ package kr.sofac.jangsisters.network.dto;
 
 import java.util.HashMap;
 
-/**
- * Created by Maxim on 27.12.2017.
- */
-
 public class SenderContainerDTO {
 
-    private String id;
+    private Integer id;
     private Integer customer_id;
     private String password;
     private String email;
@@ -40,7 +36,7 @@ public class SenderContainerDTO {
     /**
      * signUpCustomerVerification
      */
-    public SenderContainerDTO(String id, String code) {
+    public SenderContainerDTO(Integer id, String code) {
         this.id = id;
         this.code = code;
     }
@@ -55,7 +51,7 @@ public class SenderContainerDTO {
     /**
      * getPost
      */
-    public SenderContainerDTO(String id, Integer customer_id) {
+    public SenderContainerDTO(Integer id, Integer customer_id) {
         this.id = id;
         this.customer_id = customer_id;
     }
@@ -92,11 +88,11 @@ public class SenderContainerDTO {
         this.name = name;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

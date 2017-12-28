@@ -12,6 +12,7 @@ import java.io.File;
 import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.User;
@@ -75,6 +76,20 @@ public class Connection<T> {
         });
     }
 
+    public void getPost(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+        answerServerResponse = async;
+        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, new Object() {// Change type Object sending / Change data sending
+        }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
+            if (isSuccess) {
+                Type typeAnswer = new TypeToken<ServerResponse<Post>>() { //Change type response
+                }.getType();
+                tryParsing(answerString, typeAnswer);
+            } else {
+                answerServerResponse.processFinish(false, null);
+            }
+        });
+    }
+
 
     public void signUpCustomerResendVerification(String userID, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
         answerServerResponse = async;
@@ -95,7 +110,7 @@ public class Connection<T> {
         new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, new Object() {// Change type Object sending / Change data sending
         }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<ServerResponse<ArrayList<Post>>>() { //Change type response
+                Type typeAnswer = new TypeToken<ServerResponse<List<Post>>>() {
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {

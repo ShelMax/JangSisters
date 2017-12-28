@@ -8,10 +8,6 @@ import android.widget.Toast;
 import kr.sofac.jangsisters.utils.AppPreference;
 import kr.sofac.jangsisters.utils.ProgressBar;
 
-/**
- * Created by Maxim on 15.12.2017.
- */
-
 public class BaseActivity extends AppCompatActivity {
 
     public AppPreference appPreference;

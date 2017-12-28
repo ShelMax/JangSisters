@@ -16,7 +16,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Post;
-import kr.sofac.jangsisters.utils.PostWrapper;
+import kr.sofac.jangsisters.network.Connection;
+import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 import kr.sofac.jangsisters.views.adapters.CategoryAdapter;
 
 public class PostDetailedActivity extends BaseActivity {
@@ -40,18 +41,10 @@ public class PostDetailedActivity extends BaseActivity {
         setContentView(R.layout.activity_post_detailed);
         ButterKnife.bind(this);
         getPost();
-        initToolbar();
-
-        Glide.with(this).load(post.getImageURL()).into(postImage);
-        Glide.with(this).load(post.getAuthorURL()).apply(RequestOptions.circleCropTransform()).into(authorImage);
-        title.setText(post.getTitle());
-        date.setText(post.getDate());
-        author.setText(post.getAuthor());
-        initCategories();
     }
 
     private void initToolbar() {
-        toolbar.setTitle(post.getTitle());
+        toolbar.setTitle(post.getName());
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationIcon(R.drawable.arrow_left_white);
         setSupportActionBar(toolbar);
@@ -65,7 +58,21 @@ public class PostDetailedActivity extends BaseActivity {
     }
 
     private void getPost() {
-        post = PostWrapper.getPostById(getIntent().getExtras().getInt(getString(R.string.intent_postID)));
+        new Connection<Post>().getPost(new SenderContainerDTO(getIntent().getExtras().getInt(getString(R.string.intent_postID)),
+                getIntent().getExtras().getInt(getString(R.string.userID))), (isSuccess, answerServerResponse) -> {
+                    if(isSuccess){
+                        post = answerServerResponse.getDataTransferObject();
+
+                        initToolbar();
+
+                        Glide.with(this).load(post.getPostImage()).into(postImage);
+                        Glide.with(this).load(post.getPostImage()).apply(RequestOptions.circleCropTransform()).into(authorImage);
+                        title.setText(post.getName());
+                        date.setText(post.getDate());
+                        author.setText(post.getAuthorName());
+                        initCategories();
+                    }
+                });
     }
 
     @OnClick(R.id.post_detailed_category_left)
