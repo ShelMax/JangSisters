@@ -55,6 +55,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        style="@style/TextInputLayout"
         android:textColorHint="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/layoutTextPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +65,7 @@
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/editTextEmail"
-            style="@style/JangSistersTheme.TextInputLayout"
+            style="@style/TextInputEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/email"
@@ -80,6 +81,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
+        style="@style/TextInputLayout"
         android:textColorHint="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
         app:layout_constraintEnd_toEndOf="parent"

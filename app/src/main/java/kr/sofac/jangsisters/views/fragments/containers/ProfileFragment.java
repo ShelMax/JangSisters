@@ -32,6 +32,8 @@ import kr.sofac.jangsisters.views.fragments.BaseFragment;
 import kr.sofac.jangsisters.views.fragments.viewElements.FollowersFragment;
 import kr.sofac.jangsisters.views.fragments.viewElements.GridViewPostFragment;
 
+import static kr.sofac.jangsisters.config.EnumPreference.USER_ID;
+
 public class ProfileFragment extends BaseFragment {
 
     @BindView(R.id.user_image) ImageView userImage;
@@ -58,7 +60,7 @@ public class ProfileFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
         appPreference = new AppPreference(getActivity());
-        userID = getArguments().getInt(getString(R.string.userID));
+        userID = getArguments().getInt(USER_ID.toString());
         myProfile = getArguments().getBoolean(getString(R.string.myProfile));
         if(myProfile){
             follow.setVisibility(View.GONE);

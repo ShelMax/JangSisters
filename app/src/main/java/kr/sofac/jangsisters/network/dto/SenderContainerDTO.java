@@ -13,7 +13,6 @@ public class SenderContainerDTO {
     private String code;
     private HashMap<Integer, Integer> filter;
 
-
     /**
      * signInCustomer
      */

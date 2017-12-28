@@ -5,11 +5,11 @@ public class User {
     private int id;
     private String email;
     private String name;
-    private String visible;
+    private Integer visible;
     private String userImage;
     private int balance;
 
-    public User(int id, String email, String name, String visible) {
+    public User(int id, String email, String name, int visible) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -42,13 +42,22 @@ public class User {
         this.name = name;
     }
 
-    public String getVisible() {
+    public int getVisible() {
         return visible;
     }
 
-    public void setVisible(String visible) {
+    public void setVisible(int visible) {
         this.visible = visible;
     }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
 
     @Override
     public String toString() {
@@ -60,12 +69,5 @@ public class User {
                 '}';
     }
 
-    public int getBalance() {
-        return balance;
-    }
-
-    public String getUserImage() {
-        return userImage;
-    }
 
 }

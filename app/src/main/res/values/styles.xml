@@ -9,9 +9,9 @@
         <item name="android:listDivider">@color/listDivider</item>
     </style>
 
-
     <style name="ProgressBarTheme" parent="android:Theme.Holo.Dialog">
-        <item name="android:alertDialogStyle">@style/TransparentAlertDialogStyleForProgressBar</item>
+        <item name="android:alertDialogStyle">@style/TransparentAlertDialogStyleForProgressBar
+        </item>
     </style>
 
     <style name="TransparentAlertDialogStyleForProgressBar">
@@ -27,32 +27,51 @@
         <item name="android:topDark">@color/colorTransparent</item>
     </style>
 
-
     <style name="AppTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">?attr/colorAccent</item>
         <item name="tabIndicatorHeight">4dp</item>
         <item name="tabPaddingStart">6dp</item>
         <item name="tabPaddingEnd">6dp</item>
+        <item name="android:theme">@style/SelectableItemTheme</item>
         <item name="tabBackground">?attr/selectableItemBackground</item>
     </style>
 
-    <style name="JangSistersTheme.TextInputLayout"  parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:textColor">@color/colorWhite</item>
+    <style name="SelectableItemTheme">
+        <item name="colorControlHighlight">@color/colorWhite</item>
+    </style>
+
+    <!--Edit Text Authorization-->
+
+    <style name="TextInputLayout">
+        <item name="colorControlActivated">@color/colorWhite</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="colorControlHighlight">@color/colorWhite</item>
+        <item name="android:theme">@style/colorAccentWhite</item>
+    </style>
+
+    <style name="colorAccentWhite" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/colorWhite</item>
+    </style>
+
+
+    <style name="TextInputEditTextStyle">
+        <item name="colorControlActivated">@color/colorWhite</item>
         <item name="colorControlNormal">@color/colorWhite</item>
         <item name="colorControlHighlight">@color/colorWhite</item>
         <item name="colorAccent">@color/colorWhite</item>
-        <item name="colorControlActivated">@color/colorWhite</item>
-    </style>
-
-    <style name="TextInputEditTextStyle">
         <item name="android:lines">1</item>
         <item name="android:maxLines">1</item>
         <item name="android:minLines">1</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textColorHighlight">@color/colorWhite</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColorHint">@color/colorWhite</item>
+        <item name="backgroundTint">@color/colorWhite</item>
     </style>
+
+    <!--<style name="SelectableItemTheme" >-->
+    <!--<item name="colorControlHighlight">@color/colorWhite</item>-->
+    <!--</style>-->
 
     <style name="TextViewAuthorization">
         <item name="android:layout_width">wrap_content</item>

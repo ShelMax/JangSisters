@@ -53,7 +53,7 @@ public class Connection<T> {
         new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, new Object() {// Change type Object sending / Change data sending
         }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response
+                Type typeAnswer = new TypeToken<ServerResponse<User>>() { //Change type response
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {
@@ -91,9 +91,9 @@ public class Connection<T> {
     }
 
 
-    public void signUpCustomerResendVerification(String userID, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void signUpCustomerResendVerification(Integer userID, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
         answerServerResponse = async;
-        new ManagerRetrofit<String>().sendRequest(userID, new Object() {// Change type Object sending / Change data sending
+        new ManagerRetrofit<Integer>().sendRequest(userID, new Object() {// Change type Object sending / Change data sending
         }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
             if (isSuccess) {
                 Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response

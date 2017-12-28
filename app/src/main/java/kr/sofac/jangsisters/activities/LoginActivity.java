@@ -13,6 +13,8 @@ import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 
+import static kr.sofac.jangsisters.config.EnumPreference.USER_ID;
+
 public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.editTextEmail)
@@ -51,9 +53,8 @@ public class LoginActivity extends BaseActivity {
             new Connection<User>().signInCustomer(new SenderContainerDTO(password, email, ""), (isSuccess, answerServerResponse) -> {
                 if (isSuccess) {
                     appPreference.setUser(answerServerResponse.getDataTransferObject());
-                    if("0".equals(answerServerResponse.getDataTransferObject().getVisible())){
-                        appPreference.setAuthorization(false);
-
+                    if (0 == answerServerResponse.getDataTransferObject().getVisible()) {
+                        startVerificationUserActivity(answerServerResponse.getDataTransferObject().getId());
                     } else {
                         appPreference.setAuthorization(true);
                         startLaunchActivity();
@@ -68,27 +69,15 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    public void startLaunchActivity(){
+    public void startLaunchActivity() {
         Intent intent = new Intent(this, LaunchActivity.class);
         startActivity(intent);
         finishAffinity();
     }
 
-    public void startVerificationActivity(){
-        Intent intent = new Intent(this, LaunchActivity.class);
+    public void startVerificationUserActivity(Integer userID) {
+        Intent intent = new Intent(this, VerificationActivity.class);
+        intent.putExtra(USER_ID.toString(), userID);
         startActivity(intent);
-        finishAffinity();
     }
-
-//    {
-//        "responseStatus":"SERVER_RESPONSE_SUCCESS",
-//            "dataTransferObject":{
-//                "id":"1",
-//                "email":"maximkizyun@gmail.com",
-//                "password":"81dc9bdb52d04dc20036dbd8313ed055",
-//                "name":"Maxim",
-//                "visible":"1"
-//            }
-//    }
-
 }

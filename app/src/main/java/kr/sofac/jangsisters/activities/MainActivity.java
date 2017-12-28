@@ -33,6 +33,8 @@ import kr.sofac.jangsisters.views.fragments.containers.ProfileFragment;
 import kr.sofac.jangsisters.views.fragments.containers.ShopFragment;
 import kr.sofac.jangsisters.views.fragments.viewElements.NotSignedFragment;
 
+import static kr.sofac.jangsisters.config.EnumPreference.USER_ID;
+
 public class MainActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
@@ -101,11 +103,10 @@ public class MainActivity extends BaseActivity {
         adapter.addFragment(searchFragment, tabManager.getNameByPosition(1));
         adapter.addFragment(new HomeFragment(), tabManager.getNameByPosition(2));
         adapter.addFragment(new HelpFragment(), tabManager.getNameByPosition(3));
-
         ProfileFragment profileFragment = new ProfileFragment();
         if(appPreference.getUser() != null){
             Bundle bundle = new Bundle();
-            bundle.putInt(getString(R.string.userID), appPreference.getUser().getId());
+            bundle.putInt(USER_ID.toString(), appPreference.getUser().getId());
             bundle.putBoolean(getString(R.string.myProfile), true);
             profileFragment.setArguments(bundle);
             adapter.addFragment(profileFragment, tabManager.getNameByPosition(4));
