@@ -18,10 +18,6 @@ import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.SimpleListCallback;
 import kr.sofac.jangsisters.models.User;
 
-/**
- * Created by Oleksandr on 27.12.2017.
- */
-
 public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.ViewHolder> {
 
     private List<User> followers;
@@ -42,7 +38,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         Glide.with(holder.itemView).load(followers.get(position).getUserImage())
                 .apply(RequestOptions.circleCropTransform()).into(holder.image);
-        holder.username.setText(followers.get(position).getUsername());
+        holder.username.setText(followers.get(position).getName());
         holder.itemView.setOnClickListener(v -> callback.itemClick(position));
     }
 

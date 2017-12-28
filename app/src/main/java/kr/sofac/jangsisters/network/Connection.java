@@ -13,6 +13,7 @@ import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.api.ManagerRetrofit;
 import kr.sofac.jangsisters.network.api.type.ServerResponse;
@@ -22,10 +23,6 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-
-/**
- * Created by Maxim on 03.08.2017.
- */
 
 public class Connection<T> {
 

@@ -31,6 +31,7 @@ import kr.sofac.jangsisters.views.fragments.containers.HelpFragment;
 import kr.sofac.jangsisters.views.fragments.containers.HomeFragment;
 import kr.sofac.jangsisters.views.fragments.containers.ProfileFragment;
 import kr.sofac.jangsisters.views.fragments.containers.ShopFragment;
+import kr.sofac.jangsisters.views.fragments.viewElements.NotSignedFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -102,17 +103,22 @@ public class MainActivity extends BaseActivity {
         ProfileFragment profileFragment = new ProfileFragment();
         if(appPreference.getUser() != null){
             Bundle bundle = new Bundle();
-            bundle.putInt(getString(R.string.userID), appPreference.getUser().getId());
+            bundle.putString(getString(R.string.userID), appPreference.getUser().getId());
             bundle.putBoolean(getString(R.string.myProfile), true);
             profileFragment.setArguments(bundle);
+            adapter.addFragment(profileFragment, Constants.tabNames().get(4));
+        }
+        else {
+            adapter.addFragment(new NotSignedFragment(), Constants.tabNames().get(4));
         }
 
-        adapter.addFragment(profileFragment, Constants.tabNames().get(4));
         viewPager.setAdapter(adapter);
     }
 
     private void initTabLayout() {
         tabLayout.setupWithViewPager(viewPager);
+
+        //TODO порефакторить, класс вкладка
 
         tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.selector_shop));
         tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.selector_search));

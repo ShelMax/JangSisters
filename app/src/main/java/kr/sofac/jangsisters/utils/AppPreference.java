@@ -15,11 +15,6 @@ import static kr.sofac.jangsisters.config.EnumPreference.APP_PREFERENCES;
 import static kr.sofac.jangsisters.config.EnumPreference.GOOGLE_CLOUD_PREFERENCE;
 import static kr.sofac.jangsisters.config.EnumPreference.IS_AUTHORIZATION;
 
-
-/**
- * Created by Maxim on 02.09.2017.
- */
-
 public class AppPreference {
 
     private SharedPreferences preferences;

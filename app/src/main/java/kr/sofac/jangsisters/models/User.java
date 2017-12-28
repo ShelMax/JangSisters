@@ -1,23 +1,21 @@
 package kr.sofac.jangsisters.models;
 
-/**
- * Created by Maxim on 14.12.2017.
- */
-
 public class User {
 
     private String id;
     private String email;
-    private String password;
     private String name;
     private String visible;
+    private String userImage;
+    private int balance;
 
-    public User(String id, String email, String password, String name, String visible) {
+    public User(String id, String email, String name, String visible) {
         this.id = id;
         this.email = email;
-        this.password = password;
         this.name = name;
         this.visible = visible;
+        this.userImage = "http://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg";
+        this.balance = 5000;
     }
 
     public String getId() {
@@ -34,14 +32,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {
@@ -65,39 +55,17 @@ public class User {
         return "User{" +
                 "id='" + id + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", visible='" + visible + '\'' +
                 '}';
     }
 
+    public int getBalance() {
+        return balance;
+    }
 
-//    private int id;
-//    private String username;
-//    private int balance;
-//    private String userImage;
-//
-//    public User(int id, String username, int balance, String userImage) {
-//        this.id = id;
-//        this.username = username;
-//        this.balance = balance;
-//        this.userImage = userImage;
-//    }
-//
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public String getUsername() {
-//        return username;
-//    }
-//
-//    public int getBalance() {
-//        return balance;
-//    }
-//
-//    public String getUserImage() {
-//        return userImage;
-//    }
+    public String getUserImage() {
+        return userImage;
+    }
 
 }

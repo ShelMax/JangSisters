@@ -1,5 +1,6 @@
 package kr.sofac.jangsisters.views.fragments.containers;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
@@ -41,8 +43,10 @@ public class ProfileFragment extends BaseFragment {
     @BindView(R.id.balance) ButtonLight balance;
 
 
+
+
     private FragmentManager fragmentManager;
-    private int userID;
+    private String userID;
     private boolean myProfile;
     private GridViewPostFragment myPosts;
     private FollowersFragment followers;
@@ -57,7 +61,7 @@ public class ProfileFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
         appPreference = new AppPreference(getActivity());
-        userID = getArguments().getInt(getString(R.string.userID));
+        userID = getArguments().getString(getString(R.string.userID));
         myProfile = getArguments().getBoolean(getString(R.string.myProfile));
         if(myProfile){
             follow.setVisibility(View.GONE);
@@ -69,10 +73,11 @@ public class ProfileFragment extends BaseFragment {
             user = UserWrapper.getUserByID(userID);
         }
         Glide.with(this).load(user.getUserImage())
+                .apply(new RequestOptions().placeholder(R.drawable.boy))
                 .apply(RequestOptions.circleCropTransform())
                 .into(userImage);
-        username.setText(user.getUsername());
-        if(userID == appPreference.getUser().getId())
+        username.setText(user.getName());
+        if(appPreference.getUser().getId().equals(userID))
             myPosts = new GridViewPostFragment();
         followers = new FollowersFragment();
         following = new FollowersFragment();
@@ -85,7 +90,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void initTabLayout() {
-        if (userID == appPreference.getUser().getId()) {
+        if (appPreference.getUser().getId().equals(userID)) {
             tabLayout.addTab(tabLayout.newTab().setText("My posts"), true);
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
