@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.config.Server;
+import kr.sofac.jangsisters.config.ServersConfig;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.PostCallback;
 
@@ -40,7 +40,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Glide.with(holder.itemView).load(Server.BASE_URL + Server.PART_POST + items.get(position).getPostImage())
+        Glide.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_POST + items.get(position).getPostImage())
                 .into(holder.image);
 //        Glide.with(holder.itemView).load(items.get(position).get())
 //                .apply(RequestOptions.circleCropTransform()).into(holder.authorImage);

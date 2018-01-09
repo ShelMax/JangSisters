@@ -12,7 +12,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
-import static kr.sofac.jangsisters.config.Server.PART_CONTROLLER;
+import static kr.sofac.jangsisters.config.ServersConfig.PART_CONTROLLER;
 
 /**
  * Created by Maxim on 03.08.2017.

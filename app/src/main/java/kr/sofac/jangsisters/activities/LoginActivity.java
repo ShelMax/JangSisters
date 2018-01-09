@@ -76,8 +76,13 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void startVerificationUserActivity(Integer userID) {
-        Intent intent = new Intent(this, VerificationActivity.class);
-        intent.putExtra(USER_ID.toString(), userID);
-        startActivity(intent);
+        if (0 != userID) {
+            Intent intent = new Intent(this, VerificationActivity.class);
+            intent.putExtra(USER_ID.toString(), userID);
+            startActivity(intent);
+        } else {
+            showToast("You not registered user or not correct email!");
+        }
+
     }
 }

@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -22,9 +21,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.config.Server;
+import kr.sofac.jangsisters.config.ServersConfig;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
+
+import static kr.sofac.jangsisters.config.ServersConfig.SHOP_URL;
 
 public class ShopFragment extends BaseFragment {
 
@@ -41,7 +42,7 @@ public class ShopFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
         ButterKnife.bind(this, view);
         pages = new ArrayList<>();
-        webView.loadUrl(Server.SHOP_URL);
+        webView.loadUrl(SHOP_URL);
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -63,6 +64,8 @@ public class ShopFragment extends BaseFragment {
                 refresh.setRefreshing(false);
             }
         });
+        webView.loadUrl(SHOP_URL);
+        webView.setWebViewClient(new ShopWebViewClient());
         return view;
     }
 
@@ -119,7 +122,28 @@ public class ShopFragment extends BaseFragment {
 
     public void homeClick() {
         fromNavigation = true;
-        webView.loadUrl(Server.SHOP_URL);
+        webView.loadUrl(ServersConfig.SHOP_URL);
+    }
+
+    private class ShopWebViewClient extends WebViewClient{
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(view.getTitle());
+            if(!fromNavigation) {
+                pages.add(url);
+                currentPage++;
+            }
+            fromNavigation = false;
+            super.onPageFinished(view, url);
+        }
+
     }
 
 }
