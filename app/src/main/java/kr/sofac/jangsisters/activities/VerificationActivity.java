@@ -1,5 +1,6 @@
 package kr.sofac.jangsisters.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.view.View;
@@ -49,6 +50,7 @@ public class VerificationActivity extends BaseActivity {
                     User user = appPreference.getUser();
                     user.setVisible(1);
                     appPreference.setUser(user);
+                    startLaunchActivity();
                 } else {
                     showToast("Some problems with verification process");
                 }
@@ -69,6 +71,12 @@ public class VerificationActivity extends BaseActivity {
             }
             progressBar.dismissView();
         });
+    }
+
+    public void startLaunchActivity() {
+        Intent intent = new Intent(this, LaunchActivity.class);
+        startActivity(intent);
+        finishAffinity();
     }
 
 }

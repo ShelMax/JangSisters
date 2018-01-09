@@ -1,5 +1,5 @@
 package kr.sofac.jangsisters.config;
-public class Server {
+public class ServersConfig {
 
     //public static final String SHOP_URL = "http://m.sunghwa77.godomall.com/";
     public static final String SHOP_URL = "http://m.sunghwa77.godomall.com/";
@@ -8,9 +8,10 @@ public class Server {
     public final static String BASE_URL = "http://192.168.88.63/"; //Zegna
     //public final static String BASE_URL = "http://192.168.88.70/"; //Maxx
 
+
     // Path Service API JSON
-    //public final static String PART_CONTROLLER = "data/ajax/request.php"; //Part app controller php
-    public final static String PART_CONTROLLER = "data/ajax/request.php"; //Part app controller php
+    public final static String PART_CONTROLLER = "data/ajax/request.php"; //Part app controller php Zegna
+    //public final static String PART_CONTROLLER = "seunghwafood/data/ajax/request.php"; //Part app controller php MAX
 
     // File path
     public final static String PART_ESTIMATE = "data/files/estimate/"; //Part estimate

@@ -1,9 +1,6 @@
 package kr.sofac.jangsisters.models;
 
-import android.util.Log;
-
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 public class Post {

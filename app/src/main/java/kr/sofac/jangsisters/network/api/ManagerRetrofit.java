@@ -23,7 +23,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static kr.sofac.jangsisters.config.Server.BASE_URL;
+import static kr.sofac.jangsisters.config.ServersConfig.BASE_URL;
 
 /**
  * Created by Maxim on 03.08.2017.
