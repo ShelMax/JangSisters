@@ -1,6 +1,7 @@
 package kr.sofac.jangsisters.config;
 public class Server {
 
+    //public static final String SHOP_URL = "http://m.sunghwa77.godomall.com/";
     public static final String SHOP_URL = "http://m.sunghwa77.godomall.com/";
 
     //public final static String BASE_URL = "http://www.sofac.kr/"; // http://swfac.kr/

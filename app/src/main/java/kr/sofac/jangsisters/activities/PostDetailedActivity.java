@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
@@ -58,8 +59,8 @@ public class PostDetailedActivity extends BaseActivity {
     }
 
     private void getPost() {
-        new Connection<Post>().getPost(new SenderContainerDTO(getIntent().getExtras().getInt(getString(R.string.intent_postID)),
-                getIntent().getExtras().getInt(getString(R.string.userID))), (isSuccess, answerServerResponse) -> {
+        new Connection<Post>().getPost(new SenderContainerDTO(getIntent().getIntExtra(EnumPreference.POST_ID.toString(),0),
+                getIntent().getIntExtra(EnumPreference.USER_ID.toString(),0)), (isSuccess, answerServerResponse) -> {
                     if(isSuccess){
                         post = answerServerResponse.getDataTransferObject();
 

@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.activities.PostDetailedActivity;
+import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
@@ -44,7 +45,7 @@ public class GridViewPostFragment extends BaseFragment {
                 posts = answerServerResponse.getDataTransferObject();
                 adapter = new GridViewPostAdapter(posts, position -> {
                     startActivity(new Intent(getActivity(), PostDetailedActivity.class)
-                        .putExtra(getString(R.string.intent_postID), posts.get(position).getId()));
+                        .putExtra(EnumPreference.POST_ID.toString(), posts.get(position).getId()));
                 });
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recyclerView.setAdapter(adapter);

@@ -6,7 +6,6 @@
         android:id="@+id/menu_toolbar_shop_back"
         android:visible="true"
         android:title="@string/back"
-        android:icon="@drawable/arrow_left_white"
         android:enabled="true"
         app:showAsAction="always">
     </item>

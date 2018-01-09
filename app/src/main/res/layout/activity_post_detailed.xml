@@ -118,7 +118,7 @@
                     android:fitsSystemWindows="true"
                     app:layout_collapseMode="parallax"
                     android:id="@+id/post_detailed_category_left"
-                    android:background="@drawable/arrow_left"/>
+                    android:background="@drawable/arrow_left_black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"

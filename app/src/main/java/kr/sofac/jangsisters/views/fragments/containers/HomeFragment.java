@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.activities.PostDetailedActivity;
+import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.PostCallback;
 import kr.sofac.jangsisters.models.TabManager;
@@ -74,8 +75,8 @@ public class HomeFragment extends BaseFragment {
                     public void postClick(int position) {
                         int userID = appPreference.getUser() == null ? 0 : appPreference.getUser().getId();
                         startActivity(new Intent(getActivity(), PostDetailedActivity.class)
-                                .putExtra(getString(R.string.intent_postID), posts.get(position).getId())
-                                .putExtra(getString(R.string.userID), userID));
+                                .putExtra(EnumPreference.POST_ID.toString(), posts.get(position).getId())
+                                .putExtra(EnumPreference.USER_ID.toString(), userID));
                     }
 
                     @Override

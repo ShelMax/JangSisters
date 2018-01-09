@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.utils.AppPreference;
 import kr.sofac.jangsisters.views.fragments.containers.SearchFragment;
@@ -57,6 +59,8 @@ public class MainActivity extends BaseActivity {
     private SearchFragment searchFragment;
     private AppPreference appPreference;
     private TabManager tabManager;
+    private String pageTitle;
+    private boolean shopFirst = true;
 
     @Override
     public void onBackPressed() {
@@ -106,7 +110,7 @@ public class MainActivity extends BaseActivity {
         ProfileFragment profileFragment = new ProfileFragment();
         if(appPreference.getUser() != null){
             Bundle bundle = new Bundle();
-            bundle.putInt(getString(R.string.userID), appPreference.getUser().getId());
+            bundle.putInt(EnumPreference.USER_ID.toString(), appPreference.getUser().getId());
             bundle.putBoolean(getString(R.string.myProfile), true);
             profileFragment.setArguments(bundle);
             adapter.addFragment(profileFragment, tabManager.getNameByPosition(4));
@@ -132,6 +136,7 @@ public class MainActivity extends BaseActivity {
                     case 0:
                         toolbar.setNavigationIcon(R.drawable.home);
                         toolbar.setNavigationOnClickListener(v -> shopFragment.homeClick());
+                        toolbar.setTitle(pageTitle);
                         break;
                     case 1:
                         toolbar.setNavigationIcon(null);
@@ -162,11 +167,20 @@ public class MainActivity extends BaseActivity {
                 if (tab.getPosition() == 2) {
                     tabHome.setSelected(false);
                 }
-                else if(tab.getPosition() == 0 || tab.getPosition() == 3){
-                    toolbar.setTitle(null);
+                else if(tab.getPosition() == 0 ){
+                    if(shopFirst){
+                        shopFirst = false;
+                    }
+                    else{
+                        //pageTitle = shopFragment.getTitle();
+                        toolbar.setTitle(null);
+                    }
                 }
                 else if(tab.getPosition() == 1){
                     search.setVisibility(View.GONE);
+                }
+                else if(tab.getPosition() == 3){
+                    toolbar.setTitle(null);
                 }
             }
 

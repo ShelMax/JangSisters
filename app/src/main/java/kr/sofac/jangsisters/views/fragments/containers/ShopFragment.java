@@ -11,8 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -30,6 +28,7 @@ public class ShopFragment extends BaseFragment {
 
     @BindView(R.id.shop_webview) WebView webView;
     @BindView(R.id.shop_refresh) SwipeRefreshLayout refresh;
+    private MenuItem backItem;
 
     private List<String> pages;
     private int currentPage = -1;
@@ -41,19 +40,18 @@ public class ShopFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
         ButterKnife.bind(this, view);
         pages = new ArrayList<>();
-        webView.loadUrl(Server.SHOP_URL);
         webView.setWebViewClient(new WebViewClient(){
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 refresh.setRefreshing(true);
                 view.loadUrl(url);
                 return true;
             }
-        });
-        webView.setWebChromeClient(new WebChromeClient(){
+
             @Override
-            public void onReceivedTitle(WebView view, String title) {
-                super.onReceivedTitle(view, title);
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
                 ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(view.getTitle());
                 if(!fromNavigation) {
                     pages.add(view.getUrl());
@@ -61,8 +59,13 @@ public class ShopFragment extends BaseFragment {
                 }
                 fromNavigation = false;
                 refresh.setRefreshing(false);
+                if(pages.size() > 1){
+                    backItem.setIcon(R.drawable.arrow_left_white);
+                }
             }
         });
+        refresh.setOnRefreshListener(() -> refreshClick());
+        webView.loadUrl(Server.SHOP_URL);
         return view;
     }
 
@@ -76,6 +79,13 @@ public class ShopFragment extends BaseFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(TabManager.getTabManager().getMenuByPosition(0), menu);
         super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        backItem = menu.findItem(R.id.menu_toolbar_shop_back);
+        backItem.setIcon(R.drawable.arrow_left_grey);
+        super.onPrepareOptionsMenu(menu);
     }
 
     @Override

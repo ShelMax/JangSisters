@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.activities.LoginActivity;
+import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.utils.AppPreference;
@@ -58,7 +59,7 @@ public class ProfileFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
         appPreference = new AppPreference(getActivity());
-        userID = getArguments().getInt(getString(R.string.userID));
+        userID = getArguments().getInt(EnumPreference.USER_ID.toString());
         myProfile = getArguments().getBoolean(getString(R.string.myProfile));
         if(myProfile){
             follow.setVisibility(View.GONE);

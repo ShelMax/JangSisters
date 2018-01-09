@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.activities.UserActivity;
+import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.SimpleListCallback;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.utils.UserWrapper;
@@ -40,7 +41,7 @@ public class FollowersFragment extends BaseFragment{
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycler.setAdapter(new FollowersAdapter(users, position -> {
             startActivity(new Intent(getActivity(), UserActivity.class)
-            .putExtra(getString(R.string.userID), users.get(position).getId())
+            .putExtra(EnumPreference.USER_ID.toString(), users.get(position).getId())
             .putExtra(getString(R.string.myProfile), false));
         }));
         return view;

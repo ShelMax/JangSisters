@@ -5,11 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.views.fragments.containers.ProfileFragment;
 
-public class UserActivity extends AppCompatActivity {
+public class UserActivity extends BaseActivity {
 
     private FragmentManager fragmentManager;
+
+    //TODO заменить на енумы
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,8 +20,8 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
         fragmentManager = getSupportFragmentManager();
         Bundle bundle = new Bundle();
-        bundle.putInt(getString(R.string.userID),
-                getIntent().getExtras().getInt(getString(R.string.userID)));
+        bundle.putInt(EnumPreference.USER_ID.toString(),
+                getIntent().getIntExtra(EnumPreference.USER_ID.toString(),0));
         bundle.putBoolean(getString(R.string.myProfile),
                 getIntent().getExtras().getBoolean(getString(R.string.myProfile)));
         ProfileFragment profileFragment = new ProfileFragment();
