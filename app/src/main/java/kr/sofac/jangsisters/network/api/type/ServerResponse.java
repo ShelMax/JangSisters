@@ -1,9 +1,5 @@
 package kr.sofac.jangsisters.network.api.type;
 
-/**
- * Created by Maxim on 03.08.2017.
- */
-
 public class ServerResponse <T> {
 
     public ServerResponse() {

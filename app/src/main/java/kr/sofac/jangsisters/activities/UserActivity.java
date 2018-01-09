@@ -17,8 +17,8 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
         fragmentManager = getSupportFragmentManager();
         Bundle bundle = new Bundle();
-        bundle.putString(getString(R.string.userID),
-                getIntent().getExtras().getString(getString(R.string.userID)));
+        bundle.putInt(getString(R.string.userID),
+                getIntent().getExtras().getInt(getString(R.string.userID)));
         bundle.putBoolean(getString(R.string.myProfile),
                 getIntent().getExtras().getBoolean(getString(R.string.myProfile)));
         ProfileFragment profileFragment = new ProfileFragment();

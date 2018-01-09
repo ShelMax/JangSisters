@@ -32,8 +32,6 @@ import kr.sofac.jangsisters.views.fragments.BaseFragment;
 import kr.sofac.jangsisters.views.fragments.viewElements.FollowersFragment;
 import kr.sofac.jangsisters.views.fragments.viewElements.GridViewPostFragment;
 
-import static kr.sofac.jangsisters.config.EnumPreference.USER_ID;
-
 public class ProfileFragment extends BaseFragment {
 
     @BindView(R.id.user_image) ImageView userImage;
@@ -60,7 +58,7 @@ public class ProfileFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
         appPreference = new AppPreference(getActivity());
-        userID = getArguments().getInt(USER_ID.toString());
+        userID = getArguments().getInt(getString(R.string.userID));
         myProfile = getArguments().getBoolean(getString(R.string.myProfile));
         if(myProfile){
             follow.setVisibility(View.GONE);
@@ -76,7 +74,7 @@ public class ProfileFragment extends BaseFragment {
                 .apply(RequestOptions.circleCropTransform())
                 .into(userImage);
         username.setText(user.getName());
-        if(appPreference.getUser().getId() ==userID)
+        if(myProfile)
             myPosts = new GridViewPostFragment();
         followers = new FollowersFragment();
         following = new FollowersFragment();
@@ -89,7 +87,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void initTabLayout() {
-        if (appPreference.getUser().getId() == userID) {
+        if (myProfile) {
             tabLayout.addTab(tabLayout.newTab().setText("My posts"), true);
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override

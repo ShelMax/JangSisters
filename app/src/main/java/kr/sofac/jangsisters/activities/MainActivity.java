@@ -106,7 +106,7 @@ public class MainActivity extends BaseActivity {
         ProfileFragment profileFragment = new ProfileFragment();
         if(appPreference.getUser() != null){
             Bundle bundle = new Bundle();
-            bundle.putInt(USER_ID.toString(), appPreference.getUser().getId());
+            bundle.putInt(getString(R.string.userID), appPreference.getUser().getId());
             bundle.putBoolean(getString(R.string.myProfile), true);
             profileFragment.setArguments(bundle);
             adapter.addFragment(profileFragment, tabManager.getNameByPosition(4));
@@ -145,6 +145,8 @@ public class MainActivity extends BaseActivity {
                         });
                         break;
                     case 3:
+                        toolbar.setNavigationIcon(null);
+                        toolbar.setTitle("Help");
                         break;
                     case 4:
                         toolbar.setNavigationIcon(R.drawable.add);
@@ -160,8 +162,8 @@ public class MainActivity extends BaseActivity {
                 if (tab.getPosition() == 2) {
                     tabHome.setSelected(false);
                 }
-                else if(tab.getPosition() == 0){
-                    getSupportActionBar().setTitle(null);
+                else if(tab.getPosition() == 0 || tab.getPosition() == 3){
+                    toolbar.setTitle(null);
                 }
                 else if(tab.getPosition() == 1){
                     search.setVisibility(View.GONE);

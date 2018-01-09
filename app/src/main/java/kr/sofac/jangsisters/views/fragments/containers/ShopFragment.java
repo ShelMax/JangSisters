@@ -3,6 +3,7 @@ package kr.sofac.jangsisters.views.fragments.containers;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,6 +11,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -19,13 +22,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.models.Constants;
+import kr.sofac.jangsisters.config.Server;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
 public class ShopFragment extends BaseFragment {
 
     @BindView(R.id.shop_webview) WebView webView;
+    @BindView(R.id.shop_refresh) SwipeRefreshLayout refresh;
 
     private List<String> pages;
     private int currentPage = -1;
@@ -37,8 +41,28 @@ public class ShopFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
         ButterKnife.bind(this, view);
         pages = new ArrayList<>();
-        webView.loadUrl(Constants.SHOP_URL);
-        webView.setWebViewClient(new ShopWebViewClient());
+        webView.loadUrl(Server.SHOP_URL);
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                refresh.setRefreshing(true);
+                view.loadUrl(url);
+                return true;
+            }
+        });
+        webView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(view.getTitle());
+                if(!fromNavigation) {
+                    pages.add(view.getUrl());
+                    currentPage++;
+                }
+                fromNavigation = false;
+                refresh.setRefreshing(false);
+            }
+        });
         return view;
     }
 
@@ -95,28 +119,7 @@ public class ShopFragment extends BaseFragment {
 
     public void homeClick() {
         fromNavigation = true;
-        webView.loadUrl(Constants.SHOP_URL);
-    }
-
-    private class ShopWebViewClient extends WebViewClient{
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(view.getTitle());
-            if(!fromNavigation) {
-                pages.add(url);
-                currentPage++;
-            }
-            fromNavigation = false;
-            super.onPageFinished(view, url);
-        }
-
+        webView.loadUrl(Server.SHOP_URL);
     }
 
 }

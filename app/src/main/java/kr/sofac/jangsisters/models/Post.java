@@ -1,5 +1,7 @@
 package kr.sofac.jangsisters.models;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -16,24 +18,26 @@ public class Post {
 
     @SerializedName("body")
     private String description;
+
     private String ingredients;
     private String date;
 
     @SerializedName("customer_name")
     private String authorName;
 
-    @SerializedName("likesCount")
+    @SerializedName("count_likes")
     private int likesCount;
 
-    @SerializedName("commentsCount")
+    @SerializedName("count_comments")
     private int commentsCount;
 
-    @SerializedName("postImage")
+    @SerializedName("post_image")
     private String postImage;
     private List<Category> categories;
 
-    @SerializedName("shopIngredients")
+    @SerializedName("shop_ingredients")
     private List<Ingredient> shopIngredients;
+
 
     public Post(int id, int authorID, String name, String description, String ingredients, String date,
                 String authorName, int likesCount, int commentsCount, String postImage,

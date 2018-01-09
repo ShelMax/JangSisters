@@ -16,6 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.config.Server;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.PostCallback;
 
@@ -29,7 +30,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         this.items = items;
         this.callback = callback;
         this.context = context;
-
     }
 
     @Override
@@ -40,7 +40,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Glide.with(holder.itemView).load(items.get(position).getPostImage()).into(holder.image);
+        Glide.with(holder.itemView).load(Server.BASE_URL + Server.PART_POST + items.get(position).getPostImage())
+                .into(holder.image);
 //        Glide.with(holder.itemView).load(items.get(position).get())
 //                .apply(RequestOptions.circleCropTransform()).into(holder.authorImage);
         holder.author.setText(items.get(position).getAuthorName());
@@ -49,8 +50,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.comments.setText(String.valueOf(items.get(position).getCommentsCount()));
         holder.likes.setText(String.valueOf(items.get(position).getLikesCount()));
         holder.description.setText(items.get(position).getDescription());
+
         holder.itemView.setOnClickListener(view -> callback.postClick(position));
         holder.ingredients.setOnClickListener(view -> callback.ingredientsClick(position));
+
         holder.categories.setAdapter(new CategoryAdapter(items.get(position).getCategories()));
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);

@@ -49,7 +49,7 @@ public class TabManager {
         menus.add(R.menu.menu_toolbar_shop);
         menus.add(R.menu.menu_toolbar_search);
         menus.add(R.menu.menu_toolbar_home);
-        menus.add(R.menu.menu_toolbar_profile);
+        menus.add(null);
         menus.add(R.menu.menu_toolbar_profile);
     }
 

@@ -1,11 +1,11 @@
 package kr.sofac.jangsisters.views.fragments.containers;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,6 +36,7 @@ import kr.sofac.jangsisters.views.fragments.BaseFragment;
 public class HomeFragment extends BaseFragment {
 
     @BindView(R.id.home_recycler) RecyclerView recyclerView;
+    @BindView(R.id.home_swipe) SwipeRefreshLayout swipeRefresh;
     private ListView listView;
     private List<Post> posts;
     private AlertDialog dialog;
@@ -50,6 +51,20 @@ public class HomeFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         appPreference = new AppPreference(getActivity());
         progressBar = new ProgressBar(getActivity());
+        loadPosts();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View ingredientsView = getLayoutInflater().inflate(R.layout.dialog_post_ingredients, null);
+        builder.setView(ingredientsView);
+        dialog = builder.create();
+        listView = ingredientsView.findViewById(R.id.post_ingredients_list);
+        swipeRefresh.setOnRefreshListener(() -> {
+            swipeRefresh.setRefreshing(false);
+            loadPosts();
+        });
+        return view;
+    }
+
+    private void loadPosts() {
         progressBar.showView();
         new Connection<List<Post>>().getListPosts(new SenderContainerDTO(new HashMap<>()), (isSuccess, answerServerResponse) -> {
             if(isSuccess){
@@ -72,16 +87,10 @@ public class HomeFragment extends BaseFragment {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recyclerView.setAdapter(adapter);
             }else{
-
+                //todo handle error
             }
             progressBar.dismissView();
         });
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View ingredientsView = getLayoutInflater().inflate(R.layout.dialog_post_ingredients, null);
-        builder.setView(ingredientsView);
-        dialog = builder.create();
-        listView = ingredientsView.findViewById(R.id.post_ingredients_list);
-        return view;
     }
 
     @Override

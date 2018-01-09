@@ -1,13 +1,14 @@
 package kr.sofac.jangsisters.config;
 public class Server {
 
-    //TODO StringBuilder
+    public static final String SHOP_URL = "http://m.sunghwa77.godomall.com/";
 
     //public final static String BASE_URL = "http://www.sofac.kr/"; // http://swfac.kr/
     public final static String BASE_URL = "http://192.168.88.63/"; //Zegna
-    //public final static String BASE_URL = "http://192.168.1.36/"; //Maxx
+    //public final static String BASE_URL = "http://192.168.88.70/"; //Maxx
 
     // Path Service API JSON
+    //public final static String PART_CONTROLLER = "data/ajax/request.php"; //Part app controller php
     public final static String PART_CONTROLLER = "data/ajax/request.php"; //Part app controller php
 
     // File path

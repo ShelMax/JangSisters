@@ -39,6 +39,7 @@ public class SearchFragment extends BaseFragment {
                 .commit();
         panel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
         panel.setTouchEnabled(false);
+        searchButton.setOnClickListener(v -> hideSlideUp());
         return view;
     }
 

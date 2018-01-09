@@ -14,8 +14,6 @@ public class User {
         this.email = email;
         this.name = name;
         this.visible = visible;
-        this.userImage = "http://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg";
-        this.balance = 5000;
     }
 
     public int getId() {
