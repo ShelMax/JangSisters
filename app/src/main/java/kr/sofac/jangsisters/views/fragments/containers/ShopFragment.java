@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -71,7 +70,7 @@ public class ShopFragment extends BaseFragment {
         webView.loadUrl(SHOP_URL);
         webView.setWebViewClient(new ShopWebViewClient());
         refresh.setOnRefreshListener(() -> refreshClick());
-        webView.loadUrl(Server.SHOP_URL);
+        webView.loadUrl(ServersConfig.SHOP_URL);
         return view;
     }
 

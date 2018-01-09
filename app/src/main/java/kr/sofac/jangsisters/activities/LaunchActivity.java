@@ -17,6 +17,6 @@ public class LaunchActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         new Handler().postDelayed(() -> {startActivity(intent);
         finishAffinity();
-        },100);
+        },500);
     }
 }
