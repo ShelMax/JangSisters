@@ -17,6 +17,7 @@ public class Post {
     private String description;
 
     private String ingredients;
+
     private String date;
 
     @SerializedName("customer_name")
@@ -30,6 +31,7 @@ public class Post {
 
     @SerializedName("post_image")
     private String postImage;
+
     private List<Category> categories;
 
     @SerializedName("shop_ingredients")

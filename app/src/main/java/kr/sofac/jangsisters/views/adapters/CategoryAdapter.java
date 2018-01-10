@@ -7,12 +7,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Category;
+
+import static kr.sofac.jangsisters.config.ServersConfig.BASE_URL;
+import static kr.sofac.jangsisters.config.ServersConfig.PART_POST;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
@@ -30,7 +36,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(CategoryAdapter.ViewHolder holder, int position) {
-        holder.name.setText(String.valueOf(position));
+        holder.setModel(categories.get(position));
     }
 
     @Override
@@ -38,15 +44,31 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return categories.size();
     }
 
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.item_category_image) ImageView image;
-        @BindView(R.id.item_category_name) TextView name;
+        @BindView(R.id.item_category_image)
+        ImageView image;
+        @BindView(R.id.item_category_name)
+        TextView name;
+        View itemView;
 
         ViewHolder(View itemView) {
             super(itemView);
+            this.itemView = itemView;
             ButterKnife.bind(this, itemView);
         }
 
+        public void setModel(Category categoryItem) {
+            Glide.with(itemView)
+                    .load(BASE_URL + PART_POST + categoryItem.getId() + ".png")
+                    .apply(RequestOptions.centerCropTransform()
+                            .placeholder(R.drawable.category)
+                            .error(R.drawable.category))
+                    .into(image);
+            name.setText(categoryItem.getName());
+        }
+
     }
+
 }

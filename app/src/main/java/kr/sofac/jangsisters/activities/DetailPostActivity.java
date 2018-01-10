@@ -22,9 +22,10 @@ import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 import kr.sofac.jangsisters.views.adapters.CategoryAdapter;
 
-public class DetailPostActivity extends BaseActivity {
+import static kr.sofac.jangsisters.config.ServersConfig.BASE_URL;
+import static kr.sofac.jangsisters.config.ServersConfig.PART_POST;
 
-    //TODO Toolbar (back, title, dots)
+public class DetailPostActivity extends BaseActivity {
 
     @BindView(R.id.post_detailed_image)
     ImageView postImage;
@@ -38,6 +39,8 @@ public class DetailPostActivity extends BaseActivity {
     TextView author;
     @BindView(R.id.post_detailed_toolbar)
     Toolbar toolbar;
+    @BindView(R.id.textViewContent)
+    TextView textViewContent;
 
     private Post post;
     private LinearLayoutManager layoutManager;
@@ -47,7 +50,49 @@ public class DetailPostActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detailed);
         ButterKnife.bind(this);
-        getPost();
+
+        int postID = getIntent().getIntExtra(EnumPreference.POST_ID.toString(), 1);
+        requestLoadingPost(postID);
+    }
+
+
+    private void requestLoadingPost(int postID) {
+        SenderContainerDTO senderContainerDTO = new SenderContainerDTO(postID, appPreference.getUser().getId());
+
+        progressBar.showView();
+        new Connection<Post>().getPost(
+                senderContainerDTO, (isSuccess, answerServerResponse) -> {
+                    if (isSuccess) {
+                        post = answerServerResponse.getDataTransferObject();
+                        fillUpHeader();
+                        initToolbar();
+                        initCategories();
+                        fillUpContentPost();
+                    } else {
+                        showToast("Can't open this post, sorry!");
+                        finish();
+                    }
+                    progressBar.dismissView();
+                });
+    }
+
+
+    private void fillUpHeader() {
+        Glide.with(this)
+                .load(BASE_URL + PART_POST + post.getPostImage())
+                .apply(RequestOptions.centerCropTransform().placeholder(R.drawable.background_holder).error(R.drawable.background_holder))
+                .into(postImage);
+
+        Glide.with(this)
+                .load(BASE_URL + PART_POST + post.getPostImage())
+                .apply(RequestOptions.circleCropTransform().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder).circleCrop())
+                .into(authorImage);
+        date.setText(post.getDate());
+        author.setText(post.getAuthorName());
+    }
+
+    private void fillUpContentPost() {
+        //textViewContent.setText(post.getDescription());
     }
 
     private void initToolbar() {
@@ -64,38 +109,6 @@ public class DetailPostActivity extends BaseActivity {
         categoriesList.setLayoutManager(layoutManager);
     }
 
-    private void getPost() {
-        progressBar.showView();
-        new Connection<Post>().getPost(
-                new SenderContainerDTO(
-                        getIntent().getIntExtra(EnumPreference.POST_ID.toString(), 0),
-                        getIntent().getIntExtra(EnumPreference.USER_ID.toString(), 0)),
-                (isSuccess, answerServerResponse) -> {
-                    if (isSuccess) {
-                        post = answerServerResponse.getDataTransferObject();
-
-                        initToolbar();
-
-                        Glide.with(this)
-                                .load(post.getPostImage())
-                                .apply(RequestOptions.centerCropTransform().placeholder(R.drawable.background_holder).error(R.drawable.background_holder))
-                                .into(postImage);
-
-                        Glide.with(DetailPostActivity.this)
-                                .load(post.getPostImage())
-                                .apply(RequestOptions.circleCropTransform().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder).circleCrop())
-                                .into(authorImage);
-
-                        date.setText(post.getDate());
-                        author.setText(post.getAuthorName());
-                        initCategories();
-                    } else {
-                        //todo handle error
-                    }
-                    progressBar.dismissView();
-                });
-    }
-
     @OnClick(R.id.post_detailed_category_left)
     public void onLeftClick() {
         if (layoutManager.findFirstCompletelyVisibleItemPosition() != 0)
@@ -103,8 +116,8 @@ public class DetailPostActivity extends BaseActivity {
     }
 
     @OnClick(R.id.post_detailed_category_right)
-    public void onRightClick(){
-        if(layoutManager.findLastCompletelyVisibleItemPosition()!= post.getCategories().size())
+    public void onRightClick() {
+        if (layoutManager.findLastCompletelyVisibleItemPosition() != post.getCategories().size())
             layoutManager.scrollToPosition(layoutManager.findLastCompletelyVisibleItemPosition() + 1);
     }
 

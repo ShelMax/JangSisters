@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,13 +51,17 @@ public class HomeFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
+
         appPreference = new AppPreference(getActivity());
         progressBar = new ProgressBar(getActivity());
+        progressBar.showView();
         loadPosts();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View ingredientsView = getLayoutInflater().inflate(R.layout.dialog_post_ingredients, null);
         builder.setView(ingredientsView);
         dialog = builder.create();
+
         listView = ingredientsView.findViewById(R.id.post_ingredients_list);
         swipeRefresh.setOnRefreshListener(() -> {
             swipeRefresh.setRefreshing(false);
@@ -66,7 +71,6 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void loadPosts() {
-        progressBar.showView();
         new Connection<List<Post>>().getListPosts(new SenderContainerDTO(new HashMap<>()), (isSuccess, answerServerResponse) -> {
             if(isSuccess){
                 posts = answerServerResponse.getDataTransferObject();
@@ -88,7 +92,7 @@ public class HomeFragment extends BaseFragment {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recyclerView.setAdapter(adapter);
             }else{
-                //todo handle error
+                Toast.makeText(getActivity(), "Connection error!", Toast.LENGTH_SHORT).show();
             }
             progressBar.dismissView();
         });
