@@ -15,6 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.config.ServersConfig;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.SimpleListCallback;
 
@@ -36,16 +37,17 @@ public class GridViewPostAdapter extends RecyclerView.Adapter<GridViewPostAdapte
 
     @Override
     public void onBindViewHolder(GridViewPostAdapter.ViewHolder holder, int position) {
-        Glide.with(holder.itemView).load(posts.get(position * 2).getPostImage()).into(holder.first);
+        Glide.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_POST + posts.get(position * 2).getPostImage()).into(holder.first);
         holder.firstTitle.setText(posts.get(position * 2).getName());
-        holder.itemView.setOnClickListener(view ->
+        holder.first.setOnClickListener(view ->
                 callback.itemClick(position * 2));
         if(position * 2 != posts.size() - 1){
-            Glide.with(holder.itemView).load(posts.get(position * 2 + 1).getPostImage()).into(holder.second);
+            Glide.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_POST + posts.get(position * 2 + 1).getPostImage()).into(holder.second);
             holder.secondTitle.setText(posts.get(position * 2 + 1).getName());
             holder.itemView.setOnClickListener(view -> callback.itemClick(position * 2 + 1));
         }
         else{
+            holder.second.setOnClickListener(null);
             holder.secondLinear.setVisibility(View.GONE);
         }
     }

@@ -17,6 +17,8 @@ import static kr.sofac.jangsisters.config.EnumPreference.USER_ID;
 
 public class LoginActivity extends BaseActivity {
 
+    //TODO Подумать, куда перекидывать после logout, с LoginActivity не вернуться на главную
+
     @BindView(R.id.editTextEmail)
     TextInputEditText editTextEmail;
     @BindView(R.id.editTextPassword)
@@ -70,8 +72,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void startLaunchActivity() {
-        Intent intent = new Intent(this, LaunchActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, LaunchActivity.class));
         finishAffinity();
     }
 

@@ -6,7 +6,7 @@ public class User {
     private String email;
     private String name;
     private Integer visible;
-    private String userImage;
+    private String avatar;
     private int balance;
 
     public User(int id, String email, String name, int visible) {
@@ -52,8 +52,8 @@ public class User {
         return balance;
     }
 
-    public String getUserImage() {
-        return userImage;
+    public String getAvatar() {
+        return avatar;
     }
 
 

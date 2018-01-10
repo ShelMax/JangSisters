@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.activities.LoginActivity;
+import kr.sofac.jangsisters.activities.SettingsActivity;
 import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.models.User;
@@ -46,7 +47,8 @@ public class ProfileFragment extends BaseFragment {
     private FragmentManager fragmentManager;
     private int userID;
     private boolean myProfile;
-    private GridViewPostFragment myPosts;
+
+    private GridViewPostFragment posts;
     private FollowersFragment followers;
     private FollowersFragment following;
     private GridViewPostFragment bookmarks;
@@ -60,7 +62,7 @@ public class ProfileFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         appPreference = new AppPreference(getActivity());
         userID = getArguments().getInt(EnumPreference.USER_ID.toString());
-        myProfile = getArguments().getBoolean(getString(R.string.myProfile));
+        myProfile = getArguments().getBoolean(EnumPreference.MY_PROFILE.toString());
         if(myProfile){
             follow.setVisibility(View.GONE);
             message.setVisibility(View.GONE);
@@ -70,32 +72,44 @@ public class ProfileFragment extends BaseFragment {
             balance.setVisibility(View.GONE);
             user = UserWrapper.getUserByID(userID);
         }
-        Glide.with(this).load(user.getUserImage())
+        Glide.with(this).load(user.getAvatar())
                 .apply(new RequestOptions().placeholder(R.drawable.boy))
                 .apply(RequestOptions.circleCropTransform())
                 .into(userImage);
         username.setText(user.getName());
-        if(myProfile)
-            myPosts = new GridViewPostFragment();
-        followers = new FollowersFragment();
-        following = new FollowersFragment();
-        bookmarks = new GridViewPostFragment();
-        fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.frame, new GridViewPostFragment()).commit();
 
+        initFragments();
         initTabLayout();
         return view;
     }
 
+    private void initFragments() {
+        posts = new GridViewPostFragment();
+        Bundle bundle = new Bundle();
+        Bundle bundle1 = new Bundle();
+        bundle.putBoolean(EnumPreference.FOLLOWERS.toString(), true);
+        bundle1.putBoolean(EnumPreference.FOLLOWERS.toString(), false);
+        followers = new FollowersFragment();
+        following = new FollowersFragment();
+        followers.setArguments(bundle);
+        following.setArguments(bundle1);
+        bookmarks = new GridViewPostFragment();
+        fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().add(R.id.frame, posts).commit();
+    }
+
     private void initTabLayout() {
+        tabLayout.addTab(tabLayout.newTab().setText("My posts"), true);
+        tabLayout.addTab(tabLayout.newTab().setText("Following"));
+        tabLayout.addTab(tabLayout.newTab().setText("Followers"));
         if (myProfile) {
-            tabLayout.addTab(tabLayout.newTab().setText("My posts"), true);
+            tabLayout.addTab(tabLayout.newTab().setText("Bookmarks"));
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     switch (tab.getPosition()) {
                         case 0:
-                            setCurrentFragment(myPosts);
+                            setCurrentFragment(posts);
                             break;
                         case 1:
                             setCurrentFragment(following);
@@ -125,13 +139,13 @@ public class ProfileFragment extends BaseFragment {
                 public void onTabSelected(TabLayout.Tab tab) {
                     switch (tab.getPosition()) {
                         case 0:
-                            setCurrentFragment(following);
+                            setCurrentFragment(posts);
                             break;
                         case 1:
-                            setCurrentFragment(following);
+                            setCurrentFragment(followers);
                             break;
                         case 2:
-                            setCurrentFragment(bookmarks);
+                            setCurrentFragment(following);
                             break;
                     }
                 }
@@ -147,9 +161,7 @@ public class ProfileFragment extends BaseFragment {
                 }
             });
         }
-        tabLayout.addTab(tabLayout.newTab().setText("Following"));
-        tabLayout.addTab(tabLayout.newTab().setText("Followers"));
-        tabLayout.addTab(tabLayout.newTab().setText("Bookmarks"));
+
     }
 
     private void setCurrentFragment(Fragment fragment) {
@@ -173,10 +185,13 @@ public class ProfileFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.settings:
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                getActivity().overridePendingTransition(R.anim.forward_start, R.anim.forward_finish);
                 break;
             case R.id.logout:
                 appPreference.clearUser();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().finishAffinity();
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -132,6 +132,38 @@ public class Connection<T> {
         });
     }
 
+    public void getFollowers(Integer userID, AnswerServerResponse<T> async){
+        answerServerResponse = async;
+        new ManagerRetrofit<Integer>().sendRequest(userID, "getListSubscribers",
+                ((isSuccess, answerString) -> {
+                    if(isSuccess){
+                        Type typeAnswer = new TypeToken<ServerResponse<List<User>>>(){
+                        }.getType();
+                        tryParsing(answerString, typeAnswer);
+                    }
+                    else{
+                        answerServerResponse.processFinish(false, null);
+                    }
+                })
+        );
+    }
+
+    public void getFollowing(Integer userID, AnswerServerResponse<T> async){
+        answerServerResponse = async;
+        new ManagerRetrofit<Integer>().sendRequest(userID, "getListSubscriptions",
+                ((isSuccess, answerString) -> {
+                    if(isSuccess){
+                        Type typeAnswer = new TypeToken<ServerResponse<List<User>>>(){
+                        }.getType();
+                        tryParsing(answerString, typeAnswer);
+                    }
+                    else{
+                        answerServerResponse.processFinish(false, null);
+                    }
+                })
+        );
+    }
+
     public void getPostListComments(Integer postID, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
         answerServerResponse = async;
         new ManagerRetrofit<Integer>().sendRequest(postID, new Object() {// Change type Object sending / Change data sending

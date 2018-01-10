@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,8 +34,6 @@ import kr.sofac.jangsisters.views.fragments.containers.ProfileFragment;
 import kr.sofac.jangsisters.views.fragments.containers.ShopFragment;
 import kr.sofac.jangsisters.views.fragments.viewElements.NotSignedFragment;
 
-import static kr.sofac.jangsisters.config.EnumPreference.USER_ID;
-
 public class MainActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
@@ -57,10 +54,9 @@ public class MainActivity extends BaseActivity {
     private ViewPagerAdapter adapter;
     private ShopFragment shopFragment;
     private SearchFragment searchFragment;
-    private AppPreference appPreference;
     private TabManager tabManager;
+
     private String pageTitle;
-    private boolean shopFirst = true;
 
     @Override
     public void onBackPressed() {
@@ -111,7 +107,7 @@ public class MainActivity extends BaseActivity {
         if(appPreference.getUser() != null){
             Bundle bundle = new Bundle();
             bundle.putInt(EnumPreference.USER_ID.toString(), appPreference.getUser().getId());
-            bundle.putBoolean(getString(R.string.myProfile), true);
+            bundle.putBoolean(EnumPreference.MY_PROFILE.toString(), true);
             profileFragment.setArguments(bundle);
             adapter.addFragment(profileFragment, tabManager.getNameByPosition(4));
         }
@@ -134,7 +130,7 @@ public class MainActivity extends BaseActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
                     case 0:
-                        toolbar.setNavigationIcon(R.drawable.home);
+                        toolbar.setNavigationIcon(R.drawable.home_white);
                         toolbar.setNavigationOnClickListener(v -> shopFragment.homeClick());
                         toolbar.setTitle(pageTitle);
                         break;
@@ -168,13 +164,9 @@ public class MainActivity extends BaseActivity {
                     tabHome.setSelected(false);
                 }
                 else if(tab.getPosition() == 0 ){
-                    if(shopFirst){
-                        shopFirst = false;
-                    }
-                    else{
-                        //pageTitle = shopFragment.getTitle();
-                        toolbar.setTitle(null);
-                    }
+                    pageTitle = shopFragment.getTitle();
+                    toolbar.setTitle(null);
+
                 }
                 else if(tab.getPosition() == 1){
                     search.setVisibility(View.GONE);

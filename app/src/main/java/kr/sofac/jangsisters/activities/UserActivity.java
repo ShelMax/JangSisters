@@ -12,8 +12,6 @@ public class UserActivity extends BaseActivity {
 
     private FragmentManager fragmentManager;
 
-    //TODO заменить на енумы
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +20,8 @@ public class UserActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putInt(EnumPreference.USER_ID.toString(),
                 getIntent().getIntExtra(EnumPreference.USER_ID.toString(),0));
-        bundle.putBoolean(getString(R.string.myProfile),
-                getIntent().getExtras().getBoolean(getString(R.string.myProfile)));
+        bundle.putBoolean(EnumPreference.MY_PROFILE.toString(),
+                getIntent().getBooleanExtra(EnumPreference.MY_PROFILE.toString(), false));
         ProfileFragment profileFragment = new ProfileFragment();
         profileFragment.setArguments(bundle);
         fragmentManager.beginTransaction()

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -42,8 +43,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         Glide.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_POST + items.get(position).getPostImage())
                 .into(holder.image);
-//        Glide.with(holder.itemView).load(items.get(position).get())
-//                .apply(RequestOptions.circleCropTransform()).into(holder.authorImage);
+        Glide.with(holder.itemView).load("")
+                .apply(RequestOptions.circleCropTransform())
+                .apply(new RequestOptions().placeholder(R.drawable.boy))
+                .into(holder.authorImage);
         holder.author.setText(items.get(position).getAuthorName());
         holder.title.setText(items.get(position).getName());
         holder.date.setText(items.get(position).getDate());

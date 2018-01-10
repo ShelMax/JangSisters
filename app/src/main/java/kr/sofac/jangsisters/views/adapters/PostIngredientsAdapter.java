@@ -12,7 +12,6 @@ import java.util.List;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Ingredient;
 
-
 public class PostIngredientsAdapter extends BaseAdapter {
 
     private String ingredients;

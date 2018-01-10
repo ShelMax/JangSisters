@@ -24,25 +24,24 @@ import kr.sofac.jangsisters.config.ServersConfig;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
-import static kr.sofac.jangsisters.config.ServersConfig.SHOP_URL;
-
 public class ShopFragment extends BaseFragment {
 
     @BindView(R.id.shop_webview) WebView webView;
     @BindView(R.id.shop_refresh) SwipeRefreshLayout refresh;
+
     private MenuItem backItem;
 
-    private List<String> pages;
+    private List<String> pages = new ArrayList<>();
     private int currentPage = -1;
     private boolean fromNavigation;
+    private String pageTitle;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
         ButterKnife.bind(this, view);
-        pages = new ArrayList<>();
-        webView.loadUrl(SHOP_URL);
+        refresh.setRefreshing(true);
         webView.setWebViewClient(new WebViewClient(){
 
             @Override
@@ -56,6 +55,7 @@ public class ShopFragment extends BaseFragment {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(view.getTitle());
+                pageTitle = view.getTitle();
                 if(!fromNavigation) {
                     pages.add(view.getUrl());
                     currentPage++;
@@ -67,10 +67,8 @@ public class ShopFragment extends BaseFragment {
                 }
             }
         });
-        webView.loadUrl(SHOP_URL);
-        webView.setWebViewClient(new ShopWebViewClient());
-        refresh.setOnRefreshListener(() -> refreshClick());
         webView.loadUrl(ServersConfig.SHOP_URL);
+        refresh.setOnRefreshListener(this::refreshClick);
         return view;
     }
 
@@ -126,6 +124,7 @@ public class ShopFragment extends BaseFragment {
     }
 
     public void refreshClick(){
+        refresh.setRefreshing(true);
         if(currentPage != -1) {
             fromNavigation = true;
             webView.loadUrl(pages.get(currentPage));
@@ -133,29 +132,12 @@ public class ShopFragment extends BaseFragment {
     }
 
     public void homeClick() {
+        refresh.setRefreshing(true);
         fromNavigation = true;
         webView.loadUrl(ServersConfig.SHOP_URL);
     }
 
-    private class ShopWebViewClient extends WebViewClient{
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(view.getTitle());
-            if(!fromNavigation) {
-                pages.add(url);
-                currentPage++;
-            }
-            fromNavigation = false;
-            super.onPageFinished(view, url);
-        }
-
+    public String getTitle() {
+        return pageTitle;
     }
-
 }

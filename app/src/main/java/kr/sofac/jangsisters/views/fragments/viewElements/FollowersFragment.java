@@ -15,35 +15,73 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.activities.BaseActivity;
 import kr.sofac.jangsisters.activities.UserActivity;
 import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.SimpleListCallback;
 import kr.sofac.jangsisters.models.User;
+import kr.sofac.jangsisters.network.Connection;
+import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
+import kr.sofac.jangsisters.utils.ProgressBar;
 import kr.sofac.jangsisters.utils.UserWrapper;
 import kr.sofac.jangsisters.views.adapters.FollowersAdapter;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
-
-/**
- * Created by Oleksandr on 27.12.2017.
- */
 
 public class FollowersFragment extends BaseFragment{
 
     @BindView(R.id.recycler) RecyclerView recycler;
     private List<User> users;
+    private ProgressBar progressBar;
+    private boolean isFollowers;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_followers, null);
         ButterKnife.bind(this, view);
-        users = UserWrapper.getAllUsers();
-        recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recycler.setAdapter(new FollowersAdapter(users, position -> {
-            startActivity(new Intent(getActivity(), UserActivity.class)
-            .putExtra(EnumPreference.USER_ID.toString(), users.get(position).getId())
-            .putExtra(getString(R.string.myProfile), false));
-        }));
+        progressBar = new ProgressBar(getActivity());
+        progressBar.showView();
+        isFollowers = getArguments().getBoolean(EnumPreference.FOLLOWERS.toString());
+        if(isFollowers)
+            loadFollowers();
+        else
+            loadFollowing();
         return view;
+    }
+
+    private void loadFollowers() {
+        new Connection<List<User>>().getFollowers(1, (isSuccess, answerServerResponse) -> {
+            if(isSuccess){
+                users = answerServerResponse.getDataTransferObject();
+                recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+                recycler.setAdapter(new FollowersAdapter(users, position -> {
+                    startActivity(new Intent(getActivity(), UserActivity.class)
+                            .putExtra(EnumPreference.USER_ID.toString(), users.get(position).getId())
+                            .putExtra(EnumPreference.MY_PROFILE.toString(), false));
+                }));
+            }
+            else{
+                //todo handle error
+            }
+            progressBar.dismissView();
+        });
+    }
+
+    private void loadFollowing() {
+        new Connection<List<User>>().getFollowing(1, (isSuccess, answerServerResponse) -> {
+            if(isSuccess){
+                users = answerServerResponse.getDataTransferObject();
+                recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+                recycler.setAdapter(new FollowersAdapter(users, position -> {
+                    startActivity(new Intent(getActivity(), UserActivity.class)
+                            .putExtra(EnumPreference.USER_ID.toString(), users.get(position).getId())
+                            .putExtra(EnumPreference.MY_PROFILE.toString(), false));
+                }));
+            }
+            else{
+                //todo handle error
+            }
+            progressBar.dismissView();
+        });
     }
 }

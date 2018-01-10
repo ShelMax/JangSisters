@@ -30,7 +30,6 @@ Nam vehicula ex a efficitur aliquet. Quisque blandit et augue non malesuada. Int
     <string name="logout">logout</string>
     <string name="settings">settings</string>
     <string name="balance">Balance</string>
-    <string name="myProfile">myProfile</string>
     <string name="not_signed">Soryan, you are not signed it. You can create new accout or sign in using existing one</string>
     <string name="login">Login</string>
     <string name="register">Register</string>

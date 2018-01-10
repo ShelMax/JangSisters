@@ -18,5 +18,9 @@ public class LaunchActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {startActivity(intent);
         finishAffinity();
         },500);
+        new Handler().postDelayed(() -> {
+            startActivity(intent);
+            finishAffinity();
+            },100);
     }
 }

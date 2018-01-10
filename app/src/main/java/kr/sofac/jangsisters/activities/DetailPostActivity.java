@@ -89,6 +89,8 @@ public class DetailPostActivity extends BaseActivity {
                         date.setText(post.getDate());
                         author.setText(post.getAuthorName());
                         initCategories();
+                    } else {
+                        //todo handle error
                     }
                     progressBar.dismissView();
                 });
@@ -101,8 +103,8 @@ public class DetailPostActivity extends BaseActivity {
     }
 
     @OnClick(R.id.post_detailed_category_right)
-    public void onRightClick() {
-        if (layoutManager.findLastCompletelyVisibleItemPosition() != post.getCategories().size())
+    public void onRightClick(){
+        if(layoutManager.findLastCompletelyVisibleItemPosition()!= post.getCategories().size())
             layoutManager.scrollToPosition(layoutManager.findLastCompletelyVisibleItemPosition() + 1);
     }
 

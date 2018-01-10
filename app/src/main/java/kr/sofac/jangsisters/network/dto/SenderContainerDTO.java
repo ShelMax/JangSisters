@@ -55,6 +55,15 @@ public class SenderContainerDTO {
         this.customer_id = customer_id;
     }
 
+    /**
+     *
+     * getFollowers
+     */
+
+    public SenderContainerDTO(Integer id){
+        this.id = id;
+    }
+
     public String getPassword() {
         return password;
     }
