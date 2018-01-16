@@ -5,7 +5,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,6 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.EnumPreference;
+import kr.sofac.jangsisters.models.OnLoggedOut;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.utils.AppPreference;
 import kr.sofac.jangsisters.views.fragments.containers.SearchFragment;
@@ -34,7 +35,7 @@ import kr.sofac.jangsisters.views.fragments.containers.ProfileFragment;
 import kr.sofac.jangsisters.views.fragments.containers.ShopFragment;
 import kr.sofac.jangsisters.views.fragments.viewElements.NotSignedFragment;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements OnLoggedOut {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -55,8 +56,6 @@ public class MainActivity extends BaseActivity {
     private ShopFragment shopFragment;
     private SearchFragment searchFragment;
     private TabManager tabManager;
-
-    private String pageTitle;
 
     @Override
     public void onBackPressed() {
@@ -83,7 +82,6 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        appPreference = new AppPreference(this);
         tabManager = TabManager.getTabManager();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
@@ -95,7 +93,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setupViewPager() {
-        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), appPreference.getUser() != null);
         shopFragment = new ShopFragment();
         searchFragment = new SearchFragment();
 
@@ -103,8 +101,8 @@ public class MainActivity extends BaseActivity {
         adapter.addFragment(searchFragment, tabManager.getNameByPosition(1));
         adapter.addFragment(new HomeFragment(), tabManager.getNameByPosition(2));
         adapter.addFragment(new HelpFragment(), tabManager.getNameByPosition(3));
-        ProfileFragment profileFragment = new ProfileFragment();
         if(appPreference.getUser() != null){
+            ProfileFragment profileFragment = new ProfileFragment();
             Bundle bundle = new Bundle();
             bundle.putInt(EnumPreference.USER_ID.toString(), appPreference.getUser().getId());
             bundle.putBoolean(EnumPreference.MY_PROFILE.toString(), true);
@@ -119,20 +117,15 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initTabLayout() {
-        tabLayout.setupWithViewPager(viewPager);
-
-        for(int i = 0; i<5;i++){
-            tabLayout.getTabAt(i).setIcon(getResources().getDrawable(tabManager.getDrawableByPosition(i)));
-        }
-
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
                     case 0:
+                        shopFragment.setOpened(true);
                         toolbar.setNavigationIcon(R.drawable.home_white);
                         toolbar.setNavigationOnClickListener(v -> shopFragment.homeClick());
-                        toolbar.setTitle(pageTitle);
+                        toolbar.setTitle(shopFragment.getTitle());
                         break;
                     case 1:
                         toolbar.setNavigationIcon(null);
@@ -155,6 +148,7 @@ public class MainActivity extends BaseActivity {
                             //todo
                         });
                         break;
+
                 }
             }
 
@@ -164,9 +158,8 @@ public class MainActivity extends BaseActivity {
                     tabHome.setSelected(false);
                 }
                 else if(tab.getPosition() == 0 ){
-                    pageTitle = shopFragment.getTitle();
                     toolbar.setTitle(null);
-
+                    shopFragment.setOpened(false);
                 }
                 else if(tab.getPosition() == 1){
                     search.setVisibility(View.GONE);
@@ -181,6 +174,12 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+
+        tabLayout.setupWithViewPager(viewPager);
+
+        for(int i = 0; i<5;i++){
+            tabLayout.getTabAt(i).setIcon(getResources().getDrawable(tabManager.getDrawableByPosition(i)));
+        }
         searchFragment.onSetTextChanged(search);
     }
 
@@ -210,12 +209,26 @@ public class MainActivity extends BaseActivity {
         tabHome.setSelected(true);
     }
 
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
+    @Override
+    public void loggedOut() {
+        adapter.loggedOut();
+        adapter.notifyDataSetChanged();
+        tabLayout.getTabAt(2).select();
+    }
+
+    private class ViewPagerAdapter extends FragmentStatePagerAdapter {
+
+        private List<Fragment> mFragmentList = new ArrayList<>();
+        private boolean isLogged;
         //private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        ViewPagerAdapter(FragmentManager manager) {
+        ViewPagerAdapter(FragmentManager manager, boolean isLogged) {
             super(manager);
+            this.isLogged = isLogged;
+        }
+
+        void loggedOut() {
+            isLogged = false;
         }
 
         @Override
@@ -235,7 +248,14 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            //Для того, чтобы фрагменты не пересоздавались
+            if(position ==4 && !isLogged){
+                super.destroyItem(container, position, object);
+                mFragmentList.remove(4);
+                mFragmentList.add(new NotSignedFragment());
+                for(int i = 0; i<5;i++){
+                    tabLayout.getTabAt(i).setIcon(getResources().getDrawable(tabManager.getDrawableByPosition(i)));
+                }
+            }
         }
 
         @Override
@@ -243,6 +263,5 @@ public class MainActivity extends BaseActivity {
             return null;
         }
     }
-
 
 }

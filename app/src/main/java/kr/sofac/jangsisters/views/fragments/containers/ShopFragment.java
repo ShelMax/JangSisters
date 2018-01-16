@@ -35,6 +35,7 @@ public class ShopFragment extends BaseFragment {
     private int currentPage = -1;
     private boolean fromNavigation;
     private String pageTitle;
+    private boolean isOpened;
 
     @Nullable
     @Override
@@ -54,7 +55,9 @@ public class ShopFragment extends BaseFragment {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(view.getTitle());
+                if(isOpened) {
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(view.getTitle());
+                }
                 pageTitle = view.getTitle();
                 if(!fromNavigation) {
                     pages.add(view.getUrl());
@@ -135,6 +138,10 @@ public class ShopFragment extends BaseFragment {
         refresh.setRefreshing(true);
         fromNavigation = true;
         webView.loadUrl(ServersConfig.SHOP_URL);
+    }
+
+    public void setOpened(boolean opened) {
+        isOpened = opened;
     }
 
     public String getTitle() {

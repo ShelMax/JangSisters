@@ -72,7 +72,6 @@
         android:id="@+id/item_post_divider"/>
 
     <TextView
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -101,27 +100,31 @@
         android:id="@+id/item_post_comments_image"/>
 
     <TextView
+        android:id="@+id/item_post_comments"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="1dp"
         android:layout_marginStart="8dp"
         android:textColor="#fff"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="@+id/item_post_comments_image"
         app:layout_constraintStart_toEndOf="@+id/item_post_comments_image"
         app:layout_constraintTop_toTopOf="@+id/item_post_comments_image"
-        tools:text="13"
-        android:id="@+id/item_post_comments"/>
+        tools:text="13" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <View
+        android:id="@+id/item_post_separator"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
         android:layout_alignBottom="@id/item_post_author"
+        android:layout_marginBottom="2dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:background="@android:color/white"
         android:text="@string/separator"
-        android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="@+id/item_post_comments"
         app:layout_constraintStart_toEndOf="@+id/item_post_comments"
-        app:layout_constraintTop_toTopOf="@+id/item_post_comments"
-        android:id="@+id/item_post_separator"/>
+        app:layout_constraintTop_toTopOf="@+id/item_post_comments" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -134,15 +137,16 @@
         android:id="@+id/item_post_likes_image"/>
 
     <TextView
+        android:id="@+id/item_post_likes"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:textColor="#fff"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/item_post_likes_image"
         app:layout_constraintStart_toEndOf="@+id/item_post_likes_image"
         app:layout_constraintTop_toTopOf="@+id/item_post_likes_image"
-        tools:text="145"
-        android:id="@+id/item_post_likes"/>
+        tools:text="145" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -155,6 +159,18 @@
         app:layout_constraintTop_toTopOf="@id/item_post_author_image"
         android:id="@+id/item_post_author"/>
 
+    <View
+        android:id="@+id/item_post_separator2"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/item_post_author"
+        app:layout_constraintStart_toEndOf="@id/item_post_author"
+        app:layout_constraintTop_toTopOf="@id/item_post_author" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -163,15 +179,5 @@
         android:layout_marginStart="8dp"
         android:textColor="#fff"
         android:id="@+id/item_post_date"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/separator"
-        android:layout_marginStart="8dp"
-        app:layout_constraintStart_toEndOf="@id/item_post_author"
-        app:layout_constraintBaseline_toBaselineOf="@id/item_post_author"
-        android:textColor="#fff"
-        android:id="@+id/item_post_separator2"/>
 
 </android.support.constraint.ConstraintLayout>

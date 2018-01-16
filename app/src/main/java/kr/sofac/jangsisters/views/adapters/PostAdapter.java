@@ -43,10 +43,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         Glide.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_POST + items.get(position).getPostImage())
                 .into(holder.image);
-        Glide.with(holder.itemView).load("")
+        Glide.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR + items.get(position).getAuthorImg())
                 .apply(RequestOptions.circleCropTransform())
                 .apply(new RequestOptions().placeholder(R.drawable.boy))
                 .into(holder.authorImage);
+
         holder.author.setText(items.get(position).getAuthorName());
         holder.title.setText(items.get(position).getName());
         holder.date.setText(items.get(position).getDate());
@@ -56,6 +57,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         holder.itemView.setOnClickListener(view -> callback.postClick(position));
         holder.ingredients.setOnClickListener(view -> callback.ingredientsClick(position));
+        holder.authorImage.setOnClickListener(view -> callback.userClick(position));
 
         holder.categories.setAdapter(new CategoryAdapter(items.get(position).getCategories()));
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);

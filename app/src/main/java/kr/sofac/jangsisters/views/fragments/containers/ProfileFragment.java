@@ -25,10 +25,14 @@ import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.activities.LoginActivity;
 import kr.sofac.jangsisters.activities.SettingsActivity;
 import kr.sofac.jangsisters.config.EnumPreference;
+import kr.sofac.jangsisters.config.ServersConfig;
+import kr.sofac.jangsisters.models.OnLoggedOut;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.models.User;
+import kr.sofac.jangsisters.network.Connection;
+import kr.sofac.jangsisters.network.api.type.ServerResponse;
 import kr.sofac.jangsisters.utils.AppPreference;
-import kr.sofac.jangsisters.utils.UserWrapper;
+import kr.sofac.jangsisters.utils.ProgressBar;
 import kr.sofac.jangsisters.views.customview.ButtonLight;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
 import kr.sofac.jangsisters.views.fragments.viewElements.FollowersFragment;
@@ -54,12 +58,18 @@ public class ProfileFragment extends BaseFragment {
     private GridViewPostFragment bookmarks;
     private AppPreference appPreference;
     private User user;
+    private ProgressBar progressBar;
+
+    private OnLoggedOut listener;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
+        listener = (OnLoggedOut) getActivity();
+
+        progressBar = new ProgressBar(getActivity());
         appPreference = new AppPreference(getActivity());
         userID = getArguments().getInt(EnumPreference.USER_ID.toString());
         myProfile = getArguments().getBoolean(EnumPreference.MY_PROFILE.toString());
@@ -67,12 +77,18 @@ public class ProfileFragment extends BaseFragment {
             follow.setVisibility(View.GONE);
             message.setVisibility(View.GONE);
             user = appPreference.getUser();
+            updateUI();
         }
         else{
             balance.setVisibility(View.GONE);
-            user = UserWrapper.getUserByID(userID);
+            getUser();
         }
-        Glide.with(this).load(user.getAvatar())
+        return view;
+    }
+
+    private void updateUI() {
+        Glide.with(this).load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR+
+                user.getAvatar())
                 .apply(new RequestOptions().placeholder(R.drawable.boy))
                 .apply(RequestOptions.circleCropTransform())
                 .into(userImage);
@@ -80,7 +96,20 @@ public class ProfileFragment extends BaseFragment {
 
         initFragments();
         initTabLayout();
-        return view;
+    }
+
+    private void getUser() {
+        progressBar.showView();
+        new Connection<User>().getUserByID(userID, (isSuccess, answerServerResponse) -> {
+            if(isSuccess){
+                user = answerServerResponse.getDataTransferObject();
+                updateUI();
+            }
+            else{
+                //todo handle error
+            }
+            progressBar.dismissView();
+        });
     }
 
     private void initFragments() {
@@ -99,7 +128,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void initTabLayout() {
-        tabLayout.addTab(tabLayout.newTab().setText("My posts"), true);
+        tabLayout.addTab(tabLayout.newTab().setText("Posts"));
         tabLayout.addTab(tabLayout.newTab().setText("Following"));
         tabLayout.addTab(tabLayout.newTab().setText("Followers"));
         if (myProfile) {
@@ -190,8 +219,9 @@ public class ProfileFragment extends BaseFragment {
                 break;
             case R.id.logout:
                 appPreference.clearUser();
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-                getActivity().finishAffinity();
+                //startActivity(new Intent(getActivity(), LoginActivity.class));
+                //getActivity().finishAffinity();
+                listener.loggedOut();
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -21,6 +21,7 @@ import kr.sofac.jangsisters.activities.DetailPostActivity;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
+import kr.sofac.jangsisters.utils.ProgressBar;
 import kr.sofac.jangsisters.views.adapters.GridViewPostAdapter;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
@@ -29,18 +30,22 @@ public class GridViewPostFragment extends BaseFragment {
     @BindView(R.id.recycler) RecyclerView recyclerView;
     private List<Post> posts;
     private GridViewPostAdapter adapter;
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_grid_view_post, container, false);
         ButterKnife.bind(this, view);
+        progressBar = new ProgressBar(getActivity());
         loadPosts();
         return view;
     }
 
     private void loadPosts() {
-        new Connection<List<Post>>().getListPosts(new SenderContainerDTO(new HashMap<>()), (isSuccess, answerServerResponse) -> {
+        progressBar.showView();
+        new Connection<List<Post>>().getListPosts(new SenderContainerDTO()
+                .setFilter(new HashMap<>()), (isSuccess, answerServerResponse) -> {
             if(isSuccess){
                 posts = answerServerResponse.getDataTransferObject();
                 adapter = new GridViewPostAdapter(posts, position -> {
@@ -52,6 +57,7 @@ public class GridViewPostFragment extends BaseFragment {
             }else{
                 //todo handle error
             }
+            progressBar.dismissView();
         });
     }
 

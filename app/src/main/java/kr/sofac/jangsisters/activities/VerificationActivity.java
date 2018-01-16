@@ -44,7 +44,9 @@ public class VerificationActivity extends BaseActivity {
     public void requestVerification(String codeVerification) {
         if (!codeVerification.isEmpty()) {
             progressBar.showView();
-            new Connection<String>().signUpCustomerVerification(new SenderContainerDTO(userID, codeVerification), (isSuccess, answerServerResponse) -> {
+            new Connection<String>().signUpCustomerVerification(new SenderContainerDTO()
+                    .setID(userID)
+                    .setCode(codeVerification), (isSuccess, answerServerResponse) -> {
                 if (isSuccess) {
                     appPreference.setAuthorization(true);
                     User user = appPreference.getUser();

@@ -47,10 +47,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.item_category_image)
-        ImageView image;
-        @BindView(R.id.item_category_name)
-        TextView name;
+        @BindView(R.id.item_category_image) ImageView image;
+        @BindView(R.id.item_category_name) TextView name;
         View itemView;
 
         ViewHolder(View itemView) {

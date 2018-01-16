@@ -1,115 +1,76 @@
 package kr.sofac.jangsisters.network.dto;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashMap;
 
 public class SenderContainerDTO {
 
+    @SerializedName("id")
     private Integer id;
+
     private Integer customer_id;
     private String password;
+
+    @SerializedName("post_id")
+    private Integer postID;
+
+    private String body;
+
     private String email;
     private String googleCloudKey;
     private String name;
     private String code;
     private HashMap<Integer, Integer> filter;
 
-    /**
-     * signInCustomer
-     */
-    public SenderContainerDTO(String password, String email, String googleCloudKey) {
-        this.password = password;
-        this.email = email;
-        this.googleCloudKey = googleCloudKey;
-    }
-
-    /**
-     * signUpCustomer
-     */
-    public SenderContainerDTO(String password, String email, String name, String googleCloudKey) {
-        this.password = password;
-        this.email = email;
-        this.name = name;
-        this.googleCloudKey = googleCloudKey;
-    }
-
-    /**
-     * signUpCustomerVerification
-     */
-    public SenderContainerDTO(Integer id, String code) {
+    public SenderContainerDTO setID(Integer id) {
         this.id = id;
-        this.code = code;
+        return this;
     }
 
-    /**
-     * getListPosts
-     */
-    public SenderContainerDTO(HashMap<Integer, Integer> filter) {
-        this.filter = filter;
-    }
-
-    /**
-     * getPost
-     */
-    public SenderContainerDTO(Integer id, Integer customer_id) {
-        this.id = id;
+    public SenderContainerDTO setCustomer_id(Integer customer_id) {
         this.customer_id = customer_id;
+        return this;
     }
 
-    /**
-     *
-     * getFollowers
-     */
-
-    public SenderContainerDTO(Integer id){
-        this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+    public SenderContainerDTO setPassword(String password) {
         this.password = password;
+        return this;
     }
 
-    public String getEmail() {
-        return email;
+    public SenderContainerDTO setPostID(Integer postID) {
+        this.postID = postID;
+        return this;
     }
 
-    public void setEmail(String email) {
+    public SenderContainerDTO setEmail(String email) {
         this.email = email;
+        return this;
     }
 
-    public String getGoogleCloudKey() {
-        return googleCloudKey;
+    public SenderContainerDTO setBody(String body){
+        this.body = body;
+        return this;
     }
 
-    public void setGoogleCloudKey(String googleCloudKey) {
+    public SenderContainerDTO setGoogleCloudKey(String googleCloudKey) {
         this.googleCloudKey = googleCloudKey;
+        return this;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public SenderContainerDTO setName(String name) {
         this.name = name;
+        return this;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
+    public SenderContainerDTO setCode(String code) {
         this.code = code;
+        return this;
+    }
+
+    public SenderContainerDTO setFilter(HashMap<Integer, Integer> filter) {
+        this.filter = filter;
+        return this;
     }
 
     @Override

@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.activities.DetailPostActivity;
+import kr.sofac.jangsisters.activities.UserActivity;
 import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.PostCallback;
@@ -37,13 +38,20 @@ import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
 public class HomeFragment extends BaseFragment {
 
+    // TODO сообщение если нет новостей, подписчиков и т.д.
+
+    // TODO Chat
+
+    // TODO цыфры в кружок
+
     @BindView(R.id.home_recycler) RecyclerView recyclerView;
     @BindView(R.id.home_swipe) SwipeRefreshLayout swipeRefresh;
+
     private ListView listView;
     private List<Post> posts;
     private AlertDialog dialog;
     private PostAdapter adapter;
-    ProgressBar progressBar;
+    private ProgressBar progressBar;
     private AppPreference appPreference;
 
     @Override
@@ -71,7 +79,8 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void loadPosts() {
-        new Connection<List<Post>>().getListPosts(new SenderContainerDTO(new HashMap<>()), (isSuccess, answerServerResponse) -> {
+        new Connection<List<Post>>().getListPosts(new SenderContainerDTO()
+                .setFilter(new HashMap<>()), (isSuccess, answerServerResponse) -> {
             if(isSuccess){
                 posts = answerServerResponse.getDataTransferObject();
                 adapter = new PostAdapter(posts, getActivity(), new PostCallback() {
@@ -87,6 +96,14 @@ public class HomeFragment extends BaseFragment {
                     public void ingredientsClick(int position) {
                         listView.setAdapter(new PostIngredientsAdapter(posts.get(position).getIngredients(), getActivity()));
                         dialog.show();
+                    }
+
+                    @Override
+                    public void userClick(int position) {
+                        startActivity(new Intent(getActivity(), UserActivity.class)
+                        .putExtra(EnumPreference.USER_ID.toString(), posts.get(position).getAuthorID())
+                        .putExtra(EnumPreference.MY_PROFILE.toString(),
+                                appPreference.getUser().getId() == posts.get(position).getAuthorID()));
                     }
                 });
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

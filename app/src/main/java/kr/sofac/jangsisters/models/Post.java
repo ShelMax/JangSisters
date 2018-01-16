@@ -13,6 +13,9 @@ public class Post {
     @SerializedName("name")
     private String postTitle;
 
+    @SerializedName("avatar")
+    private String authorImg;
+
     @SerializedName("body")
     private String description;
 
@@ -37,23 +40,9 @@ public class Post {
     @SerializedName("shop_ingredients")
     private List<Ingredient> shopIngredients;
 
+    @SerializedName("is_likes")
+    private int isLiked;
 
-    public Post(int id, int authorID, String name, String description, String ingredients, String date,
-                String authorName, int likesCount, int commentsCount, String postImage,
-                List<Category> categories, List<Ingredient> shopIngredients) {
-        this.id = id;
-        this.authorID = authorID;
-        this.postTitle = name;
-        this.description = description;
-        this.ingredients = ingredients;
-        this.date = date;
-        this.authorName = authorName;
-        this.likesCount = likesCount;
-        this.commentsCount = commentsCount;
-        this.postImage = "http://192.168.88.63/data/files/post/" + postImage;
-        this.categories = categories;
-        this.shopIngredients = shopIngredients;
-    }
 
     public int getId() {
         return id;
@@ -101,5 +90,17 @@ public class Post {
 
     public List<Ingredient> getShopIngredients() {
         return shopIngredients;
+    }
+
+    public String getPostTitle() {
+        return postTitle;
+    }
+
+    public int isLiked() {
+        return isLiked;
+    }
+
+    public String getAuthorImg() {
+        return authorImg;
     }
 }

@@ -30,9 +30,10 @@
         <activity android:name=".activities.DetailPostActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RegistrationActivity" />
-        <activity android:name=".activities.VerificationActivity"/>
+        <activity android:name=".activities.VerificationActivity" />
         <activity android:name=".activities.UserActivity" />
-        <activity android:name=".activities.SettingsActivity"></activity>
+        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".activities.ChatActivity"></activity>
     </application>
 
 </manifest>

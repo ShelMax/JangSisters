@@ -17,8 +17,6 @@ import static kr.sofac.jangsisters.config.EnumPreference.USER_ID;
 
 public class LoginActivity extends BaseActivity {
 
-    //TODO Подумать, куда перекидывать после logout, с LoginActivity не вернуться на главную
-
     @BindView(R.id.editTextEmail)
     TextInputEditText editTextEmail;
     @BindView(R.id.editTextPassword)
@@ -52,7 +50,10 @@ public class LoginActivity extends BaseActivity {
     public void requestAuthorization(String email, String password) {
         if (!email.isEmpty() && !password.isEmpty()) {
             progressBar.showView();
-            new Connection<User>().signInCustomer(new SenderContainerDTO(password, email, ""), (isSuccess, answerServerResponse) -> {
+            new Connection<User>().signInCustomer(new SenderContainerDTO()
+                    .setEmail(email)
+                    .setPassword(password)
+                    .setGoogleCloudKey(""), (isSuccess, answerServerResponse) -> {
                 if (isSuccess) {
                     appPreference.setUser(answerServerResponse.getDataTransferObject());
                     if (0 == answerServerResponse.getDataTransferObject().getVisible()) {
@@ -72,15 +73,14 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void startLaunchActivity() {
-        startActivity(new Intent(this, LaunchActivity.class));
+        startActivity(new Intent(LoginActivity.this, LaunchActivity.class));
         finishAffinity();
     }
 
     public void startVerificationUserActivity(Integer userID) {
         if (0 != userID) {
-            Intent intent = new Intent(this, VerificationActivity.class);
-            intent.putExtra(USER_ID.toString(), userID);
-            startActivity(intent);
+            startActivity(new Intent(LoginActivity.this, VerificationActivity.class)
+                    .putExtra(USER_ID.toString(), userID));
         } else {
             showToast("You not registered user or not correct email!");
         }

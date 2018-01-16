@@ -13,6 +13,8 @@ Sed tempor ornare nunc vel tempor. Phasellus consectetur venenatis purus, eget r
 
 Nam vehicula ex a efficitur aliquet. Quisque blandit et augue non malesuada. Integer non neque ex. Maecenas consectetur sodales ex, in porttitor magna luctus in. Praesent at ante id orci consequat viverra in vitae eros. Ut nibh lorem, aliquam eu egestas vitae, malesuada in nunc. Suspendisse arcu tortor, rutrum sit amet egestas eu, volutpat id justo. Nunc congue turpis diam, vitae pulvinar urna ullamcorper accumsan. Nullam ac fermentum tellus. Maecenas nec malesuada magna. Donec dolor ligula, lacinia eu metus pellentesque, dictum molestie arcu. Integer iaculis erat vel pretium tincidunt. Sed gravida quam id volutpat consectetur.</string>
 
+
+    <string name="lorem_small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur porta faucibus nisi eu ornare. Fusce consequat, mauris id fringilla maximus, ligula velit luctus quam, et sodales nibh dui eget urna.</string>
     <string name="bookmark">bookmark</string>
     <string name="like">like</string>
     <string name="comment">comment</string>

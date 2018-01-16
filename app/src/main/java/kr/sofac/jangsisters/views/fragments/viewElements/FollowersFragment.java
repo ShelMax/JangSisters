@@ -15,15 +15,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.activities.BaseActivity;
 import kr.sofac.jangsisters.activities.UserActivity;
 import kr.sofac.jangsisters.config.EnumPreference;
-import kr.sofac.jangsisters.models.SimpleListCallback;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
-import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 import kr.sofac.jangsisters.utils.ProgressBar;
-import kr.sofac.jangsisters.utils.UserWrapper;
 import kr.sofac.jangsisters.views.adapters.FollowersAdapter;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
@@ -32,7 +28,6 @@ public class FollowersFragment extends BaseFragment{
     @BindView(R.id.recycler) RecyclerView recycler;
     private List<User> users;
     private ProgressBar progressBar;
-    private boolean isFollowers;
 
     @Nullable
     @Override
@@ -41,7 +36,7 @@ public class FollowersFragment extends BaseFragment{
         ButterKnife.bind(this, view);
         progressBar = new ProgressBar(getActivity());
         progressBar.showView();
-        isFollowers = getArguments().getBoolean(EnumPreference.FOLLOWERS.toString());
+        boolean isFollowers = getArguments().getBoolean(EnumPreference.FOLLOWERS.toString());
         if(isFollowers)
             loadFollowers();
         else

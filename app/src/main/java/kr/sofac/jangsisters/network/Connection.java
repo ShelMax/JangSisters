@@ -14,6 +14,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.sofac.jangsisters.models.Comment;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.api.ManagerRetrofit;
@@ -132,6 +133,34 @@ public class Connection<T> {
         });
     }
 
+    public void addCommentToPost(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+        answerServerResponse = async;
+        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, "addComment",
+                (isSuccess, answerString) -> {
+            if (isSuccess) {
+                Type typeAnswer = new TypeToken<ServerResponse<Comment>>() { //Change type response
+                }.getType();
+                tryParsing(answerString, typeAnswer);
+            } else {
+                answerServerResponse.processFinish(false, null);
+            }
+        });
+    }
+
+    public void getPostComments(int postID, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+        answerServerResponse = async;
+        new ManagerRetrofit<Integer>().sendRequest(postID, "getPostListComments",
+                (isSuccess, answerString) -> {
+                    if (isSuccess) {
+                        Type typeAnswer = new TypeToken<ServerResponse<List<Comment>>>() { //Change type response
+                        }.getType();
+                        tryParsing(answerString, typeAnswer);
+                    } else {
+                        answerServerResponse.processFinish(false, null);
+                    }
+                });
+    }
+
     public void getFollowers(Integer userID, AnswerServerResponse<T> async){
         answerServerResponse = async;
         new ManagerRetrofit<Integer>().sendRequest(userID, "getListSubscribers",
@@ -154,6 +183,38 @@ public class Connection<T> {
                 ((isSuccess, answerString) -> {
                     if(isSuccess){
                         Type typeAnswer = new TypeToken<ServerResponse<List<User>>>(){
+                        }.getType();
+                        tryParsing(answerString, typeAnswer);
+                    }
+                    else{
+                        answerServerResponse.processFinish(false, null);
+                    }
+                })
+        );
+    }
+
+    public void getUserByID(Integer userID, AnswerServerResponse<T> async){
+        answerServerResponse = async;
+        new ManagerRetrofit<Integer>().sendRequest(userID, "getUser",
+                ((isSuccess, answerString) -> {
+                    if(isSuccess){
+                        Type typeAnswer = new TypeToken<ServerResponse<User>>(){
+                        }.getType();
+                        tryParsing(answerString, typeAnswer);
+                    }
+                    else{
+                        answerServerResponse.processFinish(false, null);
+                    }
+                })
+        );
+    }
+
+    public void likePost(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async){
+        answerServerResponse = async;
+        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, "addLike",
+                ((isSuccess, answerString) -> {
+                    if(isSuccess){
+                        Type typeAnswer = new TypeToken<ServerResponse>(){
                         }.getType();
                         tryParsing(answerString, typeAnswer);
                     }
