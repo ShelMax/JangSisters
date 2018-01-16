@@ -27,11 +27,10 @@ import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.OnLoggedOut;
 import kr.sofac.jangsisters.models.TabManager;
-import kr.sofac.jangsisters.utils.AppPreference;
-import kr.sofac.jangsisters.views.fragments.containers.SearchFragment;
 import kr.sofac.jangsisters.views.fragments.containers.HelpFragment;
 import kr.sofac.jangsisters.views.fragments.containers.HomeFragment;
 import kr.sofac.jangsisters.views.fragments.containers.ProfileFragment;
+import kr.sofac.jangsisters.views.fragments.containers.SearchFragment;
 import kr.sofac.jangsisters.views.fragments.containers.ShopFragment;
 import kr.sofac.jangsisters.views.fragments.viewElements.NotSignedFragment;
 
@@ -61,17 +60,16 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
     public void onBackPressed() {
         if (viewPager.getCurrentItem() == 0) {
             shopFragment.backClick();
-        } else if(viewPager.getCurrentItem() == 1){
+        } else if (viewPager.getCurrentItem() == 1) {
             searchFragment.hideSlideUp();
-        }
-        else{
+        } else {
             super.onBackPressed();
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.filter){
+        if (item.getItemId() == R.id.filter) {
             drawer.openDrawer(Gravity.END);
         }
         return super.onOptionsItemSelected(item);
@@ -101,15 +99,14 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
         adapter.addFragment(searchFragment, tabManager.getNameByPosition(1));
         adapter.addFragment(new HomeFragment(), tabManager.getNameByPosition(2));
         adapter.addFragment(new HelpFragment(), tabManager.getNameByPosition(3));
-        if(appPreference.getUser() != null){
+        if (appPreference.getUser() != null) {
             ProfileFragment profileFragment = new ProfileFragment();
             Bundle bundle = new Bundle();
             bundle.putInt(EnumPreference.USER_ID.toString(), appPreference.getUser().getId());
             bundle.putBoolean(EnumPreference.MY_PROFILE.toString(), true);
             profileFragment.setArguments(bundle);
             adapter.addFragment(profileFragment, tabManager.getNameByPosition(4));
-        }
-        else {
+        } else {
             adapter.addFragment(new NotSignedFragment(), tabManager.getNameByPosition(4));
         }
 
@@ -120,7 +117,7 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()){
+                switch (tab.getPosition()) {
                     case 0:
                         shopFragment.setOpened(true);
                         toolbar.setNavigationIcon(R.drawable.home_white);
@@ -156,15 +153,12 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
             public void onTabUnselected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 2) {
                     tabHome.setSelected(false);
-                }
-                else if(tab.getPosition() == 0 ){
+                } else if (tab.getPosition() == 0) {
                     toolbar.setTitle(null);
                     shopFragment.setOpened(false);
-                }
-                else if(tab.getPosition() == 1){
+                } else if (tab.getPosition() == 1) {
                     search.setVisibility(View.GONE);
-                }
-                else if(tab.getPosition() == 3){
+                } else if (tab.getPosition() == 3) {
                     toolbar.setTitle(null);
                 }
             }
@@ -177,12 +171,13 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
 
         tabLayout.setupWithViewPager(viewPager);
 
-        for(int i = 0; i<5;i++){
+        for (int i = 0; i < 5; i++) {
             tabLayout.getTabAt(i).setIcon(getResources().getDrawable(tabManager.getDrawableByPosition(i)));
         }
         searchFragment.onSetTextChanged(search);
     }
 
+    //TODO Category
     private void initDrawerEndPosition() {
         drawer.addDrawerListener(new ActionBarDrawerToggle(this, drawer,
                 toolbar, R.string.open, R.string.close));
@@ -248,11 +243,11 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            if(position ==4 && !isLogged){
+            if (position == 4 && !isLogged) {
                 super.destroyItem(container, position, object);
                 mFragmentList.remove(4);
                 mFragmentList.add(new NotSignedFragment());
-                for(int i = 0; i<5;i++){
+                for (int i = 0; i < 5; i++) {
                     tabLayout.getTabAt(i).setIcon(getResources().getDrawable(tabManager.getDrawableByPosition(i)));
                 }
             }
