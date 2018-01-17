@@ -7,11 +7,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.List;
+
+import kr.sofac.jangsisters.models.Category;
 import kr.sofac.jangsisters.models.User;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.Context.USER_SERVICE;
 import static kr.sofac.jangsisters.config.EnumPreference.APP_PREFERENCES;
+import static kr.sofac.jangsisters.config.EnumPreference.CATEGORY_PREF;
 import static kr.sofac.jangsisters.config.EnumPreference.GOOGLE_CLOUD_PREFERENCE;
 import static kr.sofac.jangsisters.config.EnumPreference.IS_AUTHORIZATION;
 
@@ -60,5 +64,17 @@ public class AppPreference {
     public void clearUser(){
         editor.clear().commit();
     }
+
+    public void saveCategories(List<Category> categoryList){
+        editor.putString(CATEGORY_PREF.toString(), gson.toJson(categoryList));
+        editor.apply();
+        editor.commit();
+    }
+
+    public List<Category> getCategories(){
+        return gson.fromJson(preferences.getString(CATEGORY_PREF.toString(), ""), new TypeToken<List<Category>>(){}.getType());
+    }
+
+
 
 }

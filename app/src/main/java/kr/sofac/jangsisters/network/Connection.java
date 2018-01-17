@@ -14,6 +14,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.sofac.jangsisters.models.Category;
 import kr.sofac.jangsisters.models.Comment;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.User;
@@ -238,6 +239,21 @@ public class Connection<T> {
             }
         });
     }
+
+    public void getCorrectVersion(String empty, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+        answerServerResponse = async;
+        new ManagerRetrofit<String>().sendRequest(empty, new Object() {// Change type Object sending / Change data sending
+        }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
+            if (isSuccess) {
+                Type typeAnswer = new TypeToken<ArrayList<Category>>() { //Change type response
+                }.getType();
+                tryParsing(answerString, typeAnswer);
+            } else {
+                answerServerResponse.processFinish(false, null);
+            }
+        });
+    }
+
 
 //     public void createPost(Context context, PostDTO postDTO, ArrayList<Uri> listUri, AnswerServerResponse<T> async) {
 //        answerServerResponse = async;
