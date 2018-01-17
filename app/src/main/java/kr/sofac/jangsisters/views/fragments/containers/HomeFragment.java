@@ -40,8 +40,6 @@ public class HomeFragment extends BaseFragment {
 
     // TODO сообщение если нет новостей, подписчиков и т.д.
 
-    // TODO Chat
-
     // TODO цыфры в кружок
 
     @BindView(R.id.home_recycler) RecyclerView recyclerView;

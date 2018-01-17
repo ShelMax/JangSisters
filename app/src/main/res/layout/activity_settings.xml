@@ -17,15 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:titleTextColor="@android:color/white"
-            app:popupTheme="@style/JangSistersTheme" />
+            app:titleTextColor="@android:color/white" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/background"
             android:background="@drawable/background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <ImageView
                 android:id="@+id/user_image_border"
@@ -111,7 +110,7 @@
             android:paddingEnd="15dp"
             android:paddingStart="15dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/username_text"
+            app:layout_constraintStart_toStartOf="@id/username_text"
             app:layout_constraintTop_toBottomOf="@id/username_text"
             tools:text="Alex" />
 
@@ -121,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Email"
-            app:layout_constraintStart_toStartOf="@+id/username_text"
+            app:layout_constraintStart_toStartOf="@id/username_text"
             app:layout_constraintTop_toBottomOf="@id/username_change" />
 
         <EditText
@@ -134,22 +133,22 @@
             android:inputType="textEmailAddress"
             android:paddingEnd="15dp"
             android:paddingStart="15dp"
-            app:layout_constraintEnd_toEndOf="@+id/username_change"
-            app:layout_constraintStart_toStartOf="@+id/username_change"
+            app:layout_constraintEnd_toEndOf="@id/username_change"
+            app:layout_constraintStart_toStartOf="@id/username_change"
             app:layout_constraintTop_toBottomOf="@id/email_text"
             tools:text="alex@a.com" />
 
         <TextView
-            android:id="@+id/description_text"
+            android:id="@+id/blog_name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Description"
+            android:text="Blog name"
             app:layout_constraintStart_toStartOf="@id/email_change"
             app:layout_constraintTop_toBottomOf="@id/email_change" />
 
         <EditText
-            android:id="@+id/description_change"
+            android:id="@+id/blog_name_change"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
@@ -158,22 +157,51 @@
             android:inputType="textPersonName"
             android:paddingEnd="15dp"
             android:paddingStart="15dp"
-            app:layout_constraintEnd_toEndOf="@+id/email_change"
-            app:layout_constraintStart_toStartOf="@+id/email_change"
-            app:layout_constraintTop_toBottomOf="@id/description_text"
+            app:layout_constraintEnd_toEndOf="@id/email_change"
+            app:layout_constraintStart_toStartOf="@id/email_change"
+            app:layout_constraintTop_toBottomOf="@id/blog_name_text"
             tools:text="This is my blog" />
+
+        <TextView
+            android:id="@+id/blog_description_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Blog description"
+            app:layout_constraintStart_toStartOf="@+id/blog_description_change"
+            app:layout_constraintTop_toBottomOf="@+id/blog_name_change" />
+
+
+        <EditText
+            android:id="@+id/blog_description_change"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_edittext"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            app:layout_constraintEnd_toEndOf="@id/email_change"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/email_change"
+            app:layout_constraintTop_toBottomOf="@+id/blog_description_text"
+            tools:text="Description about blog" />
 
         <kr.sofac.jangsisters.views.customview.ButtonLight
             android:id="@+id/save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
             android:layout_marginEnd="88dp"
             android:layout_marginStart="88dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:text="Save"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.056"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/description_change" />
+            app:layout_constraintTop_toBottomOf="@+id/blog_description_change" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

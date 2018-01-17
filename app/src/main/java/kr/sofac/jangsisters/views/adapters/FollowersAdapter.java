@@ -37,8 +37,9 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Glide.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_POST +
+        Glide.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR +
                 followers.get(position).getAvatar())
+                .apply(new RequestOptions().placeholder(R.drawable.avatar_holder))
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.image);
         holder.username.setText(followers.get(position).getName());

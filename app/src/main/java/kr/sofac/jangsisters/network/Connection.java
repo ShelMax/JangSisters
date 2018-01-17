@@ -242,7 +242,7 @@ public class Connection<T> {
 //     public void createPost(Context context, PostDTO postDTO, ArrayList<Uri> listUri, AnswerServerResponse<T> async) {
 //        answerServerResponse = async;
 //        new ManagerRetrofit<PostDTO>().sendMultiPartRequest(postDTO, new Object() {// Change (type sending) / (data sending)
-//        }.getClass().getEnclosingMethod().getName(), generateMultiPartList(listUri, context), (isSuccess, answerString) -> {
+//        }.getClass().getEnclosingMethod().getTitle(), generateMultiPartList(listUri, context), (isSuccess, answerString) -> {
 //            if (isSuccess) {
 //                Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response(тип ответа)
 //                }.getType();
@@ -257,7 +257,7 @@ public class Connection<T> {
 //    public void updatePost(Context context, PostDTO postDTO, ArrayList<Uri> listUri, ArrayList<String> listDeletingFiles, AnswerServerResponse<T> async) {
 //        answerServerResponse = async;
 //        new ManagerRetrofit<PostDTO>().sendMultiPartWithTwoObj(postDTO, new Object() {// Change (type sending) / (data sending)
-//        }.getClass().getEnclosingMethod().getName(), generateMultiPartList(listUri, context), listDeletingFiles, (isSuccess, answerString) -> {
+//        }.getClass().getEnclosingMethod().getTitle(), generateMultiPartList(listUri, context), listDeletingFiles, (isSuccess, answerString) -> {
 //            if (isSuccess) {
 //                Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response(тип ответа)
 //                }.getType();

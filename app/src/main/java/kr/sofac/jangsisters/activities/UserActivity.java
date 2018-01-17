@@ -1,18 +1,27 @@
 package kr.sofac.jangsisters.activities;
 
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.views.fragments.containers.ProfileFragment;
 
 public class UserActivity extends BaseActivity {
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        ButterKnife.bind(this);
+        initToolbar();
         FragmentManager fragmentManager = getSupportFragmentManager();
         Bundle bundle = new Bundle();
         bundle.putInt(EnumPreference.USER_ID.toString(),
@@ -24,5 +33,17 @@ public class UserActivity extends BaseActivity {
         fragmentManager.beginTransaction()
                 .add(R.id.userFrame, profileFragment)
                 .commit();
+    }
+
+    private void initToolbar() {
+        toolbar.setTitle("Profile");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.add);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo add post
+            }
+        });
     }
 }

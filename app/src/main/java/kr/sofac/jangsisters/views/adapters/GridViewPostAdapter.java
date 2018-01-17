@@ -38,12 +38,12 @@ public class GridViewPostAdapter extends RecyclerView.Adapter<GridViewPostAdapte
     @Override
     public void onBindViewHolder(GridViewPostAdapter.ViewHolder holder, int position) {
         Glide.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_POST + posts.get(position * 2).getPostImage()).into(holder.first);
-        holder.firstTitle.setText(posts.get(position * 2).getName());
+        holder.firstTitle.setText(posts.get(position * 2).getTitle());
         holder.first.setOnClickListener(view ->
                 callback.itemClick(position * 2));
         if(position * 2 != posts.size() - 1){
             Glide.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_POST + posts.get(position * 2 + 1).getPostImage()).into(holder.second);
-            holder.secondTitle.setText(posts.get(position * 2 + 1).getName());
+            holder.secondTitle.setText(posts.get(position * 2 + 1).getTitle());
             holder.itemView.setOnClickListener(view -> callback.itemClick(position * 2 + 1));
         }
         else{

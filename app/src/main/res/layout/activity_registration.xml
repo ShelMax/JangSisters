@@ -62,6 +62,8 @@
             style="@style/TextInputEditTextStyle"
             android:drawableStart="@drawable/email"
             android:hint="Email"
+            android:drawablePadding="8dp"
+            android:paddingStart="8dp"
             android:inputType="textEmailAddress"
             android:textColor="@color/colorWhite" />
     </android.support.design.widget.TextInputLayout>
@@ -87,6 +89,9 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/lock"
             android:hint="Password"
+            android:drawablePadding="8dp"
+            android:paddingStart="8dp"
+            android:inputType="textPassword"
             android:textColor="@color/colorWhite" />
     </android.support.design.widget.TextInputLayout>
 
@@ -111,6 +116,8 @@
             style="@style/TextInputEditTextStyle"
             android:drawableStart="@drawable/account_white"
             android:hint="Name"
+            android:drawablePadding="8dp"
+            android:paddingStart="8dp"
             android:textColor="@color/colorWhite" />
     </android.support.design.widget.TextInputLayout>
 

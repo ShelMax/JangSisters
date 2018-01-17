@@ -5,12 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
-
-import java.util.List;
 
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.models.Ingredient;
 
 public class PostIngredientsAdapter extends BaseAdapter {
 
@@ -43,7 +39,7 @@ public class PostIngredientsAdapter extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         convertView = inflater.inflate(R.layout.item_post_ingredient, null);
 //        TextView name = convertView.findViewById(R.id.item_post_ingredient_name);
-//        name.setText(ingredients.get(i).getName());
+//        name.setText(ingredients.get(i).getTitle());
         return convertView;
     }
 }

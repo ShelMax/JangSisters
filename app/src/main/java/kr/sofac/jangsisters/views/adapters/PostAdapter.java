@@ -45,11 +45,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 .into(holder.image);
         Glide.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR + items.get(position).getAuthorImg())
                 .apply(RequestOptions.circleCropTransform())
-                .apply(new RequestOptions().placeholder(R.drawable.boy))
+                .apply(new RequestOptions().placeholder(R.drawable.avatar_holder))
                 .into(holder.authorImage);
 
         holder.author.setText(items.get(position).getAuthorName());
-        holder.title.setText(items.get(position).getName());
+        holder.title.setText(items.get(position).getTitle());
         holder.date.setText(items.get(position).getDate());
         holder.comments.setText(String.valueOf(items.get(position).getCommentsCount()));
         holder.likes.setText(String.valueOf(items.get(position).getLikesCount()));

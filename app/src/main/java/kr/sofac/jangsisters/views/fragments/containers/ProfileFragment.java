@@ -22,7 +22,6 @@ import com.bumptech.glide.request.RequestOptions;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.activities.LoginActivity;
 import kr.sofac.jangsisters.activities.SettingsActivity;
 import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.config.ServersConfig;
@@ -30,7 +29,6 @@ import kr.sofac.jangsisters.models.OnLoggedOut;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
-import kr.sofac.jangsisters.network.api.type.ServerResponse;
 import kr.sofac.jangsisters.utils.AppPreference;
 import kr.sofac.jangsisters.utils.ProgressBar;
 import kr.sofac.jangsisters.views.customview.ButtonLight;
@@ -43,6 +41,8 @@ public class ProfileFragment extends BaseFragment {
     @BindView(R.id.user_image) ImageView userImage;
     @BindView(R.id.username) TextView username;
     @BindView(R.id.tabLayout) TabLayout tabLayout;
+    @BindView(R.id.description)
+    TextView description;
     @BindView(R.id.user_balance) TextView userBalance;
     @BindView(R.id.message) ButtonLight message;
     @BindView(R.id.follow) ButtonLight follow;
@@ -67,13 +67,13 @@ public class ProfileFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
-        listener = (OnLoggedOut) getActivity();
 
         progressBar = new ProgressBar(getActivity());
         appPreference = new AppPreference(getActivity());
         userID = getArguments().getInt(EnumPreference.USER_ID.toString());
         myProfile = getArguments().getBoolean(EnumPreference.MY_PROFILE.toString());
         if(myProfile){
+            listener = (OnLoggedOut) getActivity();
             follow.setVisibility(View.GONE);
             message.setVisibility(View.GONE);
             user = appPreference.getUser();
@@ -89,10 +89,11 @@ public class ProfileFragment extends BaseFragment {
     private void updateUI() {
         Glide.with(this).load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR+
                 user.getAvatar())
-                .apply(new RequestOptions().placeholder(R.drawable.boy))
+                .apply(new RequestOptions().placeholder(R.drawable.avatar_holder))
                 .apply(RequestOptions.circleCropTransform())
                 .into(userImage);
         username.setText(user.getName());
+        description.setText(user.getBlogDescription());
 
         initFragments();
         initTabLayout();
@@ -202,6 +203,13 @@ public class ProfileFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if (!myProfile)
+            menu.findItem(R.id.logout).setVisible(false);
     }
 
     @Override

@@ -52,16 +52,17 @@
         android:layout_marginEnd="20dp" />
 
     <TextView
+        android:id="@+id/item_post_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:minLines="1"
         android:textColor="#fff"
-        app:layout_constraintBottom_toTopOf="@id/item_post_ingredients"
+        app:layout_constraintBottom_toTopOf="@+id/item_post_categories"
         app:layout_constraintLeft_toLeftOf="@id/item_post_categories"
-        app:layout_constraintRight_toLeftOf="@id/item_post_ingredients"
-        android:id="@+id/item_post_description"/>
+        app:layout_constraintRight_toLeftOf="@id/item_post_ingredients" />
 
     <View
         android:layout_width="100dp"

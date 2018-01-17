@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,7 +37,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         Glide.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR
                 + comments.get(position).getUserImage())
                 .apply(RequestOptions.circleCropTransform())
-                .apply(new RequestOptions().placeholder(R.drawable.boy))
+                .apply(new RequestOptions().placeholder(R.drawable.avatar_holder))
                 .into(holder.userImage);
         holder.username.setText(comments.get(position).getUsername());
         holder.date.setText(comments.get(position).getDate());

@@ -70,8 +70,8 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/email"
             android:hint=" Email"
-            android:paddingStart="5dp"
-            android:padding="5dp"
+            android:paddingStart="8dp"
+            android:drawablePadding="8dp"
             android:inputType="textEmailAddress"
             android:textColor="@color/colorWhite" />
     </android.support.design.widget.TextInputLayout>
@@ -98,8 +98,8 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/lock"
             android:hint=" Password"
-            android:paddingStart="5dp"
-            android:padding="5dp"
+            android:paddingStart="8dp"
+            android:drawablePadding="8dp"
             android:inputType="textPassword"
             android:textColor="@color/colorWhite" />
     </android.support.design.widget.TextInputLayout>

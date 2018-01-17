@@ -30,6 +30,7 @@ import kr.sofac.jangsisters.network.api.type.ServerResponse;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 import kr.sofac.jangsisters.views.adapters.CategoryAdapter;
 import kr.sofac.jangsisters.views.adapters.CommentAdapter;
+import kr.sofac.jangsisters.views.adapters.DetailPostAdapter;
 
 import static kr.sofac.jangsisters.config.ServersConfig.BASE_URL;
 import static kr.sofac.jangsisters.config.ServersConfig.PART_AVATAR;
@@ -43,7 +44,8 @@ public class DetailPostActivity extends BaseActivity {
     @BindView(R.id.post_detailed_date) TextView date;
     @BindView(R.id.post_detailed_author) TextView author;
     @BindView(R.id.post_detailed_toolbar) Toolbar toolbar;
-    @BindView(R.id.textViewContent) TextView textViewContent;
+    @BindView(R.id.textViewContent)
+    RecyclerView textViewContent;
 
     @BindView(R.id.like) Button like;
     @BindView(R.id.comment) Button comment;
@@ -56,7 +58,8 @@ public class DetailPostActivity extends BaseActivity {
     private LinearLayoutManager layoutManager;
     private int userID;
     private int postID;
-    private CommentAdapter adapter;
+    private CommentAdapter commentAdapter;
+    private DetailPostAdapter adapter;
 
     private boolean isLiked;
 
@@ -107,8 +110,8 @@ public class DetailPostActivity extends BaseActivity {
         progressBar.showView();
         new Connection<List<Comment>>().getPostComments(postID, (isSuccess, answerServerResponse) -> {
             if(isSuccess){
-                adapter = new CommentAdapter(answerServerResponse.getDataTransferObject());
-                commentsList.setAdapter(adapter);
+                commentAdapter = new CommentAdapter(answerServerResponse.getDataTransferObject());
+                commentsList.setAdapter(commentAdapter);
                 commentsList.setLayoutManager(new LinearLayoutManager(this));
             }
             else{
@@ -228,11 +231,17 @@ public class DetailPostActivity extends BaseActivity {
     }
 
     private void fillUpContentPost() {
-        //textViewContent.setText(post.getDescription());
+        LinearLayoutManager managerImages = new LinearLayoutManager(this);
+        LinearLayoutManager managerVideos = new LinearLayoutManager(this);
+        managerImages.setOrientation(LinearLayoutManager.HORIZONTAL);
+        managerVideos.setOrientation(LinearLayoutManager.HORIZONTAL);
+        adapter = new DetailPostAdapter(post.getBody());
+        textViewContent.setAdapter(adapter);
+        textViewContent.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void initToolbar() {
-        toolbar.setTitle(post.getName());
+        toolbar.setTitle(post.getTitle());
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationIcon(R.drawable.arrow_left_white);
         setSupportActionBar(toolbar);

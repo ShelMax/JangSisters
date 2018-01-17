@@ -1,5 +1,7 @@
 package kr.sofac.jangsisters.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
 
     private int id;
@@ -9,12 +11,11 @@ public class User {
     private String avatar;
     private int balance;
 
-    public User(int id, String email, String name, int visible) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.visible = visible;
-    }
+    @SerializedName("blog_name")
+    private String blogName;
+
+    @SerializedName("blog_description")
+    private String blogDescription;
 
     public int getId() {
         return id;
@@ -56,6 +57,13 @@ public class User {
         return avatar;
     }
 
+    public String getBlogName() {
+        return blogName;
+    }
+
+    public String getBlogDescription() {
+        return blogDescription;
+    }
 
     @Override
     public String toString() {

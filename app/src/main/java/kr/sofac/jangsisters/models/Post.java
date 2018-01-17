@@ -1,6 +1,7 @@
 package kr.sofac.jangsisters.models;
 
 import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Post {
@@ -10,18 +11,18 @@ public class Post {
     @SerializedName("customer_id")
     private int authorID;
 
-    @SerializedName("name")
-    private String postTitle;
+    private String title;
 
     @SerializedName("avatar")
     private String authorImg;
 
-    @SerializedName("body")
     private String description;
 
     private String ingredients;
 
     private String date;
+
+    private List<Category> categories;
 
     @SerializedName("customer_name")
     private String authorName;
@@ -35,13 +36,13 @@ public class Post {
     @SerializedName("post_image")
     private String postImage;
 
-    private List<Category> categories;
-
     @SerializedName("shop_ingredients")
     private List<Ingredient> shopIngredients;
 
     @SerializedName("is_likes")
     private int isLiked;
+
+    private List<PostElement> body;
 
 
     public int getId() {
@@ -52,8 +53,8 @@ public class Post {
         return authorID;
     }
 
-    public String getName() {
-        return postTitle;
+    public String getTitle() {
+        return title;
     }
 
     public String getDescription() {
@@ -92,15 +93,15 @@ public class Post {
         return shopIngredients;
     }
 
-    public String getPostTitle() {
-        return postTitle;
-    }
-
     public int isLiked() {
         return isLiked;
     }
 
     public String getAuthorImg() {
         return authorImg;
+    }
+
+    public List<PostElement> getBody() {
+        return body;
     }
 }
