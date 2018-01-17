@@ -18,6 +18,7 @@ import static kr.sofac.jangsisters.config.EnumPreference.APP_PREFERENCES;
 import static kr.sofac.jangsisters.config.EnumPreference.CATEGORY_PREF;
 import static kr.sofac.jangsisters.config.EnumPreference.GOOGLE_CLOUD_PREFERENCE;
 import static kr.sofac.jangsisters.config.EnumPreference.IS_AUTHORIZATION;
+import static kr.sofac.jangsisters.config.EnumPreference.VERSION_CATEGORIES;
 
 public class AppPreference {
 
@@ -73,6 +74,16 @@ public class AppPreference {
 
     public List<Category> getCategories(){
         return gson.fromJson(preferences.getString(CATEGORY_PREF.toString(), ""), new TypeToken<List<Category>>(){}.getType());
+    }
+
+    public int getVersionCategories() {
+        return preferences.getInt(VERSION_CATEGORIES.toString(), 0);
+    }
+
+    public void setVersionCategories(int versionID) {
+        editor.putInt(VERSION_CATEGORIES.toString(), versionID);
+        editor.apply();
+        editor.commit();
     }
 
 

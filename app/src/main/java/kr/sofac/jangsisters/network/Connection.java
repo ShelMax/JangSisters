@@ -18,6 +18,7 @@ import kr.sofac.jangsisters.models.Category;
 import kr.sofac.jangsisters.models.Comment;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.User;
+import kr.sofac.jangsisters.models.Version;
 import kr.sofac.jangsisters.network.api.ManagerRetrofit;
 import kr.sofac.jangsisters.network.api.type.ServerResponse;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
@@ -125,7 +126,7 @@ public class Connection<T> {
         new ManagerRetrofit<String>().sendRequest(emptyString, new Object() {// Change type Object sending / Change data sending
         }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response
+                Type typeAnswer = new TypeToken<List<Category>>() { //Change type response
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {
@@ -245,7 +246,7 @@ public class Connection<T> {
         new ManagerRetrofit<String>().sendRequest(empty, new Object() {// Change type Object sending / Change data sending
         }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<ArrayList<Category>>() { //Change type response
+                Type typeAnswer = new TypeToken<Version>() { //Change type response
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {
@@ -253,6 +254,8 @@ public class Connection<T> {
             }
         });
     }
+
+
 
 
 //     public void createPost(Context context, PostDTO postDTO, ArrayList<Uri> listUri, AnswerServerResponse<T> async) {
