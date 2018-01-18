@@ -13,7 +13,7 @@ import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 
-import static kr.sofac.jangsisters.config.EnumPreference.USER_ID;
+import static kr.sofac.jangsisters.config.EnumPreference.MY_USER;
 
 public class LoginActivity extends BaseActivity {
 
@@ -55,10 +55,10 @@ public class LoginActivity extends BaseActivity {
                     .setPassword(password)
                     .setGoogleCloudKey(""), (isSuccess, answerServerResponse) -> {
                 if (isSuccess) {
-                    appPreference.setUser(answerServerResponse.getDataTransferObject());
                     if (0 == answerServerResponse.getDataTransferObject().getVisible()) {
-                        startVerificationUserActivity(answerServerResponse.getDataTransferObject().getId());
+                        startVerificationUserActivity(answerServerResponse.getDataTransferObject());
                     } else {
+                        appPreference.setUser(answerServerResponse.getDataTransferObject());
                         appPreference.setAuthorization(true);
                         startLaunchActivity();
                     }
@@ -77,13 +77,17 @@ public class LoginActivity extends BaseActivity {
         finishAffinity();
     }
 
-    public void startVerificationUserActivity(Integer userID) {
-        if (0 != userID) {
-            startActivity(new Intent(LoginActivity.this, VerificationActivity.class)
-                    .putExtra(USER_ID.toString(), userID));
+    public void startVerificationUserActivity(User user) {
+        if (0 != user.getId()) {
+            startActivity(new Intent(LoginActivity.this, VerificationActivity.class).putExtra(MY_USER.toString(), user));
         } else {
             showToast("You not registered user or not correct email!");
         }
 
+    }
+
+    @OnClick(R.id.buttonBack)
+    public void onBackClicked() {
+        finish();
     }
 }

@@ -113,6 +113,7 @@
         android:choiceMode="singleChoice"
         app:itemBackground="@drawable/navigation_back"
         app:itemTextColor="#fff"
-        app:menu="@menu/menu_home" />
+        app:menu="@menu/menu_home"/>
+
 
 </android.support.v4.widget.DrawerLayout>

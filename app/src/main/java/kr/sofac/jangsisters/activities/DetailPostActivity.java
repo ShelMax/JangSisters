@@ -41,7 +41,7 @@ import kr.sofac.jangsisters.views.adapters.PostIngredientsAdapter;
 
 import static kr.sofac.jangsisters.config.ServersConfig.BASE_URL;
 import static kr.sofac.jangsisters.config.ServersConfig.PART_AVATAR;
-import static kr.sofac.jangsisters.config.ServersConfig.PART_POST_IMAGE;
+import static kr.sofac.jangsisters.config.ServersConfig.PART_POST;
 
 public class DetailPostActivity extends BaseActivity {
 
@@ -145,7 +145,7 @@ public class DetailPostActivity extends BaseActivity {
 
     private void fillUpHeader() {
         Glide.with(this)
-                .load(BASE_URL + PART_POST_IMAGE + post.getPostImage())
+                .load(BASE_URL + PART_POST + post.getPostImage())
                 .apply(RequestOptions.centerCropTransform().placeholder(R.drawable.background_holder).error(R.drawable.background_holder))
                 .into(postImage);
         Glide.with(this)
@@ -289,7 +289,7 @@ public class DetailPostActivity extends BaseActivity {
     private void initCategories() {
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        categoriesList.setAdapter(new CategoryAdapter(post.getCategories()));
+        categoriesList.setAdapter(new CategoryAdapter(post.getCategories(),true));
         categoriesList.setLayoutManager(layoutManager);
     }
 

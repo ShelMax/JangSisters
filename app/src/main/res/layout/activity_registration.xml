@@ -5,17 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="kr.sofac.jangsisters.activities.RegistrationActivity"
-    tools:layout_editor_absoluteY="25dp">
+    tools:context="kr.sofac.jangsisters.activities.RegistrationActivity"    >
 
 
     <ImageView
         android:id="@+id/background"
-        android:layout_width="411dp"
-        android:layout_height="659dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:visibility="visible"
-        app:srcCompat="@drawable/background" />
+        app:srcCompat="@drawable/background_holder" />
+
+    <android.support.design.widget.CheckableImageButton
+        android:id="@+id/buttonBack"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorTransparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_left_white" />
 
     <ImageView
         android:id="@+id/logo"
@@ -41,11 +51,11 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/layoutTextEmail"
+        style="@style/TextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        style="@style/TextInputLayout"
         android:textColorHint="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/layoutTextPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,25 +66,25 @@
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/editTextEmail"
+            style="@style/TextInputEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorWhite"
-            style="@style/TextInputEditTextStyle"
+            android:drawablePadding="8dp"
             android:drawableStart="@drawable/email"
             android:hint="Email"
-            android:drawablePadding="8dp"
-            android:paddingStart="8dp"
             android:inputType="textEmailAddress"
+            android:paddingStart="8dp"
             android:textColor="@color/colorWhite" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/layoutTextPassword"
+        style="@style/TextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        style="@style/TextInputLayout"
         android:textColorHint="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/layoutTextUserName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,24 +94,24 @@
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/editTextPassword"
-            android:layout_width="match_parent"
             style="@style/TextInputEditTextStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
             android:drawableStart="@drawable/lock"
             android:hint="Password"
-            android:drawablePadding="8dp"
-            android:paddingStart="8dp"
             android:inputType="textPassword"
+            android:paddingStart="8dp"
             android:textColor="@color/colorWhite" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/layoutTextUserName"
+        style="@style/TextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        style="@style/TextInputLayout"
         android:textColorHint="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/buttonRegistration"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,24 +121,24 @@
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/editTextUserName"
+            style="@style/TextInputEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/TextInputEditTextStyle"
+            android:drawablePadding="8dp"
             android:drawableStart="@drawable/account_white"
             android:hint="Name"
-            android:drawablePadding="8dp"
             android:paddingStart="8dp"
             android:textColor="@color/colorWhite" />
     </android.support.design.widget.TextInputLayout>
 
     <kr.sofac.jangsisters.views.customview.ButtonDark
         android:id="@+id/buttonRegistration"
+        style="@style/ButtonLarge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        style="@style/ButtonLarge"
         android:text="Sign up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

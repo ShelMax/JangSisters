@@ -12,7 +12,7 @@ import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 
-import static kr.sofac.jangsisters.config.EnumPreference.USER_ID;
+import static kr.sofac.jangsisters.config.EnumPreference.MY_USER;
 
 public class RegistrationActivity extends BaseActivity {
 
@@ -48,8 +48,7 @@ public class RegistrationActivity extends BaseActivity {
                     .setName(name)
                     .setGoogleCloudKey(""), (isSuccess, answerServerResponse) -> {
                 if (isSuccess) {
-                    appPreference.setUser(answerServerResponse.getDataTransferObject());
-                    startVerificationUserActivity(answerServerResponse.getDataTransferObject().getId());
+                    startVerificationUserActivity(answerServerResponse.getDataTransferObject());
                 } else {
                     showToast("Some problems with sign up");
                 }
@@ -60,10 +59,15 @@ public class RegistrationActivity extends BaseActivity {
         }
     }
 
-    public void startVerificationUserActivity(Integer userID) {
+    public void startVerificationUserActivity(User user) {
         Intent intent = new Intent(this, VerificationActivity.class);
-        intent.putExtra(USER_ID.toString(), userID);
+        intent.putExtra(MY_USER.toString(), user);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.buttonBack)
+    public void onBackClicked() {
+        finish();
     }
 
 }

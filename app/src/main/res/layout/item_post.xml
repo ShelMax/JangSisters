@@ -1,113 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="310dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="1dp">
+    android:layout_marginBottom="1dp">
 
     <ImageView
+        android:id="@+id/item_post_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="center"
-        android:id="@+id/item_post_image"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_holder" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ab000000"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout"/>
+        android:background="@drawable/gradient_black_transparent"
+        android:orientation="horizontal" />
 
     <ImageView
+        android:id="@+id/item_post_ingredients"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:background="@drawable/round_button_ingredient"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintLeft_toRightOf="@+id/linearLayout"
         app:layout_constraintRight_toRightOf="@+id/linearLayout"
-        android:id="@+id/item_post_ingredients"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <ImageView
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:id="@+id/item_post_icon_cart"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintRight_toRightOf="@+id/linearLayout"
-        app:srcCompat="@drawable/food"
-        android:id="@+id/item_post_icon_cart"/>
+        app:srcCompat="@drawable/ingredients" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/item_post_categories"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/linearLayout"
-        app:layout_constraintRight_toLeftOf="@id/item_post_ingredients"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginBottom="10dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp" />
+        app:layout_constraintBottom_toBottomOf="@id/linearLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/item_post_ingredients" />
 
     <TextView
         android:id="@+id/item_post_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:minLines="1"
         android:textColor="#fff"
+        tools:text="Description post"
         app:layout_constraintBottom_toTopOf="@+id/item_post_categories"
         app:layout_constraintLeft_toLeftOf="@id/item_post_categories"
         app:layout_constraintRight_toLeftOf="@id/item_post_ingredients" />
 
     <View
-        android:layout_width="100dp"
+        android:id="@+id/item_post_divider"
+        android:layout_width="180dp"
         android:layout_height="1dp"
         android:background="@android:color/white"
         app:layout_constraintBottom_toTopOf="@id/item_post_description"
-        app:layout_constraintLeft_toLeftOf="@id/item_post_categories"
-        android:id="@+id/item_post_divider"/>
+        app:layout_constraintLeft_toLeftOf="@id/item_post_categories" />
 
     <TextView
+        android:id="@+id/item_post_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:textColor="#fff"
-        android:textSize="19sp"
+        android:textSize="17sp"
         android:textStyle="bold"
+        tools:text="Title post"
         app:layout_constraintBottom_toTopOf="@id/item_post_divider"
-        app:layout_constraintLeft_toLeftOf="@id/item_post_categories"
-        android:id="@+id/item_post_title"/>
+        app:layout_constraintLeft_toLeftOf="@id/item_post_categories" />
 
     <ImageView
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="10dp"
+        android:id="@+id/item_post_author_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/avatar_holder"
         app:layout_constraintBottom_toTopOf="@id/item_post_title"
-        app:layout_constraintLeft_toLeftOf="@id/item_post_categories"
-        android:id="@+id/item_post_author_image"/>
+        app:layout_constraintLeft_toLeftOf="@id/item_post_categories" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/item_post_comments_image"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@id/item_post_author_image"
         app:layout_constraintStart_toEndOf="@id/item_post_author_image"
-        app:srcCompat="@drawable/comment"
-        android:id="@+id/item_post_comments_image"/>
+        app:srcCompat="@drawable/comment" />
 
     <TextView
         android:id="@+id/item_post_comments"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="1dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="5dp"
         android:textColor="#fff"
-        android:textSize="17sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/item_post_comments_image"
         app:layout_constraintStart_toEndOf="@+id/item_post_comments_image"
         app:layout_constraintTop_toTopOf="@+id/item_post_comments_image"
@@ -128,37 +132,38 @@
         app:layout_constraintTop_toTopOf="@+id/item_post_comments" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/item_post_likes_image"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/item_post_comments"
         app:layout_constraintStart_toEndOf="@+id/item_post_separator"
         app:layout_constraintTop_toTopOf="@+id/item_post_comments"
-        app:srcCompat="@drawable/heart"
-        android:id="@+id/item_post_likes_image"/>
+        app:srcCompat="@drawable/heart" />
 
     <TextView
         android:id="@+id/item_post_likes"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="5dp"
         android:textColor="#fff"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/item_post_likes_image"
         app:layout_constraintStart_toEndOf="@+id/item_post_likes_image"
         app:layout_constraintTop_toTopOf="@+id/item_post_likes_image"
         tools:text="145" />
 
     <TextView
+        android:id="@+id/item_post_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:textColor="#fff"
-        android:textSize="17sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/item_post_author_image"
         app:layout_constraintTop_toTopOf="@id/item_post_author_image"
-        android:id="@+id/item_post_author"/>
+        tools:text="Author" />
 
     <View
         android:id="@+id/item_post_separator2"
@@ -173,12 +178,14 @@
         app:layout_constraintTop_toTopOf="@id/item_post_author" />
 
     <TextView
+        android:id="@+id/item_post_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/item_post_separator2"
-        app:layout_constraintBaseline_toBaselineOf="@id/item_post_author"
         android:layout_marginStart="8dp"
         android:textColor="#fff"
-        android:id="@+id/item_post_date"/>
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/item_post_author"
+        app:layout_constraintStart_toEndOf="@id/item_post_separator2"
+        tools:text="Date" />
 
 </android.support.constraint.ConstraintLayout>

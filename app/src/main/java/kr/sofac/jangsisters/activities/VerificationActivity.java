@@ -13,20 +13,20 @@ import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 
-import static kr.sofac.jangsisters.config.EnumPreference.USER_ID;
+import static kr.sofac.jangsisters.config.EnumPreference.MY_USER;
 
 public class VerificationActivity extends BaseActivity {
 
     @BindView(R.id.editTextCodeVerification)
     TextInputEditText editTextCodeVerification;
-    private Integer userID;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification);
         ButterKnife.bind(this);
-        userID = getIntent().getIntExtra(USER_ID.toString(), 0);
+        user = (User) getIntent().getSerializableExtra(MY_USER.toString());
     }
 
     @OnClick({R.id.buttonSendCode, R.id.buttonTextResendCode})
@@ -45,11 +45,10 @@ public class VerificationActivity extends BaseActivity {
         if (!codeVerification.isEmpty()) {
             progressBar.showView();
             new Connection<String>().signUpCustomerVerification(new SenderContainerDTO()
-                    .setID(userID)
+                    .setID(user.getId())
                     .setCode(codeVerification), (isSuccess, answerServerResponse) -> {
                 if (isSuccess) {
                     appPreference.setAuthorization(true);
-                    User user = appPreference.getUser();
                     user.setVisible(1);
                     appPreference.setUser(user);
                     startLaunchActivity();
@@ -65,7 +64,7 @@ public class VerificationActivity extends BaseActivity {
 
     public void requestResendVerification() {
         progressBar.showView();
-        new Connection<User>().signUpCustomerResendVerification(userID, (isSuccess, answerServerResponse) -> {
+        new Connection<User>().signUpCustomerResendVerification(user.getId(), (isSuccess, answerServerResponse) -> {
             if (isSuccess) {
                 showToast("Verification was sent, check your email!");
             } else {
@@ -79,6 +78,11 @@ public class VerificationActivity extends BaseActivity {
         Intent intent = new Intent(this, LaunchActivity.class);
         startActivity(intent);
         finishAffinity();
+    }
+
+    @OnClick(R.id.buttonBack)
+    public void onBackClicked() {
+        finish();
     }
 
 }

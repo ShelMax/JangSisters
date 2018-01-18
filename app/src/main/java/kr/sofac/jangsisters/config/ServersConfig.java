@@ -13,6 +13,9 @@ public class ServersConfig {
     // File path
     public final static String PART_POST = "data/files/images/original/"; //Part post
     public final static String PART_AVATAR = "data/files/images/avatar/"; //Part toss
-    public final static String PART_CATEGORY_IMAGE = "data/files/images/avatar/"; //Part toss
+    public final static String PART_CATEGORY_IMAGE = "data/files/category-icon/"; //Part toss
+
+
+
 
 }

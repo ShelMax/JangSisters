@@ -18,31 +18,24 @@ import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Category;
 
 import static kr.sofac.jangsisters.config.ServersConfig.BASE_URL;
-import static kr.sofac.jangsisters.config.ServersConfig.PART_CATEGORY_IMAGE;
+import static kr.sofac.jangsisters.config.ServersConfig.PART_POST;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
+public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder> {
 
     private List<Category> categories;
-    private Boolean isDetailView;
 
-    public CategoryAdapter(List<Category> categories, Boolean isDetailView) {
+    public FilterAdapter(List<Category> categories) {
         this.categories = categories;
-        this.isDetailView = isDetailView;
     }
 
     @Override
-    public CategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v;
-        if(isDetailView){
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_detail, parent, false);
-        } else {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
-        }
-        return new CategoryAdapter.ViewHolder(v);
+    public FilterAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_detail, parent, false);
+        return new FilterAdapter.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(CategoryAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(FilterAdapter.ViewHolder holder, int position) {
         holder.setModel(categories.get(position));
     }
 
@@ -66,7 +59,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         public void setModel(Category categoryItem) {
             Glide.with(itemView)
-                    .load(BASE_URL + PART_CATEGORY_IMAGE + categoryItem.getId() + ".png")
+                    .load(BASE_URL + PART_POST + categoryItem.getId() + ".png")
                     .apply(RequestOptions.centerCropTransform()
                             .placeholder(R.drawable.category)
                             .error(R.drawable.category))
@@ -75,6 +68,5 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
 
     }
-
 
 }

@@ -122,7 +122,7 @@ public class MainActivity extends BaseActivity {
                 switch (tab.getPosition()) {
                     case 0:
                         shopFragment.setOpened(true);
-                        toolbar.setNavigationIcon(R.drawable.home_selected);
+                        toolbar.setNavigationIcon(R.drawable.home_white);
                         toolbar.setNavigationOnClickListener(v -> shopFragment.homeClick());
                         toolbar.setTitle(shopFragment.getTitle());
                         break;
