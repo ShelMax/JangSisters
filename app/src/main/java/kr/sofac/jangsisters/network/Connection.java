@@ -126,7 +126,7 @@ public class Connection<T> {
         new ManagerRetrofit<String>().sendRequest(emptyString, new Object() {// Change type Object sending / Change data sending
         }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<List<Category>>() { //Change type response
+                Type typeAnswer = new TypeToken<ServerResponse<List<Category>>>() { //Change type response
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {
@@ -246,7 +246,7 @@ public class Connection<T> {
         new ManagerRetrofit<String>().sendRequest(empty, new Object() {// Change type Object sending / Change data sending
         }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<Version>() { //Change type response
+                Type typeAnswer = new TypeToken<ServerResponse<Version>>() { //Change type response
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {

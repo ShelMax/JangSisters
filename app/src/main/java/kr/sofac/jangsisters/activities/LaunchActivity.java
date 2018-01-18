@@ -40,6 +40,7 @@ public class LaunchActivity extends BaseActivity {
             if (isSuccess) {
                 appPreference.saveCategories(answerServerResponse.getDataTransferObject());
                 appPreference.setVersionCategories(versionFromServer.getValue());
+                startMainActivity();
             } else {
                 showToast("Connection error!");
             }
