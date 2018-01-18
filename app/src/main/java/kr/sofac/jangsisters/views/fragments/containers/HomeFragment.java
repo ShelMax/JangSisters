@@ -42,6 +42,10 @@ public class HomeFragment extends BaseFragment {
 
     // TODO цыфры в кружок
 
+    // TODO не добавлять коммент и не лайкать если разлогинен
+
+    //TODO название блога под именем
+
     @BindView(R.id.home_recycler) RecyclerView recyclerView;
     @BindView(R.id.home_swipe) SwipeRefreshLayout swipeRefresh;
 
@@ -98,10 +102,16 @@ public class HomeFragment extends BaseFragment {
 
                     @Override
                     public void userClick(int position) {
-                        startActivity(new Intent(getActivity(), UserActivity.class)
-                        .putExtra(EnumPreference.USER_ID.toString(), posts.get(position).getAuthorID())
-                        .putExtra(EnumPreference.MY_PROFILE.toString(),
-                                appPreference.getUser().getId() == posts.get(position).getAuthorID()));
+                        boolean isLogged = appPreference.getUser() != null;
+                        Intent intent = new Intent(getActivity(), UserActivity.class);
+                        intent.putExtra(EnumPreference.USER_ID.toString(), posts.get(position).getAuthorID());
+                        if (isLogged)
+                            intent.putExtra(EnumPreference.MY_PROFILE.toString(),
+                                    appPreference.getUser().getId() == posts.get(position).getAuthorID());
+                        else
+                            intent.putExtra(EnumPreference.MY_PROFILE.toString(),
+                                    false);
+                        startActivity(intent);
                     }
                 });
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -12,7 +12,7 @@
                 android:state_pressed="true">
 
             </item>
-            <item android:drawable="@drawable/arrow_right" />
+            <item android:drawable="@drawable/arrow_right_black" />
         </selector>
 
     </item>

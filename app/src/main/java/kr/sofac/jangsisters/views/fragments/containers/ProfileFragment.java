@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,10 +23,10 @@ import com.bumptech.glide.request.RequestOptions;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.activities.LoginActivity;
 import kr.sofac.jangsisters.activities.SettingsActivity;
 import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.config.ServersConfig;
-import kr.sofac.jangsisters.models.OnLoggedOut;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
@@ -60,26 +61,23 @@ public class ProfileFragment extends BaseFragment {
     private User user;
     private ProgressBar progressBar;
 
-    private OnLoggedOut listener;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
-
         progressBar = new ProgressBar(getActivity());
         appPreference = new AppPreference(getActivity());
         userID = getArguments().getInt(EnumPreference.USER_ID.toString());
         myProfile = getArguments().getBoolean(EnumPreference.MY_PROFILE.toString());
         if(myProfile){
-            listener = (OnLoggedOut) getActivity();
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Your profile");
             follow.setVisibility(View.GONE);
             message.setVisibility(View.GONE);
             user = appPreference.getUser();
             updateUI();
-        }
-        else{
+        } else {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profile");
             balance.setVisibility(View.GONE);
             getUser();
         }
@@ -89,11 +87,14 @@ public class ProfileFragment extends BaseFragment {
     private void updateUI() {
         Glide.with(this).load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR+
                 user.getAvatar())
-                .apply(new RequestOptions().placeholder(R.drawable.avatar_holder))
+                .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
                 .apply(RequestOptions.circleCropTransform())
                 .into(userImage);
         username.setText(user.getName());
-        description.setText(user.getBlogDescription());
+        if (user.getBlogDescription().isEmpty())
+            description.setVisibility(View.GONE);
+        else
+            description.setText(user.getBlogDescription());
 
         initFragments();
         initTabLayout();
@@ -208,8 +209,10 @@ public class ProfileFragment extends BaseFragment {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        if (!myProfile)
+        if (!myProfile) {
             menu.findItem(R.id.logout).setVisible(false);
+            menu.findItem(R.id.settings).setVisible(false);
+        }
     }
 
     @Override
@@ -227,9 +230,9 @@ public class ProfileFragment extends BaseFragment {
                 break;
             case R.id.logout:
                 appPreference.clearUser();
-                //startActivity(new Intent(getActivity(), LoginActivity.class));
-                //getActivity().finishAffinity();
-                listener.loggedOut();
+                //TODO перекидывать
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().finishAffinity();
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -30,6 +30,7 @@ public class ShopFragment extends BaseFragment {
     @BindView(R.id.shop_refresh) SwipeRefreshLayout refresh;
 
     private MenuItem backItem;
+    private MenuItem forwardItem;
 
     private List<String> pages = new ArrayList<>();
     private int currentPage = -1;
@@ -65,9 +66,14 @@ public class ShopFragment extends BaseFragment {
                 }
                 fromNavigation = false;
                 refresh.setRefreshing(false);
-                if(pages.size() > 1){
+                if (pages.size() > 1 && currentPage != 0)
                     backItem.setIcon(R.drawable.arrow_left_white);
-                }
+                else
+                    backItem.setIcon(R.drawable.arrow_left_grey);
+                if (currentPage != pages.size() - 1)
+                    forwardItem.setIcon(R.drawable.arrow_right_white);
+                else
+                    forwardItem.setIcon(R.drawable.arrow_right_grey);
             }
         });
         webView.loadUrl(ServersConfig.SHOP_URL);
@@ -90,7 +96,9 @@ public class ShopFragment extends BaseFragment {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         backItem = menu.findItem(R.id.menu_toolbar_shop_back);
+        forwardItem = menu.findItem(R.id.menu_toolbar_shop_forward);
         backItem.setIcon(R.drawable.arrow_left_grey);
+        forwardItem.setIcon(R.drawable.arrow_right_grey);
         super.onPrepareOptionsMenu(menu);
     }
 
@@ -127,8 +135,8 @@ public class ShopFragment extends BaseFragment {
     }
 
     public void refreshClick(){
-        refresh.setRefreshing(true);
         if(currentPage != -1) {
+            refresh.setRefreshing(true);
             fromNavigation = true;
             webView.loadUrl(pages.get(currentPage));
         }

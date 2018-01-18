@@ -17,8 +17,8 @@ public class ServersConfig {
     // File path
     public final static String PART_ESTIMATE = "data/files/estimate/"; //Part estimate
     public final static String PART_MESSAGE = "data/files/message/"; //Part message
-    public final static String PART_POST = "data/files/post/"; //Part post
+    public final static String PART_POST_IMAGE = "data/files/images/original/"; //Part post
     public final static String PART_TOSS = "data/files/toss/"; //Part toss
-    public final static String PART_AVATAR = "control/design/images/avatar/"; //Part toss
+    public final static String PART_AVATAR = "data/files/images/avatar/"; //Part toss
 
 }

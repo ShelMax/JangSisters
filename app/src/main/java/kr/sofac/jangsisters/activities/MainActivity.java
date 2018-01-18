@@ -25,7 +25,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.EnumPreference;
-import kr.sofac.jangsisters.models.OnLoggedOut;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.views.fragments.containers.HelpFragment;
 import kr.sofac.jangsisters.views.fragments.containers.HomeFragment;
@@ -34,9 +33,7 @@ import kr.sofac.jangsisters.views.fragments.containers.SearchFragment;
 import kr.sofac.jangsisters.views.fragments.containers.ShopFragment;
 import kr.sofac.jangsisters.views.fragments.viewElements.NotSignedFragment;
 
-public class MainActivity extends BaseActivity implements OnLoggedOut {
-
-    //TODO при разлогине не показывать (+)
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -57,6 +54,8 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
     private ShopFragment shopFragment;
     private SearchFragment searchFragment;
     private TabManager tabManager;
+
+    private boolean isLogged;
 
     @Override
     public void onBackPressed() {
@@ -82,6 +81,7 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        isLogged = appPreference.getUser() != null;
         tabManager = TabManager.getTabManager();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
@@ -93,7 +93,7 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
     }
 
     private void setupViewPager() {
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), appPreference.getUser() != null);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
         shopFragment = new ShopFragment();
         searchFragment = new SearchFragment();
 
@@ -101,7 +101,7 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
         adapter.addFragment(searchFragment, tabManager.getNameByPosition(1));
         adapter.addFragment(new HomeFragment(), tabManager.getNameByPosition(2));
         adapter.addFragment(new HelpFragment(), tabManager.getNameByPosition(3));
-        if (appPreference.getUser() != null) {
+        if (isLogged) {
             ProfileFragment profileFragment = new ProfileFragment();
             Bundle bundle = new Bundle();
             bundle.putInt(EnumPreference.USER_ID.toString(), appPreference.getUser().getId());
@@ -122,7 +122,7 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
                 switch (tab.getPosition()) {
                     case 0:
                         shopFragment.setOpened(true);
-                        toolbar.setNavigationIcon(R.drawable.home_white);
+                        toolbar.setNavigationIcon(R.drawable.home_selected);
                         toolbar.setNavigationOnClickListener(v -> shopFragment.homeClick());
                         toolbar.setTitle(shopFragment.getTitle());
                         break;
@@ -132,20 +132,26 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
                         break;
                     case 2:
                         tabHome.setSelected(true);
-                        toolbar.setNavigationIcon(R.drawable.add);
-                        toolbar.setNavigationOnClickListener(v -> {
-                            //todo add post
-                        });
+                        if (isLogged) {
+                            toolbar.setNavigationIcon(R.drawable.add);
+                            toolbar.setNavigationOnClickListener(v -> {
+                                //todo add post
+                            });
+                        }
                         break;
                     case 3:
                         toolbar.setNavigationIcon(null);
                         toolbar.setTitle("Help");
                         break;
                     case 4:
-                        toolbar.setNavigationIcon(R.drawable.add);
-                        toolbar.setNavigationOnClickListener(v -> {
-                            //todo
-                        });
+                        if (isLogged) {
+                            toolbar.setTitle("Your profile");
+                            toolbar.setNavigationIcon(R.drawable.add);
+                            toolbar.setNavigationOnClickListener(v -> {
+                                //todo
+                            });
+                        } else
+                            toolbar.setTitle("Login required");
                         break;
 
                 }
@@ -156,6 +162,7 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
                 if (tab.getPosition() == 2) {
                     tabHome.setSelected(false);
                 } else if (tab.getPosition() == 0) {
+                    toolbar.setNavigationIcon(null);
                     toolbar.setTitle(null);
                     shopFragment.setOpened(false);
                 } else if (tab.getPosition() == 1) {
@@ -173,7 +180,7 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
 
         tabLayout.setupWithViewPager(viewPager);
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < adapter.getCount(); i++) {
             tabLayout.getTabAt(i).setIcon(getResources().getDrawable(tabManager.getDrawableByPosition(i)));
         }
         searchFragment.onSetTextChanged(search);
@@ -182,7 +189,19 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
     //TODO Category
     private void initDrawerEndPosition() {
         drawer.addDrawerListener(new ActionBarDrawerToggle(this, drawer,
-                toolbar, R.string.open, R.string.close));
+                toolbar, R.string.open, R.string.close) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            }
+        });
         navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.nav_fruits:
@@ -198,6 +217,7 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
             drawer.closeDrawer(Gravity.END);
             return false;
         });
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     @OnClick(R.id.tab_home)
@@ -206,26 +226,13 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
         tabHome.setSelected(true);
     }
 
-    @Override
-    public void loggedOut() {
-        adapter.loggedOut();
-        adapter.notifyDataSetChanged();
-        tabLayout.getTabAt(2).select();
-    }
-
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         private List<Fragment> mFragmentList = new ArrayList<>();
-        private boolean isLogged;
         //private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        ViewPagerAdapter(FragmentManager manager, boolean isLogged) {
+        ViewPagerAdapter(FragmentManager manager) {
             super(manager);
-            this.isLogged = isLogged;
-        }
-
-        void loggedOut() {
-            isLogged = false;
         }
 
         @Override
@@ -245,14 +252,7 @@ public class MainActivity extends BaseActivity implements OnLoggedOut {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            if (position == 4 && !isLogged) {
-                super.destroyItem(container, position, object);
-                mFragmentList.remove(4);
-                mFragmentList.add(new NotSignedFragment());
-                for (int i = 0; i < 5; i++) {
-                    tabLayout.getTabAt(i).setIcon(getResources().getDrawable(tabManager.getDrawableByPosition(i)));
-                }
-            }
+
         }
 
         @Override

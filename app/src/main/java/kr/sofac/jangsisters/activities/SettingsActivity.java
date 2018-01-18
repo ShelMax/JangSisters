@@ -11,7 +11,9 @@ import com.bumptech.glide.request.RequestOptions;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.config.ServersConfig;
 
 public class SettingsActivity extends BaseActivity {
 
@@ -23,6 +25,8 @@ public class SettingsActivity extends BaseActivity {
     EditText blogNameNew;
     @BindView(R.id.blog_description_change)
     EditText blogDescriptionNew;
+    @BindView(R.id.background_avatar)
+    ImageView backgroundAvatar;
 
     @Override
     public void onBackPressed() {
@@ -41,15 +45,19 @@ public class SettingsActivity extends BaseActivity {
     private void init() {
         initToolbar();
         Glide.with(this)
-                .load("")
-                .apply(new RequestOptions().placeholder(R.drawable.avatar_holder))
+                .load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR + appPreference.getUser().getAvatar())
+                .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
                 .apply(RequestOptions.circleCropTransform())
                 .into(image);
+        Glide.with(this)
+                .load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR + appPreference.getUser().getAvatar())
+                .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
+                .apply(RequestOptions.bitmapTransform(new BlurTransformation(80)).centerCrop())
+                .into(backgroundAvatar);
         emailNew.setText(appPreference.getUser().getEmail());
         usernameNew.setText(appPreference.getUser().getName());
         blogNameNew.setText(appPreference.getUser().getBlogName());
         blogDescriptionNew.setText(appPreference.getUser().getBlogDescription());
-        image.requestFocus();
     }
 
     private void initToolbar() {
