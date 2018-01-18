@@ -3,7 +3,6 @@ package kr.sofac.jangsisters.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,14 +35,12 @@ public class UserActivity extends BaseActivity {
     }
 
     private void initToolbar() {
-        toolbar.setTitle("Profile");
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.add);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (getIntent().getBooleanExtra(EnumPreference.MY_PROFILE.toString(), false)) {
+            toolbar.setNavigationIcon(R.drawable.add);
+            toolbar.setNavigationOnClickListener(v -> {
                 //todo add post
-            }
-        });
+            });
+        }
     }
 }

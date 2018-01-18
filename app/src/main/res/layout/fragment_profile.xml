@@ -8,15 +8,15 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
 
         <ImageView
             android:id="@+id/user_image_border"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="18dp"
             android:background="@drawable/circle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +38,7 @@
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="22dp"
             android:textColor="@color/navigation_back_checked"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -131,7 +131,7 @@
                 android:id="@+id/frame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="4dp" />
 
         </LinearLayout>
 

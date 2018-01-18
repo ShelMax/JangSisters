@@ -1,15 +1,21 @@
 package kr.sofac.jangsisters.activities;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,10 +37,11 @@ import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 import kr.sofac.jangsisters.views.adapters.CategoryAdapter;
 import kr.sofac.jangsisters.views.adapters.CommentAdapter;
 import kr.sofac.jangsisters.views.adapters.DetailPostAdapter;
+import kr.sofac.jangsisters.views.adapters.PostIngredientsAdapter;
 
 import static kr.sofac.jangsisters.config.ServersConfig.BASE_URL;
 import static kr.sofac.jangsisters.config.ServersConfig.PART_AVATAR;
-import static kr.sofac.jangsisters.config.ServersConfig.PART_POST;
+import static kr.sofac.jangsisters.config.ServersConfig.PART_POST_IMAGE;
 
 public class DetailPostActivity extends BaseActivity {
 
@@ -54,6 +61,8 @@ public class DetailPostActivity extends BaseActivity {
     @BindView(R.id.comments_list) RecyclerView commentsList;
     @BindView(R.id.new_comment) EditText commentText;
 
+    private ListView listView;
+
     private Post post;
     private LinearLayoutManager layoutManager;
     private int userID;
@@ -61,7 +70,10 @@ public class DetailPostActivity extends BaseActivity {
     private CommentAdapter commentAdapter;
     private DetailPostAdapter adapter;
 
+    private boolean wasLiked;
     private boolean isLiked;
+
+    AlertDialog dialog;
 
     @Override
     public void onBackPressed() {
@@ -88,6 +100,15 @@ public class DetailPostActivity extends BaseActivity {
         loadPost();
     }
 
+    private void initDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View ingredientsView = getLayoutInflater().inflate(R.layout.dialog_post_ingredients, null);
+        builder.setView(ingredientsView);
+        dialog = builder.create();
+        listView = ingredientsView.findViewById(R.id.post_ingredients_list);
+        listView.setAdapter(new PostIngredientsAdapter(post.getIngredients(), this));
+    }
+
     private void loadPost() {
         progressBar.showView();
         new Connection<Post>().getPost(
@@ -98,6 +119,7 @@ public class DetailPostActivity extends BaseActivity {
                         initToolbar();
                         initCategories();
                         fillUpContentPost();
+                        initDialog();
                     } else {
                         showToast("Can't open this post, sorry!");
                         finish();
@@ -123,7 +145,7 @@ public class DetailPostActivity extends BaseActivity {
 
     private void fillUpHeader() {
         Glide.with(this)
-                .load(BASE_URL + PART_POST + post.getPostImage())
+                .load(BASE_URL + PART_POST_IMAGE + post.getPostImage())
                 .apply(RequestOptions.centerCropTransform().placeholder(R.drawable.background_holder).error(R.drawable.background_holder))
                 .into(postImage);
         Glide.with(this)
@@ -131,13 +153,22 @@ public class DetailPostActivity extends BaseActivity {
                 .apply(RequestOptions.circleCropTransform().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder).circleCrop())
                 .into(authorImage);
 
-        authorImage.setOnClickListener(v -> startActivity(new Intent(DetailPostActivity.this, UserActivity.class)
-                .putExtra(EnumPreference.USER_ID.toString(), post.getAuthorID())
-                .putExtra(EnumPreference.MY_PROFILE.toString(),
-                        appPreference.getUser().getId() == post.getAuthorID())));
+        authorImage.setOnClickListener(v -> {
+            boolean isLogged = appPreference.getUser() != null;
+            Intent intent = new Intent(DetailPostActivity.this, UserActivity.class);
+            intent.putExtra(EnumPreference.USER_ID.toString(), post.getAuthorID());
+            if (isLogged)
+                intent.putExtra(EnumPreference.MY_PROFILE.toString(),
+                        appPreference.getUser().getId() == post.getAuthorID());
+            else
+                intent.putExtra(EnumPreference.MY_PROFILE.toString(),
+                        false);
+            startActivity(intent);
+        });
         date.setText(post.getDate());
         author.setText(post.getAuthorName());
         isLiked = post.isLiked() > 0;
+        wasLiked = post.isLiked() > 0;
         if(isLiked){
             like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.heart_full, 0, 0, 0);
         }
@@ -181,9 +212,15 @@ public class DetailPostActivity extends BaseActivity {
                     //TODO after server update
                     //like.setText();
                     like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.heart_full, 0, 0, 0);
+                    like.setText(String.valueOf(post.getLikesCount()));
+                    if (!wasLiked)
+                        like.setText(String.valueOf(post.getLikesCount() + 1));
                 }
                 else{
                     like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.heart, 0,0,0);
+                    like.setText(String.valueOf(post.getLikesCount()));
+                    if (wasLiked)
+                        like.setText(String.valueOf(post.getLikesCount() - 1));
                 }
             }
             else{
@@ -200,7 +237,7 @@ public class DetailPostActivity extends BaseActivity {
 
     @OnClick(R.id.cart)
     public void cart(){
-
+        dialog.show();
     }
 
     @OnClick(R.id.bookmark)
@@ -215,7 +252,9 @@ public class DetailPostActivity extends BaseActivity {
 
     @OnClick(R.id.close)
     public void closeComments(){
-        panel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(commentText.getWindowToken(), 0);
+        new Handler().postDelayed(() -> panel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN), 300);
     }
 
     @OnClick(R.id.post_detailed_category_left)

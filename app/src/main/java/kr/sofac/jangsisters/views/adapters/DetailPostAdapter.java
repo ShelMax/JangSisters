@@ -156,7 +156,7 @@ public class DetailPostAdapter extends RecyclerView.Adapter {
             @Override
             public void onBindViewHolder(ImageAdapterHolder holder, int position) {
                 Glide.with(holder.itemView)
-                        .load("https://html5box.com/html5lightbox/images/skynight.jpg")
+                        .load(images.get(position))
                         .into(holder.image);
             }
 

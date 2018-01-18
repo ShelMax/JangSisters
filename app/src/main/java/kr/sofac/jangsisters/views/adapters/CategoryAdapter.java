@@ -18,7 +18,7 @@ import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Category;
 
 import static kr.sofac.jangsisters.config.ServersConfig.BASE_URL;
-import static kr.sofac.jangsisters.config.ServersConfig.PART_POST;
+import static kr.sofac.jangsisters.config.ServersConfig.PART_POST_IMAGE;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
@@ -59,7 +59,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         public void setModel(Category categoryItem) {
             Glide.with(itemView)
-                    .load(BASE_URL + PART_POST + categoryItem.getId() + ".png")
+                    .load(BASE_URL + PART_POST_IMAGE + categoryItem.getId() + ".png")
                     .apply(RequestOptions.centerCropTransform()
                             .placeholder(R.drawable.category)
                             .error(R.drawable.category))

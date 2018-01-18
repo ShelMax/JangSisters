@@ -5,29 +5,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import kr.sofac.jangsisters.R;
 
 public class PostIngredientsAdapter extends BaseAdapter {
 
-    private String ingredients;
-    private Context context;
+    private String[] ingredients;
     private LayoutInflater inflater;
 
     public PostIngredientsAdapter(String ingredients, Context context) {
-        this.ingredients = ingredients;
-        this.context = context;
+        this.ingredients = ingredients.split(";");
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return 0;
+        if (ingredients[0].isEmpty())
+            return 0;
+        return ingredients.length;
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return ingredients[i];
     }
 
     @Override
@@ -38,8 +39,8 @@ public class PostIngredientsAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         convertView = inflater.inflate(R.layout.item_post_ingredient, null);
-//        TextView name = convertView.findViewById(R.id.item_post_ingredient_name);
-//        name.setText(ingredients.get(i).getTitle());
+        TextView name = convertView.findViewById(R.id.item_post_ingredient_name);
+        name.setText(ingredients[i]);
         return convertView;
     }
 }
