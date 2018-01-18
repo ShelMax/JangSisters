@@ -25,7 +25,8 @@ public class LaunchActivity extends BaseActivity {
         new Connection<Version>().getCorrectVersion("", (isSuccess, answerServerResponse) -> {
             if (isSuccess) {
                 if (isCorrectVersion(answerServerResponse.getDataTransferObject())) {
-                    startMainActivity();
+                    requestLoadingCategories(answerServerResponse.getDataTransferObject());
+//                    startMainActivity();
                 } else {
                     requestLoadingCategories(answerServerResponse.getDataTransferObject());
                 }

@@ -24,23 +24,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
-                app:titleTextColor="@android:color/white"
-                app:popupTheme="@style/JangSistersTheme" >
+                app:popupTheme="@style/JangSistersTheme"
+                app:titleTextColor="@android:color/white">
 
                 <EditText
                     android:id="@+id/search"
                     android:layout_width="match_parent"
-                    android:background="@drawable/rounded_edittext"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="9dp"
                     android:layout_marginBottom="9dp"
-                    android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
-                    android:drawableStart="@drawable/magnify_selected"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="9dp"
+                    android:background="@drawable/rounded_edittext"
                     android:drawablePadding="5dp"
+                    android:drawableStart="@drawable/magnify_selected"
+                    android:inputType="text"
                     android:paddingStart="15dp"
-                    android:visibility="gone"
-                    android:inputType="text" />
+                    android:visibility="gone" />
 
             </android.support.v7.widget.Toolbar>
 
