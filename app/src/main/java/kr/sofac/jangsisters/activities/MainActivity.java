@@ -36,6 +36,8 @@ import kr.sofac.jangsisters.views.fragments.viewElements.NotSignedFragment;
 
 public class MainActivity extends BaseActivity implements OnLoggedOut {
 
+    //TODO при разлогине не показывать (+)
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.viewpager)
