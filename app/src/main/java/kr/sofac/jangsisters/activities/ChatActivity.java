@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -50,7 +49,7 @@ public class ChatActivity extends BaseActivity {
 
     private void loadMessages() {
         messages = new ArrayList<>();
-        messages.add(new Message(1, "Hello, how can i help you today?", "15:24"));
+        messages.add(new Message(0, "Hello, how can i help you today?", "15:24"));
         updateList();
     }
 

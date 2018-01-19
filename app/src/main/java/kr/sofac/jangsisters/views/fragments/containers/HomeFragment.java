@@ -45,7 +45,14 @@ public class HomeFragment extends BaseFragment {
 
     // TODO не добавлять коммент и не лайкать если разлогинен
 
-    //TODO название блога под именем
+    // TODO название блога под именем
+
+    // TODO кнопка назад в профиле
+
+    // TODO В чате поле ввода так же как в комментариях
+
+
+
 
     @BindView(R.id.home_recycler) RecyclerView recyclerView;
     @BindView(R.id.home_swipe) SwipeRefreshLayout swipeRefresh;

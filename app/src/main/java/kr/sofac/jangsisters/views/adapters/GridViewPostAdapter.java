@@ -41,7 +41,7 @@ public class GridViewPostAdapter extends RecyclerView.Adapter<GridViewPostAdapte
         GlideApp.with(holder.itemView)
                 .load(ServersConfig.BASE_URL + ServersConfig.PART_POST + posts.get(position * 2).getPostImage())
                 .override(100, 100)
-                .apply(new RequestOptions().placeholder(R.drawable.background_holder).error(R.drawable.background_holder))
+                .apply(new RequestOptions().placeholder(R.drawable.placeholder_image))
                 .into(holder.first);
         holder.firstTitle.setText(posts.get(position * 2).getTitle());
         holder.first.setOnClickListener(view ->
@@ -50,7 +50,7 @@ public class GridViewPostAdapter extends RecyclerView.Adapter<GridViewPostAdapte
             GlideApp.with(holder.itemView)
                     .load(ServersConfig.BASE_URL + ServersConfig.PART_POST + posts.get(position * 2 + 1).getPostImage())
                     .override(100, 100)
-                    .apply(new RequestOptions().placeholder(R.drawable.background_holder).error(R.drawable.background_holder))
+                    .apply(new RequestOptions().placeholder(R.drawable.placeholder_image))
                     .into(holder.second);
             holder.secondTitle.setText(posts.get(position * 2 + 1).getTitle());
             holder.itemView.setOnClickListener(view -> callback.itemClick(position * 2 + 1));
