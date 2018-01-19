@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -55,6 +56,7 @@ public class HomeFragment extends BaseFragment {
     private PostAdapter adapter;
     private ProgressBar progressBar;
     private AppPreference appPreference;
+    private ImageButton imageButtonClose;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -71,6 +73,8 @@ public class HomeFragment extends BaseFragment {
         View ingredientsView = getLayoutInflater().inflate(R.layout.dialog_post_ingredients, null);
         builder.setView(ingredientsView);
         dialog = builder.create();
+        imageButtonClose = ingredientsView.findViewById(R.id.imageButtonClosePopup);
+        imageButtonClose.setOnClickListener(view1 -> dialog.hide());
 
         listView = ingredientsView.findViewById(R.id.post_ingredients_list);
         swipeRefresh.setOnRefreshListener(() -> {

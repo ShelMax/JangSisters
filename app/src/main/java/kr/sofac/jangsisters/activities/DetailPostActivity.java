@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -62,6 +63,7 @@ public class DetailPostActivity extends BaseActivity {
     @BindView(R.id.new_comment) EditText commentText;
 
     private ListView listView;
+    private ImageButton imageButtonClose;
 
     private Post post;
     private LinearLayoutManager layoutManager;
@@ -106,6 +108,8 @@ public class DetailPostActivity extends BaseActivity {
         builder.setView(ingredientsView);
         dialog = builder.create();
         listView = ingredientsView.findViewById(R.id.post_ingredients_list);
+        imageButtonClose = ingredientsView.findViewById(R.id.imageButtonClosePopup);
+        imageButtonClose.setOnClickListener(view -> dialog.hide());
         listView.setAdapter(new PostIngredientsAdapter(post.getIngredients(), this));
     }
 

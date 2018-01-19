@@ -4,7 +4,6 @@
     <color name="colorPrimaryDark">#020307</color>
     <color name="colorAccent">#6b6b6b</color>
     <color name="colorWhite">#ffffff</color>
-    <color name="colorLightGrey">#c1c1c1</color>
 
     <!--Transparent progressbar-->
     <color name="colorTransparent">#00000000</color>

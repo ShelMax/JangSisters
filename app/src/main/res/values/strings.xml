@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">JangSisters</string>
+    <string name="filter">filter</string>
     <string name="open">open</string>
     <string name="close">close</string>
-    <string name="filter">filter</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur porta faucibus nisi eu ornare. Fusce consequat, mauris id fringilla maximus, ligula velit luctus quam, et sodales nibh dui eget urna. Quisque accumsan, leo non lacinia convallis, nisl arcu iaculis mi, ut cursus ligula justo sit amet erat. Donec vehicula, orci sagittis luctus imperdiet, mauris sem tempor eros, vitae laoreet enim augue sed sapien. Aliquam et pellentesque arcu, nec sollicitudin urna. Curabitur maximus nibh vel lectus tristique, a bibendum turpis elementum. Pellentesque varius efficitur tortor vitae gravida. Etiam est ligula, scelerisque sed faucibus id, ullamcorper eu purus.
 
 Vestibulum pulvinar, tortor non luctus lacinia, tortor dui pharetra elit, et malesuada metus odio at odio. Ut eget pellentesque urna, id euismod neque. Donec ut convallis elit. Sed sed ipsum ultrices, aliquam nisl molestie, laoreet ligula. Mauris sed felis arcu. Ut vel finibus ligula. Nullam lorem sem, sagittis vitae enim nec, facilisis gravida erat. Aliquam fringilla, orci eget volutpat congue, dui velit mollis erat, at auctor orci lectus vel lectus.
@@ -15,10 +15,6 @@ Nam vehicula ex a efficitur aliquet. Quisque blandit et augue non malesuada. Int
 
 
     <string name="lorem_small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur porta faucibus nisi eu ornare. Fusce consequat, mauris id fringilla maximus, ligula velit luctus quam, et sodales nibh dui eget urna.</string>
-    <string name="bookmark">bookmark</string>
-    <string name="like">like</string>
-    <string name="comment">comment</string>
-    <string name="cart">cart</string>
     <string name="back">back</string>
     <string name="forward">forward</string>
     <string name="refresh">refresh</string>
