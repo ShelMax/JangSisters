@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -97,19 +96,19 @@ public class MainActivity extends BaseActivity {
         shopFragment = new ShopFragment();
         searchFragment = new SearchFragment();
 
-        adapter.addFragment(shopFragment, tabManager.getNameByPosition(0));
-        adapter.addFragment(searchFragment, tabManager.getNameByPosition(1));
-        adapter.addFragment(new HomeFragment(), tabManager.getNameByPosition(2));
-        adapter.addFragment(new HelpFragment(), tabManager.getNameByPosition(3));
+        adapter.addFragment(shopFragment);
+        adapter.addFragment(searchFragment);
+        adapter.addFragment(new HomeFragment());
+        adapter.addFragment(new HelpFragment());
         if (isLogged) {
             ProfileFragment profileFragment = new ProfileFragment();
             Bundle bundle = new Bundle();
             bundle.putInt(EnumPreference.USER_ID.toString(), appPreference.getUser().getId());
             bundle.putBoolean(EnumPreference.MY_PROFILE.toString(), true);
             profileFragment.setArguments(bundle);
-            adapter.addFragment(profileFragment, tabManager.getNameByPosition(4));
+            adapter.addFragment(profileFragment);
         } else {
-            adapter.addFragment(new NotSignedFragment(), tabManager.getNameByPosition(4));
+            adapter.addFragment(new NotSignedFragment());
         }
 
         viewPager.setAdapter(adapter);
@@ -229,7 +228,6 @@ public class MainActivity extends BaseActivity {
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         private List<Fragment> mFragmentList = new ArrayList<>();
-        //private final List<String> mFragmentTitleList = new ArrayList<>();
 
         ViewPagerAdapter(FragmentManager manager) {
             super(manager);
@@ -245,14 +243,8 @@ public class MainActivity extends BaseActivity {
             return mFragmentList.size();
         }
 
-        void addFragment(Fragment fragment, String title) {
+        void addFragment(Fragment fragment) {
             mFragmentList.add(fragment);
-            //mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-
         }
 
         @Override

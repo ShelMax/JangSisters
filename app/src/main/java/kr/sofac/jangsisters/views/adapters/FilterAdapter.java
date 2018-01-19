@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
@@ -16,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Category;
+import kr.sofac.jangsisters.models.GlideApp;
 
 import static kr.sofac.jangsisters.config.ServersConfig.BASE_URL;
 import static kr.sofac.jangsisters.config.ServersConfig.PART_POST;
@@ -57,9 +57,10 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
             ButterKnife.bind(this, itemView);
         }
 
-        public void setModel(Category categoryItem) {
-            Glide.with(itemView)
+        void setModel(Category categoryItem) {
+            GlideApp.with(itemView)
                     .load(BASE_URL + PART_POST + categoryItem.getId() + ".png")
+                    .override(100, 100)
                     .apply(RequestOptions.centerCropTransform()
                             .placeholder(R.drawable.category)
                             .error(R.drawable.category))

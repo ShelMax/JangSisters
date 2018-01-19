@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
@@ -17,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.ServersConfig;
+import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.SimpleListCallback;
 
@@ -38,16 +38,18 @@ public class GridViewPostAdapter extends RecyclerView.Adapter<GridViewPostAdapte
 
     @Override
     public void onBindViewHolder(GridViewPostAdapter.ViewHolder holder, int position) {
-        Glide.with(holder.itemView)
+        GlideApp.with(holder.itemView)
                 .load(ServersConfig.BASE_URL + ServersConfig.PART_POST + posts.get(position * 2).getPostImage())
+                .override(100, 100)
                 .apply(new RequestOptions().placeholder(R.drawable.background_holder).error(R.drawable.background_holder))
                 .into(holder.first);
         holder.firstTitle.setText(posts.get(position * 2).getTitle());
         holder.first.setOnClickListener(view ->
                 callback.itemClick(position * 2));
         if(position * 2 != posts.size() - 1){
-            Glide.with(holder.itemView)
+            GlideApp.with(holder.itemView)
                     .load(ServersConfig.BASE_URL + ServersConfig.PART_POST + posts.get(position * 2 + 1).getPostImage())
+                    .override(100, 100)
                     .apply(new RequestOptions().placeholder(R.drawable.background_holder).error(R.drawable.background_holder))
                     .into(holder.second);
             holder.secondTitle.setText(posts.get(position * 2 + 1).getTitle());

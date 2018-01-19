@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.config.ServersConfig;
 import kr.sofac.jangsisters.models.File;
+import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.models.PostElement;
 
 public class DetailPostAdapter extends RecyclerView.Adapter {
@@ -155,8 +155,9 @@ public class DetailPostAdapter extends RecyclerView.Adapter {
 
             @Override
             public void onBindViewHolder(ImageAdapterHolder holder, int position) {
-                Glide.with(holder.itemView)
-                        .load(images.get(position))
+                GlideApp.with(holder.itemView)
+                        .load(ServersConfig.BASE_URL + ServersConfig.PART_POST + images.get(position))
+                        .override(200, 200)
                         .into(holder.image);
             }
 

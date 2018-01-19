@@ -66,14 +66,16 @@ public class ShopFragment extends BaseFragment {
                 }
                 fromNavigation = false;
                 refresh.setRefreshing(false);
-                if (pages.size() > 1 && currentPage != 0)
-                    backItem.setIcon(R.drawable.arrow_left_white);
-                else
-                    backItem.setIcon(R.drawable.arrow_left_grey);
-                if (currentPage != pages.size() - 1)
-                    forwardItem.setIcon(R.drawable.arrow_right_white);
-                else
-                    forwardItem.setIcon(R.drawable.arrow_right_grey);
+                if (isOpened) {
+                    if (pages.size() > 1 && currentPage != 0)
+                        backItem.setIcon(R.drawable.arrow_left_white);
+                    else
+                        backItem.setIcon(R.drawable.arrow_left_grey);
+                    if (currentPage != pages.size() - 1)
+                        forwardItem.setIcon(R.drawable.arrow_right_white);
+                    else
+                        forwardItem.setIcon(R.drawable.arrow_right_grey);
+                }
             }
         });
         webView.loadUrl(ServersConfig.SHOP_URL);

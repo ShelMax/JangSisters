@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -30,6 +29,7 @@ import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.Comment;
+import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.api.type.ServerResponse;
@@ -144,11 +144,11 @@ public class DetailPostActivity extends BaseActivity {
     }
 
     private void fillUpHeader() {
-        Glide.with(this)
+        GlideApp.with(this)
                 .load(BASE_URL + PART_POST + post.getPostImage())
                 .apply(RequestOptions.centerCropTransform().placeholder(R.drawable.background_holder).error(R.drawable.background_holder))
                 .into(postImage);
-        Glide.with(this)
+        GlideApp.with(this)
                 .load(BASE_URL + PART_AVATAR + post.getAuthorImg())
                 .apply(RequestOptions.circleCropTransform().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder).circleCrop())
                 .into(authorImage);

@@ -11,8 +11,6 @@ import kr.sofac.jangsisters.utils.ProgressBar;
 
 public class BaseActivity extends AppCompatActivity {
 
-    //TODO отступы у новостей
-
     public AppPreference appPreference;
     public ProgressBar progressBar;
 

@@ -5,7 +5,6 @@ import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
@@ -14,6 +13,7 @@ import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.ServersConfig;
+import kr.sofac.jangsisters.models.GlideApp;
 
 public class SettingsActivity extends BaseActivity {
 
@@ -44,12 +44,13 @@ public class SettingsActivity extends BaseActivity {
 
     private void init() {
         initToolbar();
-        Glide.with(this)
+        GlideApp.with(this)
                 .load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR + appPreference.getUser().getAvatar())
+                .override(100, 100)
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
                 .apply(RequestOptions.circleCropTransform())
                 .into(image);
-        Glide.with(this)
+        GlideApp.with(this)
                 .load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR + appPreference.getUser().getAvatar())
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
                 .apply(RequestOptions.bitmapTransform(new BlurTransformation(80)).centerCrop())

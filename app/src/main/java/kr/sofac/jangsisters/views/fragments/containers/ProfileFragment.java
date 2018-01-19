@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
@@ -27,6 +26,7 @@ import kr.sofac.jangsisters.activities.LoginActivity;
 import kr.sofac.jangsisters.activities.SettingsActivity;
 import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.config.ServersConfig;
+import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
@@ -85,8 +85,9 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void updateUI() {
-        Glide.with(this).load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR+
+        GlideApp.with(this).load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR +
                 user.getAvatar())
+                .override(100, 100)
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
                 .apply(RequestOptions.circleCropTransform())
                 .into(userImage);
