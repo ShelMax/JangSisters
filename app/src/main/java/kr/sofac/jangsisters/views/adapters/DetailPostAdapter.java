@@ -204,7 +204,7 @@ public class DetailPostAdapter extends RecyclerView.Adapter {
         }
 
         void bind(PostElement element) {
-            //text.setText(element.getText());
+            text.setText(element.getText());
         }
     }
 
