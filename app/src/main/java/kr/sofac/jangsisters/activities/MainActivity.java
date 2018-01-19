@@ -9,13 +9,17 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,7 @@ import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.TabManager;
+import kr.sofac.jangsisters.views.adapters.FilterAdapter;
 import kr.sofac.jangsisters.views.fragments.containers.HelpFragment;
 import kr.sofac.jangsisters.views.fragments.containers.HomeFragment;
 import kr.sofac.jangsisters.views.fragments.containers.ProfileFragment;
@@ -203,22 +208,40 @@ public class MainActivity extends BaseActivity {
                 drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             }
         });
-        navigationView.setNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.nav_fruits:
-                    navigationView.setCheckedItem(R.id.nav_fruits);
-                    break;
-                case R.id.nav_soups:
-                    navigationView.setCheckedItem(R.id.nav_soups);
-                    break;
-                case R.id.nav_sweets:
-                    navigationView.setCheckedItem(R.id.nav_sweets);
-                    break;
-            }
+
+        ImageButton backButton = navigationView.getHeaderView(0).findViewById(R.id.backButton);
+
+        RecyclerView recyclerViewFilterCategory = navigationView.getHeaderView(0).findViewById(R.id.recyclerViewFilters);
+
+        FilterAdapter filterAdapter = new FilterAdapter(appPreference.getCategories());
+
+        recyclerViewFilterCategory.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewFilterCategory.setAdapter(filterAdapter);
+
+        Log.e("CATEGORY!!! ",""+ appPreference.getCategories().toString());
+
+        backButton.setOnClickListener(view -> {
             drawer.closeDrawer(Gravity.END);
-            return false;
         });
+
+//        navigationView.setNavigationItemSelectedListener(item -> {
+//            switch (item.getItemId()) {
+//                case R.id.nav_fruits:
+//                    navigationView.setCheckedItem(R.id.nav_fruits);
+//                    break;
+//                case R.id.nav_soups:
+//                    navigationView.setCheckedItem(R.id.nav_soups);
+//                    break;
+//                case R.id.nav_sweets:
+//                    navigationView.setCheckedItem(R.id.nav_sweets);
+//                    break;
+//            }
+//            drawer.closeDrawer(Gravity.END);
+//            return false;
+//        });
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+
     }
 
     @OnClick(R.id.tab_home)
