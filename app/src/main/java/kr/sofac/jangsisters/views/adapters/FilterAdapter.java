@@ -60,10 +60,9 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
         void setModel(Category categoryItem) {
             GlideApp.with(itemView)
                     .load(BASE_URL + PART_POST + categoryItem.getId() + ".png")
-                    .override(100, 100)
+                    .override(50, 50)
                     .apply(RequestOptions.centerCropTransform()
-                            .placeholder(R.drawable.category)
-                            .error(R.drawable.category))
+                            .placeholder(R.drawable.category))
                     .into(image);
             name.setText(categoryItem.getName());
         }

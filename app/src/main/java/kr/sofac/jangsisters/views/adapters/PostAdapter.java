@@ -42,11 +42,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         GlideApp.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_POST + items.get(position).getPostImage())
-                .override(400, 400)
+                .override(200, 200)
                 .apply(new RequestOptions().placeholder(R.drawable.background_holder))
                 .into(holder.image);
         GlideApp.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR + items.get(position).getAuthorImg())
-                .override(100, 100)
+                .override(50, 50)
                 .apply(RequestOptions.circleCropTransform())
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder))
                 .into(holder.authorImage);

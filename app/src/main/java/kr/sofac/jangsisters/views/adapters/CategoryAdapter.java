@@ -67,7 +67,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         void setModel(Category categoryItem) {
             GlideApp.with(itemView)
                     .load(BASE_URL + PART_CATEGORY_IMAGE + categoryItem.getId() + ".png")
-                    .override(50, 50)
+                    .override(20, 20)
                     .apply(RequestOptions.centerCropTransform()
                             .placeholder(R.drawable.category)
                             .error(R.drawable.category))

@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -131,6 +132,7 @@ public class MainActivity extends BaseActivity {
                         break;
                     case 2:
                         tabHome.setSelected(true);
+                        toolbar.setTitle("Home");
                         if (isLogged) {
                             toolbar.setNavigationIcon(R.drawable.add);
                             toolbar.setNavigationOnClickListener(v -> {
@@ -245,6 +247,11 @@ public class MainActivity extends BaseActivity {
 
         void addFragment(Fragment fragment) {
             mFragmentList.add(fragment);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+
         }
 
         @Override

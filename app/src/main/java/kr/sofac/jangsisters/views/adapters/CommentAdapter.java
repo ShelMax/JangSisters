@@ -36,7 +36,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public void onBindViewHolder(CommentAdapter.ViewHolder holder, int position) {
         GlideApp.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR
                 + comments.get(position).getUserImage())
-                .override(100, 100)
+                .override(50, 50)
                 .apply(RequestOptions.circleCropTransform())
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder))
                 .into(holder.userImage);
