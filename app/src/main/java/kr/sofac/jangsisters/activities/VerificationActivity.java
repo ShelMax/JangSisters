@@ -53,12 +53,12 @@ public class VerificationActivity extends BaseActivity {
                     appPreference.setUser(user);
                     startLaunchActivity();
                 } else {
-                    showToast("Some problems with verification process");
+                    showToast(getString(R.string.some_problems_with_verification_process));
                 }
                 progressBar.dismissView();
             });
         } else {
-            showToast("Need fill all fields!");
+            showToast(getString(R.string.need_fill_all_fields));
         }
     }
 
@@ -66,9 +66,9 @@ public class VerificationActivity extends BaseActivity {
         progressBar.showView();
         new Connection<User>().signUpCustomerResendVerification(user.getId(), (isSuccess, answerServerResponse) -> {
             if (isSuccess) {
-                showToast("Verification was sent, check your email!");
+                showToast(getString(R.string.verification_was_sent_check_your_email));
             } else {
-                showToast("Some problems with resending verification");
+                showToast(getString(R.string.some_problems_with_resending_verification));
             }
             progressBar.dismissView();
         });

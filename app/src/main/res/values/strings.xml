@@ -1,34 +1,75 @@
 <resources>
+
     <string name="app_name">JangSisters</string>
-    <string name="filter">filter</string>
-    <string name="open">open</string>
-    <string name="close">close</string>
-    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur porta faucibus nisi eu ornare. Fusce consequat, mauris id fringilla maximus, ligula velit luctus quam, et sodales nibh dui eget urna. Quisque accumsan, leo non lacinia convallis, nisl arcu iaculis mi, ut cursus ligula justo sit amet erat. Donec vehicula, orci sagittis luctus imperdiet, mauris sem tempor eros, vitae laoreet enim augue sed sapien. Aliquam et pellentesque arcu, nec sollicitudin urna. Curabitur maximus nibh vel lectus tristique, a bibendum turpis elementum. Pellentesque varius efficitur tortor vitae gravida. Etiam est ligula, scelerisque sed faucibus id, ullamcorper eu purus.
 
-Vestibulum pulvinar, tortor non luctus lacinia, tortor dui pharetra elit, et malesuada metus odio at odio. Ut eget pellentesque urna, id euismod neque. Donec ut convallis elit. Sed sed ipsum ultrices, aliquam nisl molestie, laoreet ligula. Mauris sed felis arcu. Ut vel finibus ligula. Nullam lorem sem, sagittis vitae enim nec, facilisis gravida erat. Aliquam fringilla, orci eget volutpat congue, dui velit mollis erat, at auctor orci lectus vel lectus.
-
-Phasellus commodo quam at ipsum ullamcorper ultricies. Aliquam malesuada congue ipsum, et consequat orci imperdiet nec. Maecenas efficitur lacus dapibus pharetra auctor. Fusce purus risus, consequat in dictum non, ornare eget arcu. In elit orci, convallis a risus at, condimentum malesuada sapien. Phasellus id lorem ex. Aliquam vestibulum aliquam lectus a elementum. Integer auctor tortor id quam volutpat dapibus. Vivamus quis nisi quis enim tempor tempor quis quis dolor. Praesent faucibus turpis id leo fringilla sodales. Praesent egestas semper turpis. Fusce vitae urna sit amet ante vestibulum tempus vel non libero. Proin porttitor turpis vitae neque dapibus, a sagittis erat sodales. Mauris iaculis urna ac orci mattis fringilla.
-
-Sed tempor ornare nunc vel tempor. Phasellus consectetur venenatis purus, eget rhoncus purus ullamcorper a. Ut in ex dolor. Nunc vitae suscipit ipsum. Maecenas ac dolor mattis, gravida lectus quis, fringilla nulla. Etiam aliquam erat quis nisl dapibus, nec euismod leo ornare. Aliquam pretium molestie nisl ac tincidunt. Curabitur egestas tellus id nibh pellentesque, venenatis aliquet diam ultrices. Duis vel leo quis lorem mollis tempus eu eget neque. Ut lobortis molestie orci ut sollicitudin. Vestibulum urna tellus, sagittis ac placerat sodales, placerat ut sapien. Etiam pellentesque convallis ligula sit amet molestie. Suspendisse mollis, quam quis egestas eleifend, enim arcu dapibus nisi, eu venenatis risus sem quis dui.
-
-Nam vehicula ex a efficitur aliquet. Quisque blandit et augue non malesuada. Integer non neque ex. Maecenas consectetur sodales ex, in porttitor magna luctus in. Praesent at ante id orci consequat viverra in vitae eros. Ut nibh lorem, aliquam eu egestas vitae, malesuada in nunc. Suspendisse arcu tortor, rutrum sit amet egestas eu, volutpat id justo. Nunc congue turpis diam, vitae pulvinar urna ullamcorper accumsan. Nullam ac fermentum tellus. Maecenas nec malesuada magna. Donec dolor ligula, lacinia eu metus pellentesque, dictum molestie arcu. Integer iaculis erat vel pretium tincidunt. Sed gravida quam id volutpat consectetur.</string>
-
-
-    <string name="lorem_small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur porta faucibus nisi eu ornare. Fusce consequat, mauris id fringilla maximus, ligula velit luctus quam, et sodales nibh dui eget urna.</string>
-    <string name="back">back</string>
-    <string name="forward">forward</string>
-    <string name="refresh">refresh</string>
+    <string name="filter">Filter</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. \n \nCurabitur porta faucibus nisi eu ornare. \n \nFusce consequat, mauris id fringilla maximus, ligula velit luctus quam, et sodales nibh dui eget urna. </string>
+    <string name="lorem_small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. \n \nCurabitur porta faucibus nisi eu ornare. </string>
+    <string name="back">Back</string>
+    <string name="forward">Forward</string>
+    <string name="refresh">Refresh</string>
     <string name="separator">|</string>
     <string name="help_text">Here goes some random text saying we value our customers and blablabla and we want them to be happy and blablabla</string>
     <string name="help">Help Chat</string>
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">Search</string>
+    <!--XML-->
     <string name="not_have_account_registrate">Not have account? Sign up</string>
-    <string name="logout">logout</string>
-    <string name="settings">settings</string>
+    <string name="logout">Logout</string>
+    <string name="settings">Settings</string>
     <string name="balance">Balance</string>
-    <string name="not_signed">Soryan, you are not signed it. You can create new accout or sign in using existing one</string>
+    <string name="not_signed">Sorry, you are not signed it. You can create new account or sign in using existing one.</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="comments">Comments</string>
+    <string name="registration">Registration</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+    <string name="sign_up">Sign up</string>
+    <string name="username">Username</string>
+    <string name="blog_name">Blog name</string>
+    <string name="blog_description">Blog description</string>
+    <string name="save">Save</string>
+    <string name="code_will_be_send_in_yor_email_adress">Code will be send in yor email adress</string>
+    <string name="code_verification">Code verification</string>
+    <string name="send_verification_code">Send verification code</string>
+    <string name="send_code_again">Send code again!</string>
+    <string name="ingredients_of_this_post">Ingredients of this post:</string>
+    <string name="or">OR</string>
+    <string name="count_bonus">264 bonus</string>
+    <string name="message">Message</string>
+    <string name="follow">Follow</string>
+    <string name="help_chat">Help chat</string>
+    <string name="hello_how_can_i_help_you">Hello, how can i help you today?</string>
+    <string name="time_chat">15:24</string>
+
+    <!--java Code-->
+    <string name="message_cant_open_this_post">Can\'t open this post, sorry!</string>
+    <string name="you_must_login_first">You must login first</string>
+    <string name="couldnt_like_this_post">Couldn\'t like this post, sorry</string>
+    <string name="connection_error">Connection error!</string>
+    <string name="kakaotalk_button">KakaoTalk</string>
+    <string name="facebook_button">Facebook</string>
+    <string name="some_problems_with_sign_in">Some problems with sign in</string>
+    <string name="need_fill_all_fields">Need fill all fields!</string>
+    <string name="you_not_registered_user_or_not_correct_email">You not registered user or not correct email!</string>
+    <string name="login_required">Login required</string>
+    <string name="your_profile">Your profile</string>
+    <string name="help_title">Help</string>
+    <string name="home">Home</string>
+    <string name="some_problems_with_sign_up">Some problems with sign up</string>
+    <string name="some_problems_with_verification_process">Some problems with verification process</string>
+    <string name="verification_was_sent_check_your_email">Verification was sent, check your email!</string>
+    <string name="some_problems_with_resending_verification">Some problems with resending verification</string>
+    <string name="profile">Profile</string>
+    <string name="posts">Posts</string>
+    <string name="following">Following</string>
+    <string name="followers">Followers</string>
+    <string name="bookmarks">Bookmarks</string>
+
+
+
 </resources>

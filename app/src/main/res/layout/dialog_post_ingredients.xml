@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_margin="10dp"
-        android:text="Ingredients of this post:"
+        android:text="@string/ingredients_of_this_post"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imageButtonClosePopup"

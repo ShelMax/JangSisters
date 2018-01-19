@@ -50,12 +50,12 @@ public class RegistrationActivity extends BaseActivity {
                 if (isSuccess) {
                     startVerificationUserActivity(answerServerResponse.getDataTransferObject());
                 } else {
-                    showToast("Some problems with sign up");
+                    showToast(getString(R.string.some_problems_with_sign_up));
                 }
                 progressBar.dismissView();
             });
         } else {
-            showToast("Need fill all fields!");
+            showToast(getString(R.string.need_fill_all_fields));
         }
     }
 

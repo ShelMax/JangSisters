@@ -36,10 +36,10 @@ public class LoginActivity extends BaseActivity {
                 requestAuthorization(editTextEmail.getText().toString(), editTextPassword.getText().toString());
                 break;
             case R.id.buttonKakoTalk:
-                showToast("KakaoTalk");
+                showToast(getString(R.string.kakaotalk_button));
                 break;
             case R.id.buttonFacebook:
-                showToast("Facebook");
+                showToast(getString(R.string.facebook_button));
                 break;
             case R.id.TextViewRegister:
                 startActivity(new Intent(this, RegistrationActivity.class));
@@ -63,12 +63,12 @@ public class LoginActivity extends BaseActivity {
                         startLaunchActivity();
                     }
                 } else {
-                    showToast("Some problems with sign in");
+                    showToast(getString(R.string.some_problems_with_sign_in));
                 }
                 progressBar.dismissView();
             });
         } else {
-            showToast("Need fill all fields!");
+            showToast(getString(R.string.need_fill_all_fields));
         }
     }
 
@@ -81,7 +81,7 @@ public class LoginActivity extends BaseActivity {
         if (0 != user.getId()) {
             startActivity(new Intent(LoginActivity.this, VerificationActivity.class).putExtra(MY_USER.toString(), user));
         } else {
-            showToast("You not registered user or not correct email!");
+            showToast(getString(R.string.you_not_registered_user_or_not_correct_email));
         }
 
     }

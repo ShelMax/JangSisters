@@ -43,7 +43,7 @@
         android:id="@+id/textViewLableLogin"
         style="@style/TextViewAuthorization"
         android:layout_marginTop="16dp"
-        android:text="Registration"
+        android:text="@string/registration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
             android:backgroundTint="@color/colorWhite"
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/email"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:paddingStart="8dp"
             android:textColor="@color/colorWhite" />
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/lock"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:paddingStart="8dp"
             android:textColor="@color/colorWhite" />
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/account_white"
-            android:hint="Name"
+            android:hint="@string/name"
             android:paddingStart="8dp"
             android:textColor="@color/colorWhite" />
     </android.support.design.widget.TextInputLayout>
@@ -139,7 +139,7 @@
         android:layout_marginBottom="50dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="Sign up"
+        android:text="@string/sign_up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -125,7 +125,7 @@ public class DetailPostActivity extends BaseActivity {
                         fillUpContentPost();
                         initDialog();
                     } else {
-                        showToast("Can't open this post, sorry!");
+                        showToast(getString(R.string.message_cant_open_this_post));
                         finish();
                     }
                     progressBar.dismissView();
@@ -187,7 +187,7 @@ public class DetailPostActivity extends BaseActivity {
     @OnClick(R.id.comment_add)
     public void addComment(){
         if (userID == 0) {
-            showToast("You must login first");
+            showToast(getString(R.string.you_must_login_first));
             return;
         }
         if(!commentText.getText().toString().isEmpty()){
@@ -212,7 +212,7 @@ public class DetailPostActivity extends BaseActivity {
     @OnClick(R.id.like)
     public void like(){
         if (userID == 0) {
-            showToast("You must login first");
+            showToast(getString(R.string.you_must_login_first));
             return;
         }
         new Connection<ServerResponse>().likePost(new SenderContainerDTO()
@@ -236,7 +236,7 @@ public class DetailPostActivity extends BaseActivity {
                 }
             }
             else{
-                showToast("Couldn't like this post, sorry");
+                showToast(getString(R.string.couldnt_like_this_post));
             }
         });
     }

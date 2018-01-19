@@ -73,13 +73,13 @@ public class ProfileFragment extends BaseFragment {
         userID = getArguments().getInt(EnumPreference.USER_ID.toString());
         myProfile = getArguments().getBoolean(EnumPreference.MY_PROFILE.toString());
         if(myProfile){
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Your profile");
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.your_profile);
             follow.setVisibility(View.GONE);
             message.setVisibility(View.GONE);
             user = appPreference.getUser();
             updateUI();
         } else {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profile");
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.profile);
             balance.setVisibility(View.GONE);
             getUser();
         }
@@ -137,11 +137,11 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void initTabLayout() {
-        tabLayout.addTab(tabLayout.newTab().setText("Posts"));
-        tabLayout.addTab(tabLayout.newTab().setText("Following"));
-        tabLayout.addTab(tabLayout.newTab().setText("Followers"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.posts));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.following));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.followers));
         if (myProfile) {
-            tabLayout.addTab(tabLayout.newTab().setText("Bookmarks"));
+            tabLayout.addTab(tabLayout.newTab().setText(R.string.bookmarks));
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {

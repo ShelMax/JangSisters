@@ -41,7 +41,7 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void initToolbar() {
-        toolbar.setTitle("Help chat");
+        toolbar.setTitle(R.string.help_chat);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.arrow_left_white);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
@@ -49,7 +49,7 @@ public class ChatActivity extends BaseActivity {
 
     private void loadMessages() {
         messages = new ArrayList<>();
-        messages.add(new Message(0, "Hello, how can i help you today?", "15:24"));
+        messages.add(new Message(0, getString(R.string.hello_how_can_i_help_you), getString(R.string.time_chat)));
         updateList();
     }
 
@@ -64,7 +64,7 @@ public class ChatActivity extends BaseActivity {
     public void addNewMessage(){
         if(!newMessage.getText().toString().isEmpty()){
             messages.add(new Message(appPreference.getUser().getId(), newMessage.getText().toString(),
-                    "10:00"));
+                    getString(R.string.time_chat)));
             newMessage.setText(null);
             updateList();
         }

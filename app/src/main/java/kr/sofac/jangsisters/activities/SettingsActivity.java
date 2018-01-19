@@ -62,7 +62,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void initToolbar() {
-        toolbar.setTitle("Settings");
+        toolbar.setTitle(R.string.settings);
         toolbar.setNavigationIcon(R.drawable.arrow_left_white);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());

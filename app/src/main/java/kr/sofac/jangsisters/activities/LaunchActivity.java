@@ -31,7 +31,7 @@ public class LaunchActivity extends BaseActivity {
                     requestLoadingCategories(answerServerResponse.getDataTransferObject());
                 }
             } else {
-                showToast("Connection error!");
+                showToast(getString(R.string.connection_error));
             }
         });
     }
@@ -43,7 +43,7 @@ public class LaunchActivity extends BaseActivity {
                 appPreference.setVersionCategories(versionFromServer.getValue());
                 startMainActivity();
             } else {
-                showToast("Connection error!");
+                showToast(getString(R.string.connection_error));
             }
         });
     }

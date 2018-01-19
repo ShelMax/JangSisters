@@ -121,7 +121,7 @@ public class HomeFragment extends BaseFragment {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recyclerView.setAdapter(adapter);
             }else{
-                Toast.makeText(getActivity(), "Connection error!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.connection_error, Toast.LENGTH_SHORT).show();
             }
             progressBar.dismissView();
         });

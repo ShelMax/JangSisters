@@ -33,7 +33,7 @@ public class HelpFragment extends BaseFragment {
     @OnClick(R.id.help)
     void helpClick(){
         if(appPreference.getUser() == null){
-            Toast.makeText(getActivity(), "You must login first", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.you_must_login_first, Toast.LENGTH_SHORT).show();
             return;
         }
         startActivity(new Intent(getActivity(), ChatActivity.class));

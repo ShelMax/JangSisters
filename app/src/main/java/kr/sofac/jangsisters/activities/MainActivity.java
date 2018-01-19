@@ -132,7 +132,7 @@ public class MainActivity extends BaseActivity {
                         break;
                     case 2:
                         tabHome.setSelected(true);
-                        toolbar.setTitle("Home");
+                        toolbar.setTitle(R.string.home);
                         if (isLogged) {
                             toolbar.setNavigationIcon(R.drawable.add);
                             toolbar.setNavigationOnClickListener(v -> {
@@ -142,17 +142,17 @@ public class MainActivity extends BaseActivity {
                         break;
                     case 3:
                         toolbar.setNavigationIcon(null);
-                        toolbar.setTitle("Help");
+                        toolbar.setTitle(R.string.help_title);
                         break;
                     case 4:
                         if (isLogged) {
-                            toolbar.setTitle("Your profile");
+                            toolbar.setTitle(R.string.your_profile);
                             toolbar.setNavigationIcon(R.drawable.add);
                             toolbar.setNavigationOnClickListener(v -> {
                                 //todo
                             });
                         } else
-                            toolbar.setTitle("Login required");
+                            toolbar.setTitle(R.string.login_required);
                         break;
 
                 }

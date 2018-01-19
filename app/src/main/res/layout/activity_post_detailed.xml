@@ -236,7 +236,7 @@
             app:layout_constraintBottom_toBottomOf="@id/close"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="Comments"
+            android:text="@string/comments"
             android:textStyle="bold"
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
