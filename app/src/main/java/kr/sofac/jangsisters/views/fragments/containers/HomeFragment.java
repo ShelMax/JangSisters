@@ -39,20 +39,13 @@ import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
 public class HomeFragment extends BaseFragment {
 
-    // TODO сообщение если нет новостей, подписчиков и т.д.
+    // TODO сообщение если нет новостей, подписчиков и т.д. ()
 
-    // TODO цыфры в кружок
+    // TODO цыфры в кружок ()
 
-    // TODO не добавлять коммент и не лайкать если разлогинен
+    // TODO свайпить категории вниз
 
-    // TODO название блога под именем
-
-    // TODO кнопка назад в профиле
-
-    // TODO В чате поле ввода так же как в комментариях
-
-
-
+    // TODO еще один вьюхолдер для списка категорий в detailspost
 
     @BindView(R.id.home_recycler) RecyclerView recyclerView;
     @BindView(R.id.home_swipe) SwipeRefreshLayout swipeRefresh;

@@ -43,7 +43,9 @@ public class ProfileFragment extends BaseFragment {
     @BindView(R.id.username) TextView username;
     @BindView(R.id.tabLayout) TabLayout tabLayout;
     @BindView(R.id.description)
-    TextView description;
+    TextView blogDescription;
+    @BindView(R.id.blog_name)
+    TextView blogName;
     @BindView(R.id.user_balance) TextView userBalance;
     @BindView(R.id.message) ButtonLight message;
     @BindView(R.id.follow) ButtonLight follow;
@@ -87,15 +89,19 @@ public class ProfileFragment extends BaseFragment {
     private void updateUI() {
         GlideApp.with(this).load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR +
                 user.getAvatar())
-                .override(100, 100)
+                .override(200, 200)
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
                 .apply(RequestOptions.circleCropTransform())
                 .into(userImage);
         username.setText(user.getName());
         if (user.getBlogDescription().isEmpty())
-            description.setVisibility(View.GONE);
+            blogDescription.setVisibility(View.GONE);
         else
-            description.setText(user.getBlogDescription());
+            blogDescription.setText(user.getBlogDescription());
+        if (user.getBlogName().isEmpty())
+            blogName.setVisibility(View.GONE);
+        else
+            blogName.setText(user.getBlogName());
 
         initFragments();
         initTabLayout();

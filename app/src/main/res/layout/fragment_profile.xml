@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/user_image_border"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:layout_marginStart="18dp"
             android:layout_marginTop="18dp"
             android:background="@drawable/circle"
@@ -40,11 +40,21 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="22dp"
             android:textColor="@color/navigation_back_checked"
-            android:textSize="18sp"
+            android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/user_image_border"
             app:layout_constraintTop_toTopOf="@id/user_image_border"
             tools:text="Sanchos" />
+
+        <TextView
+            android:id="@+id/blog_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            app:layout_constraintStart_toStartOf="@+id/user_balance"
+            app:layout_constraintTop_toBottomOf="@+id/user_balance"
+            tools:text="This is blog name" />
 
         <TextView
             android:id="@+id/user_balance"
@@ -53,7 +63,7 @@
             android:layout_marginTop="8dp"
             android:text="5555 UAH"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
+            android:textSize="13sp"
             app:layout_constraintStart_toStartOf="@id/username"
             app:layout_constraintTop_toBottomOf="@id/username"
             tools:text="5555 UAH" />
@@ -63,36 +73,33 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginEnd="50dp"
-            android:layout_marginTop="8dp"
             android:text="@string/balance"
             app:layout_constraintBottom_toBottomOf="@id/user_image_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/username"
-            app:layout_constraintTop_toBottomOf="@id/user_balance" />
+            app:layout_constraintTop_toBottomOf="@+id/blog_name" />
 
         <kr.sofac.jangsisters.views.customview.ButtonLight
             android:id="@+id/message"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
             android:text="Message"
             app:layout_constraintBottom_toBottomOf="@id/user_image_border"
             app:layout_constraintEnd_toStartOf="@id/follow"
             app:layout_constraintStart_toStartOf="@id/username"
-            app:layout_constraintTop_toBottomOf="@id/user_balance" />
+            app:layout_constraintTop_toBottomOf="@+id/blog_name" />
 
         <kr.sofac.jangsisters.views.customview.ButtonLight
             android:id="@+id/follow"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
             android:text="Follow"
             app:layout_constraintBottom_toBottomOf="@id/user_image_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/message"
-            app:layout_constraintTop_toBottomOf="@id/user_balance" />
+            app:layout_constraintTop_toBottomOf="@+id/blog_name" />
 
         <TextView
             android:id="@+id/description"

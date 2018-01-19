@@ -41,6 +41,9 @@ public class UserActivity extends BaseActivity {
             toolbar.setNavigationOnClickListener(v -> {
                 //todo add post
             });
+        } else {
+            toolbar.setNavigationIcon(R.drawable.arrow_left_white);
+            toolbar.setNavigationOnClickListener(v -> onBackPressed());
         }
     }
 }

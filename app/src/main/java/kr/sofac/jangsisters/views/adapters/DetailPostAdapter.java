@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -23,6 +25,7 @@ public class DetailPostAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_TEXT = 1;
     private static final int VIEW_TYPE_IMAGE = 2;
     private static final int VIEW_TYPE_VIDEO = 3;
+    private static final int VIEW_TYPE_CATEGORIES = 4;
 
     private List<PostElement> postElements;
 
@@ -33,6 +36,16 @@ public class DetailPostAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
+//        switch (viewType){
+//            case VIEW_TYPE_TEXT:
+//                break;
+//            case VIEW_TYPE_IMAGE:
+//                break;
+//            case VIEW_TYPE_VIDEO:
+//                break;
+//            case VIEW_TYPE_CATEGORIES:
+//                break;
+//        }
         if (viewType == VIEW_TYPE_TEXT) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_detail_post_text, parent, false);
             return new TextHolder(view);
@@ -156,8 +169,9 @@ public class DetailPostAdapter extends RecyclerView.Adapter {
             @Override
             public void onBindViewHolder(ImageAdapterHolder holder, int position) {
                 GlideApp.with(holder.itemView)
-                        .load(ServersConfig.BASE_URL + ServersConfig.PART_POST + images.get(position))
-                        .override(200, 200)
+                        .load(ServersConfig.BASE_URL + ServersConfig.PART_POST + images.get(position).getName())
+                        .apply(new RequestOptions().placeholder(R.drawable.placeholder_image))
+                        .apply(RequestOptions.centerCropTransform())
                         .into(holder.image);
             }
 

@@ -186,6 +186,10 @@ public class DetailPostActivity extends BaseActivity {
 
     @OnClick(R.id.comment_add)
     public void addComment(){
+        if (userID == 0) {
+            showToast("You must login first");
+            return;
+        }
         if(!commentText.getText().toString().isEmpty()){
             progressBar.showView();
             new Connection<Comment>().addCommentToPost(new SenderContainerDTO()
@@ -207,6 +211,10 @@ public class DetailPostActivity extends BaseActivity {
 
     @OnClick(R.id.like)
     public void like(){
+        if (userID == 0) {
+            showToast("You must login first");
+            return;
+        }
         new Connection<ServerResponse>().likePost(new SenderContainerDTO()
                 .setCustomer_id(userID)
                 .setPostID(postID), (isSuccess, answerServerResponse) -> {
