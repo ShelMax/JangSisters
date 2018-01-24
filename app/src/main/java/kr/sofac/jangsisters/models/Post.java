@@ -2,9 +2,10 @@ package kr.sofac.jangsisters.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Post {
+public class Post implements Serializable {
 
     private int id;
 
@@ -103,5 +104,35 @@ public class Post {
 
     public List<PostElement> getBody() {
         return body;
+    }
+
+    //-//
+
+    public void setAuthorID(int authorID) {
+        this.authorID = authorID;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public void setShopIngredients(List<Ingredient> shopIngredients) {
+        this.shopIngredients = shopIngredients;
+    }
+
+    public void setBody(List<PostElement> body) {
+        this.body = body;
     }
 }

@@ -43,10 +43,6 @@ public class HomeFragment extends BaseFragment {
 
     // TODO цыфры в кружок ()
 
-    // TODO свайпить категории вниз
-
-    // TODO еще один вьюхолдер для списка категорий в detailspost
-
     @BindView(R.id.home_recycler) RecyclerView recyclerView;
     @BindView(R.id.home_swipe) SwipeRefreshLayout swipeRefresh;
 
@@ -140,3 +136,16 @@ public class HomeFragment extends BaseFragment {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

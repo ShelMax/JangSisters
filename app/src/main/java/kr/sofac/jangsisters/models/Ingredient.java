@@ -6,12 +6,6 @@ public class Ingredient {
     private String name;
     private int shop_id;
 
-    public Ingredient(int id, String name, int shop_id) {
-        this.id = id;
-        this.name = name;
-        this.shop_id = shop_id;
-    }
-
     public int getId() {
         return id;
     }

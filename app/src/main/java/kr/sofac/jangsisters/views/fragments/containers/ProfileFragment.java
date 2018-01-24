@@ -237,7 +237,6 @@ public class ProfileFragment extends BaseFragment {
                 break;
             case R.id.logout:
                 appPreference.clearUser();
-                //TODO перекидывать
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finishAffinity();
                 break;

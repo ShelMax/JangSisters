@@ -10,13 +10,16 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.sofac.jangsisters.network.api.type.ServerRequest;
 import kr.sofac.jangsisters.network.api.type.ServerResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,9 +28,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static kr.sofac.jangsisters.config.ServersConfig.BASE_URL;
 
-/**
- * Created by Maxim on 03.08.2017.
- */
 
 public class ManagerRetrofit<T> {
 
@@ -43,12 +43,18 @@ public class ManagerRetrofit<T> {
 
 
     {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(httpClient.build())
                 .build();
         serviceRetrofit = retrofit.create(ServiceRetrofit.class);
     }
@@ -92,7 +98,7 @@ public class ManagerRetrofit<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public void sendMultiPartRequest(T object, String requestType, ArrayList<MultipartBody.Part> partArrayList, AsyncAnswerString asyncAnswer) {
+    public void sendMultiPartRequest(T object, String requestType, List<MultipartBody.Part> partArrayList, AsyncAnswerString asyncAnswer) {
         serverRequest = new ServerRequest(requestType, object);
         answerString = asyncAnswer;
         logServerRequest(serverRequest);

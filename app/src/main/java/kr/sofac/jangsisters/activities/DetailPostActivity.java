@@ -35,7 +35,6 @@ import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.api.type.ServerResponse;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
-import kr.sofac.jangsisters.views.adapters.CategoryAdapter;
 import kr.sofac.jangsisters.views.adapters.CommentAdapter;
 import kr.sofac.jangsisters.views.adapters.DetailPostAdapter;
 import kr.sofac.jangsisters.views.adapters.PostIngredientsAdapter;
@@ -48,7 +47,6 @@ public class DetailPostActivity extends BaseActivity {
 
     @BindView(R.id.post_detailed_image) ImageView postImage;
     @BindView(R.id.post_detailed_author_image) ImageView authorImage;
-    @BindView(R.id.post_detailed_categories_list) RecyclerView categoriesList;
     @BindView(R.id.post_detailed_date) TextView date;
     @BindView(R.id.post_detailed_author) TextView author;
     @BindView(R.id.post_detailed_toolbar) Toolbar toolbar;
@@ -116,12 +114,11 @@ public class DetailPostActivity extends BaseActivity {
     private void loadPost() {
         progressBar.showView();
         new Connection<Post>().getPost(
-                new SenderContainerDTO().setID(postID).setCustomer_id(userID), (isSuccess, answerServerResponse) -> {
+                new SenderContainerDTO().setID(postID).setCustomerID(userID), (isSuccess, answerServerResponse) -> {
                     if (isSuccess) {
                         post = answerServerResponse.getDataTransferObject();
                         fillUpHeader();
                         initToolbar();
-                        initCategories();
                         fillUpContentPost();
                         initDialog();
                     } else {
@@ -193,9 +190,9 @@ public class DetailPostActivity extends BaseActivity {
         if(!commentText.getText().toString().isEmpty()){
             progressBar.showView();
             new Connection<Comment>().addCommentToPost(new SenderContainerDTO()
-                            .setCustomer_id(userID)
+                    .setCustomerID(userID)
                             .setPostID(postID)
-                            .setBody(commentText.getText().toString()), (isSuccess, answerServerResponse) -> {
+                    .setStringBody(commentText.getText().toString()), (isSuccess, answerServerResponse) -> {
                         if(isSuccess){
                             commentText.setText("");
                             loadComments();
@@ -216,7 +213,7 @@ public class DetailPostActivity extends BaseActivity {
             return;
         }
         new Connection<ServerResponse>().likePost(new SenderContainerDTO()
-                .setCustomer_id(userID)
+                .setCustomerID(userID)
                 .setPostID(postID), (isSuccess, answerServerResponse) -> {
             if(isSuccess){
                 isLiked = !isLiked;
@@ -269,24 +266,12 @@ public class DetailPostActivity extends BaseActivity {
         new Handler().postDelayed(() -> panel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN), 300);
     }
 
-    @OnClick(R.id.post_detailed_category_left)
-    public void onLeftClick() {
-        if (layoutManager.findFirstCompletelyVisibleItemPosition() != 0)
-            layoutManager.scrollToPosition(layoutManager.findFirstCompletelyVisibleItemPosition() - 1);
-    }
-
-    @OnClick(R.id.post_detailed_category_right)
-    public void onRightClick() {
-        if (layoutManager.findLastCompletelyVisibleItemPosition() != post.getCategories().size())
-            layoutManager.scrollToPosition(layoutManager.findLastCompletelyVisibleItemPosition() + 1);
-    }
-
     private void fillUpContentPost() {
         LinearLayoutManager managerImages = new LinearLayoutManager(this);
         LinearLayoutManager managerVideos = new LinearLayoutManager(this);
         managerImages.setOrientation(LinearLayoutManager.HORIZONTAL);
         managerVideos.setOrientation(LinearLayoutManager.HORIZONTAL);
-        adapter = new DetailPostAdapter(post.getBody());
+        adapter = new DetailPostAdapter(post);
         textViewContent.setAdapter(adapter);
         textViewContent.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -296,13 +281,6 @@ public class DetailPostActivity extends BaseActivity {
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationIcon(R.drawable.arrow_left_white);
         setSupportActionBar(toolbar);
-    }
-
-    private void initCategories() {
-        layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        categoriesList.setAdapter(new CategoryAdapter(post.getCategories(),true));
-        categoriesList.setLayoutManager(layoutManager);
     }
 
     @Override

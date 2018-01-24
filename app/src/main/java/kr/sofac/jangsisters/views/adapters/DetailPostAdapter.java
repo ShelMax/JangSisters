@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,8 +17,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.ServersConfig;
+import kr.sofac.jangsisters.models.Category;
 import kr.sofac.jangsisters.models.File;
 import kr.sofac.jangsisters.models.GlideApp;
+import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.PostElement;
 
 public class DetailPostAdapter extends RecyclerView.Adapter {
@@ -27,53 +30,62 @@ public class DetailPostAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_VIDEO = 3;
     private static final int VIEW_TYPE_CATEGORIES = 4;
 
-    private List<PostElement> postElements;
 
-    public DetailPostAdapter(List<PostElement> postElements) {
-        this.postElements = postElements;
+    private List<PostElement> postElements;
+    private List<Category> postCategories;
+
+    public DetailPostAdapter(Post post) {
+        this.postElements = post.getBody();
+        this.postCategories = post.getCategories();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-//        switch (viewType){
-//            case VIEW_TYPE_TEXT:
-//                break;
-//            case VIEW_TYPE_IMAGE:
-//                break;
-//            case VIEW_TYPE_VIDEO:
-//                break;
-//            case VIEW_TYPE_CATEGORIES:
-//                break;
-//        }
-        if (viewType == VIEW_TYPE_TEXT) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_detail_post_text, parent, false);
-            return new TextHolder(view);
-        } else if (viewType == VIEW_TYPE_IMAGE) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_detail_post_image, parent, false);
-            return new ImageHolder(view);
-        } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_detail_post_video, parent, false);
-            return new VideoHolder(view);
+        switch (viewType) {
+            case VIEW_TYPE_TEXT:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_detail_post_text, parent, false);
+                return new TextHolder(view);
+            case VIEW_TYPE_IMAGE:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_detail_post_image, parent, false);
+                return new ImageHolder(view);
+            case VIEW_TYPE_VIDEO:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_detail_post_video, parent, false);
+                return new VideoHolder(view);
+            case VIEW_TYPE_CATEGORIES:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_detail_post_categories, parent, false);
+                return new CategoriesHolder(view);
         }
+        return null;
+
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder.getItemViewType() == VIEW_TYPE_TEXT) {
-            ((TextHolder) holder).bind(postElements.get(position));
-        } else if (holder.getItemViewType() == VIEW_TYPE_IMAGE) {
-            ((ImageHolder) holder).bind(postElements.get(position));
-        } else {
-            ((VideoHolder) holder).bind(postElements.get(position));
+        switch (holder.getItemViewType()) {
+            case VIEW_TYPE_TEXT:
+                ((TextHolder) holder).bind(postElements.get(position - 1));
+                break;
+            case VIEW_TYPE_IMAGE:
+                ((ImageHolder) holder).bind(postElements.get(position - 1));
+                break;
+            case VIEW_TYPE_VIDEO:
+                ((VideoHolder) holder).bind(postElements.get(position - 1));
+                break;
+            case VIEW_TYPE_CATEGORIES:
+                ((CategoriesHolder) holder).bind(postCategories);
+                break;
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (postElements.get(position).getType().equals("text")) {
+        if (position == 0)
+            return VIEW_TYPE_CATEGORIES;
+
+        if (postElements.get(position - 1).getType().equals("text")) {
             return VIEW_TYPE_TEXT;
-        } else if (postElements.get(position).getType().equals("image")) {
+        } else if (postElements.get(position - 1).getType().equals("image")) {
             return VIEW_TYPE_IMAGE;
         }
         return VIEW_TYPE_VIDEO;
@@ -81,7 +93,7 @@ public class DetailPostAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return postElements.size();
+        return postElements.size() + 1;
     }
 
     class VideoHolder extends RecyclerView.ViewHolder {
@@ -206,6 +218,39 @@ public class DetailPostAdapter extends RecyclerView.Adapter {
         void bind(PostElement element) {
             text.setText(element.getText());
         }
+    }
+
+    class CategoriesHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.post_detailed_categories_list)
+        RecyclerView categoriesList;
+        @BindView(R.id.post_detailed_category_left)
+        ImageButton left;
+        @BindView(R.id.post_detailed_category_right)
+        ImageButton right;
+
+        CategoriesHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        void bind(List<Category> categories) {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(itemView.getContext());
+            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            categoriesList.setAdapter(new CategoryAdapter(categories, true));
+            categoriesList.setLayoutManager(layoutManager);
+
+            left.setOnClickListener(v -> {
+                if (layoutManager.findFirstCompletelyVisibleItemPosition() != 0)
+                    layoutManager.scrollToPosition(layoutManager.findFirstCompletelyVisibleItemPosition() - 1);
+            });
+
+            right.setOnClickListener(v -> {
+                if (layoutManager.findLastCompletelyVisibleItemPosition() != categories.size())
+                    layoutManager.scrollToPosition(layoutManager.findLastCompletelyVisibleItemPosition() + 1);
+            });
+        }
+
     }
 
 }

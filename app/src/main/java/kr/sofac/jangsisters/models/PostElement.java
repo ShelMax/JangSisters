@@ -4,16 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class PostElement {
+public class PostElement extends BasePostElement {
 
     private int id;
 
     @SerializedName("post_id")
     private int postID;
 
-    private String text;
-    private int position;
-    private String type;
     private List<File> files;
 
     public int getId() {

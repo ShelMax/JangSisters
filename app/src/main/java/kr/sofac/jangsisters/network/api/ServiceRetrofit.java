@@ -1,6 +1,7 @@
 package kr.sofac.jangsisters.network.api;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.sofac.jangsisters.network.api.type.ServerRequest;
 import okhttp3.MultipartBody;
@@ -14,10 +15,6 @@ import retrofit2.http.Part;
 
 import static kr.sofac.jangsisters.config.ServersConfig.PART_CONTROLLER;
 
-/**
- * Created by Maxim on 03.08.2017.
- */
-
 public interface ServiceRetrofit {
 
     @POST(PART_CONTROLLER)
@@ -25,7 +22,7 @@ public interface ServiceRetrofit {
 
     @Multipart
     @POST(PART_CONTROLLER)
-    Call<ResponseBody> sendMultiPartRequest(@Part("json") RequestBody obj, @Part ArrayList<MultipartBody.Part> file);
+    Call<ResponseBody> sendMultiPartRequest(@Part("json") RequestBody obj, @Part List<MultipartBody.Part> file);
 
     @Multipart
     @POST(PART_CONTROLLER)

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".JangSisters"
@@ -13,6 +14,16 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/JangSistersTheme">
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
         <activity
             android:name=".activities.LaunchActivity"
@@ -24,41 +35,42 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
-
         <activity
             android:name=".activities.DetailPostActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activities.LoginActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activities.RegistrationActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activities.VerificationActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activities.UserActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activities.SettingsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activities.ChatActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".activities.AddPostMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AddPostIngredientActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AddPostBodyActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

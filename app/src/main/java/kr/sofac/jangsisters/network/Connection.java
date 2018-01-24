@@ -10,17 +10,18 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.lang.reflect.Type;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 import kr.sofac.jangsisters.models.Category;
 import kr.sofac.jangsisters.models.Comment;
+import kr.sofac.jangsisters.models.Ingredient;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.models.Version;
 import kr.sofac.jangsisters.network.api.ManagerRetrofit;
 import kr.sofac.jangsisters.network.api.type.ServerResponse;
+import kr.sofac.jangsisters.network.dto.AddPostDTO;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 import kr.sofac.jangsisters.utils.PathUtil;
 import okhttp3.MediaType;
@@ -48,6 +49,21 @@ public class Connection<T> {
             }
         });
     }
+
+    public void getIngredients(AnswerServerResponse<T> async) {
+        answerServerResponse = async;
+        new ManagerRetrofit<String>().sendRequest("", "getListShopIngredients", (isSuccess, answerString) -> {
+            if (isSuccess) {
+                Type typeAnswer = new TypeToken<ServerResponse<List<Ingredient>>>() {
+                }.getType();
+                tryParsing(answerString, typeAnswer);
+            } else {
+                answerServerResponse.processFinish(false, null);
+            }
+        });
+    }
+
+
 
 
     public void signUpCustomer(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
@@ -255,23 +271,34 @@ public class Connection<T> {
         });
     }
 
+    public void addPost(Context context, AddPostDTO postDTO, List<Uri> listUri, AnswerServerResponse<T> async) {
+        answerServerResponse = async;
+        new ManagerRetrofit<AddPostDTO>().sendMultiPartRequest(postDTO, "addPost",
+                generateMultiPartList(listUri, context), (isSuccess, answerString) -> {
+                    if (isSuccess) {
+                        Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response(тип ответа)
+                        }.getType();
+                        tryParsing(answerString, typeAnswer);
+                    } else {
+                        answerServerResponse.processFinish(false, null);
+                    }
+                });
+    }
 
-
-
-//     public void createPost(Context context, PostDTO postDTO, ArrayList<Uri> listUri, AnswerServerResponse<T> async) {
-//        answerServerResponse = async;
-//        new ManagerRetrofit<PostDTO>().sendMultiPartRequest(postDTO, new Object() {// Change (type sending) / (data sending)
-//        }.getClass().getEnclosingMethod().getTitle(), generateMultiPartList(listUri, context), (isSuccess, answerString) -> {
-//            if (isSuccess) {
-//                Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response(тип ответа)
-//                }.getType();
-//                tryParsing(answerString, typeAnswer);
-//            } else {
-//                answerServerResponse.processFinish(false, null);
-//            }
-//        });
-//
-//    }
+    public void updateUser(Context context, SenderContainerDTO senderContainerDTO, Uri imageUri, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+        answerServerResponse = async;
+        new ManagerRetrofit<SenderContainerDTO>().sendMultiPartRequest(senderContainerDTO, "updateUserInfo",
+                generateMultiPartList(imageUri, context),
+                (isSuccess, answerString) -> {
+                    if (isSuccess) {
+                        Type typeAnswer = new TypeToken<ServerResponse<User>>() {
+                        }.getType();
+                        tryParsing(answerString, typeAnswer);
+                    } else {
+                        answerServerResponse.processFinish(false, null);
+                    }
+                });
+    }
 
 //    public void updatePost(Context context, PostDTO postDTO, ArrayList<Uri> listUri, ArrayList<String> listDeletingFiles, AnswerServerResponse<T> async) {
 //        answerServerResponse = async;
@@ -294,17 +321,19 @@ public class Connection<T> {
      * Supporting methods
      */
 
-    private ArrayList<MultipartBody.Part> generateMultiPartList(ArrayList<Uri> listFileUri, Context context) {
+    private List<MultipartBody.Part> generateMultiPartList(List<Uri> listFileUri, Context context) {
         ArrayList<MultipartBody.Part> arrayListMulti = new ArrayList<>();
         for (int i = 0; i < listFileUri.size(); i++) {
-            try {
-                File file = new File(PathUtil.getPath(context, listFileUri.get(i)));
-                arrayListMulti.add(MultipartBody.Part.createFormData("files[" + i + "]", file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file)));
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-
+            File file = new File(PathUtil.getPath(context, listFileUri.get(i)));
+            arrayListMulti.add(MultipartBody.Part.createFormData("files[" + i + "]", file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file)));
         }
+        return arrayListMulti;
+    }
+
+    private ArrayList<MultipartBody.Part> generateMultiPartList(Uri imageUri, Context context) {
+        ArrayList<MultipartBody.Part> arrayListMulti = new ArrayList<>();
+        File file = new File(PathUtil.getPath(context, imageUri));
+        arrayListMulti.add(MultipartBody.Part.createFormData("files[0]", file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file)));
         return arrayListMulti;
     }
 

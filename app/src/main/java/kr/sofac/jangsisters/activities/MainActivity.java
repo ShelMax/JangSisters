@@ -1,5 +1,6 @@
 package kr.sofac.jangsisters.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -136,7 +137,7 @@ public class MainActivity extends BaseActivity {
                         if (isLogged) {
                             toolbar.setNavigationIcon(R.drawable.add);
                             toolbar.setNavigationOnClickListener(v -> {
-                                //todo add post
+                                startActivity(new Intent(MainActivity.this, AddPostMainActivity.class));
                             });
                         }
                         break;
@@ -149,7 +150,7 @@ public class MainActivity extends BaseActivity {
                             toolbar.setTitle(R.string.your_profile);
                             toolbar.setNavigationIcon(R.drawable.add);
                             toolbar.setNavigationOnClickListener(v -> {
-                                //todo
+                                startActivity(new Intent(MainActivity.this, AddPostMainActivity.class));
                             });
                         } else
                             toolbar.setTitle(R.string.login_required);

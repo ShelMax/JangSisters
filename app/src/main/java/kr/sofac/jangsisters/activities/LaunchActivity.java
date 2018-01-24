@@ -32,6 +32,8 @@ public class LaunchActivity extends BaseActivity {
                 }
             } else {
                 showToast(getString(R.string.connection_error));
+                finish();
+                //TODO better solution
             }
         });
     }
