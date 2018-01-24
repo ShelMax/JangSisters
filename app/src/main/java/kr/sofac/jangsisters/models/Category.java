@@ -70,7 +70,7 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" +
+        return "\n\nCategory{" +
                 "id=" + id +
                 ", parent_id=" + parent_id +
                 ", name='" + name + '\'' +
