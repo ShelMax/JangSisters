@@ -63,7 +63,7 @@ public class HomeFragment extends BaseFragment {
         appPreference = new AppPreference(getActivity());
         progressBar = new ProgressBar(getActivity());
         progressBar.showView();
-        loadPosts();
+        loadPosts(new HashMap<Integer, Integer>());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View ingredientsView = getLayoutInflater().inflate(R.layout.dialog_post_ingredients, null);
@@ -75,14 +75,14 @@ public class HomeFragment extends BaseFragment {
         listView = ingredientsView.findViewById(R.id.post_ingredients_list);
         swipeRefresh.setOnRefreshListener(() -> {
             swipeRefresh.setRefreshing(false);
-            loadPosts();
+            loadPosts(new HashMap<Integer, Integer>());
         });
         return view;
     }
 
-    private void loadPosts() {
+    private void loadPosts(HashMap<Integer, Integer> hashMapFilter) {
         new Connection<List<Post>>().getListPosts(new SenderContainerDTO()
-                .setFilter(new HashMap<>()), (isSuccess, answerServerResponse) -> {
+                .setFilter(hashMapFilter), (isSuccess, answerServerResponse) -> {
             if(isSuccess){
                 posts = answerServerResponse.getDataTransferObject();
                 adapter = new PostAdapter(posts, getActivity(), new PostCallback() {
@@ -133,6 +133,13 @@ public class HomeFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+    }
+
+    public void reloadPostWithFilter(int categoryID){
+        progressBar.showView();
+        HashMap<Integer, Integer> filterRequest = new HashMap<>();
+        filterRequest.put(0, categoryID);
+        loadPosts(filterRequest);
     }
 
 }

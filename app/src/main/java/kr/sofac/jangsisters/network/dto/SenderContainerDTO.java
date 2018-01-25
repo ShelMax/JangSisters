@@ -11,7 +11,7 @@ public class SenderContainerDTO implements Serializable {
     @SerializedName("id")
     private Integer id;
 
-    @SerializedName("customerID")
+    @SerializedName("customer_id")
     private Integer customerID;
     private String password;
 
