@@ -13,7 +13,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,10 +55,19 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.search)
     EditText search;
 
+    ImageButton backButton;
+
+    FilterAdapter filterAdapter;
+    FilterAdapter filterSubAdapter;
+    RecyclerView recyclerViewFilterCategory;
+
     private ViewPagerAdapter adapter;
     private ShopFragment shopFragment;
     private SearchFragment searchFragment;
+    private HomeFragment homeFragment;
     private TabManager tabManager;
+
+    private Boolean isSubCategoryView = false;
 
     private boolean isLogged;
 
@@ -104,10 +112,11 @@ public class MainActivity extends BaseActivity {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         shopFragment = new ShopFragment();
         searchFragment = new SearchFragment();
+        homeFragment = new HomeFragment();
 
         adapter.addFragment(shopFragment);
         adapter.addFragment(searchFragment);
-        adapter.addFragment(new HomeFragment());
+        adapter.addFragment(homeFragment);
         adapter.addFragment(new HelpFragment());
         if (isLogged) {
             ProfileFragment profileFragment = new ProfileFragment();
@@ -195,8 +204,31 @@ public class MainActivity extends BaseActivity {
         searchFragment.onSetTextChanged(search);
     }
 
-    //TODO Category
     private void initDrawerEndPosition() {
+
+        recyclerViewFilterCategory = navigationView.getHeaderView(0).findViewById(R.id.recyclerViewFilters);
+        backButton = navigationView.getHeaderView(0).findViewById(R.id.backButton);
+
+        filterAdapter = new FilterAdapter(appPreference.getCategories(), isSubCategoryView, (view, position) -> {
+            filterSubAdapter = new FilterAdapter(appPreference.getCategories().get(position).getSubmenu(), true, (view1, position1) -> {
+                drawer.closeDrawer(Gravity.END);
+                homeFragment.reloadPostWithFilter(appPreference.getCategories().get(position).getSubmenu().get(position1).getId());
+                showMainFilters();
+            });
+            showSubFilters();
+        });
+
+        recyclerViewFilterCategory.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewFilterCategory.setAdapter(filterAdapter);
+
+        backButton.setOnClickListener(view -> {
+            if (isSubCategoryView) {
+                showMainFilters();
+            } else {
+                drawer.closeDrawer(Gravity.END);
+            }
+        });
+
         drawer.addDrawerListener(new ActionBarDrawerToggle(this, drawer,
                 toolbar, R.string.open, R.string.close) {
             @Override
@@ -209,42 +241,23 @@ public class MainActivity extends BaseActivity {
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                showMainFilters();
             }
         });
 
-        ImageButton backButton = navigationView.getHeaderView(0).findViewById(R.id.backButton);
-
-        RecyclerView recyclerViewFilterCategory = navigationView.getHeaderView(0).findViewById(R.id.recyclerViewFilters);
-
-        FilterAdapter filterAdapter = new FilterAdapter(appPreference.getCategories());
-
-        recyclerViewFilterCategory.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewFilterCategory.setAdapter(filterAdapter);
-
-        Log.e("CATEGORY!!! ",""+ appPreference.getCategories().toString());
-
-        backButton.setOnClickListener(view -> {
-            drawer.closeDrawer(Gravity.END);
-        });
-
-//        navigationView.setNavigationItemSelectedListener(item -> {
-//            switch (item.getItemId()) {
-//                case R.id.nav_fruits:
-//                    navigationView.setCheckedItem(R.id.nav_fruits);
-//                    break;
-//                case R.id.nav_soups:
-//                    navigationView.setCheckedItem(R.id.nav_soups);
-//                    break;
-//                case R.id.nav_sweets:
-//                    navigationView.setCheckedItem(R.id.nav_sweets);
-//                    break;
-//            }
-//            drawer.closeDrawer(Gravity.END);
-//            return false;
-//        });
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
 
+    public void showMainFilters(){
+        recyclerViewFilterCategory.setAdapter(filterAdapter);
+        isSubCategoryView = false;
+        backButton.setImageDrawable(getResources().getDrawable(R.drawable.arrow_right_white));
+    }
 
+    public void showSubFilters(){
+        recyclerViewFilterCategory.setAdapter(filterSubAdapter);
+        isSubCategoryView = true;
+        backButton.setImageDrawable(getResources().getDrawable(R.drawable.close));
     }
 
     @OnClick(R.id.tab_home)

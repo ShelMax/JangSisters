@@ -35,7 +35,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorTransparent"
-        app:srcCompat="@drawable/arrow_left_white"
+        app:srcCompat="@drawable/arrow_right_white"
         app:layout_constraintBottom_toBottomOf="@+id/header_title_background"
         app:layout_constraintStart_toStartOf="@+id/header_title_background"
         app:layout_constraintTop_toTopOf="@+id/header_title_background" />

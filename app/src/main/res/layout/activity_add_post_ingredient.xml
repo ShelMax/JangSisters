@@ -14,13 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/JangSistersTheme"
-            app:titleTextColor="@android:color/white" />
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/added_ingredients_list"
@@ -73,6 +67,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/JangSistersTheme"
+            app:titleTextColor="@android:color/white" />
 
     </android.support.constraint.ConstraintLayout>
 
