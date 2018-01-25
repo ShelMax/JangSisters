@@ -94,8 +94,10 @@ public class MainActivity extends BaseActivity {
         setupViewPager();
         initTabLayout();
         initDrawerEndPosition();
-
-        tabLayout.getTabAt(2).select();
+        if (getIntent().getBooleanExtra(EnumPreference.UPDATED_PROFILE.toString(), false))
+            tabLayout.getTabAt(4).select();
+        else
+            tabLayout.getTabAt(2).select();
     }
 
     private void setupViewPager() {

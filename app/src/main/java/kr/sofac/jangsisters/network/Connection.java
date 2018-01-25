@@ -125,8 +125,8 @@ public class Connection<T> {
 
     public void getListPosts(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
         answerServerResponse = async;
-        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, new Object() {// Change type Object sending / Change data sending
-        }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
+        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO,
+                "getListPosts", (isSuccess, answerString) -> {
             if (isSuccess) {
                 Type typeAnswer = new TypeToken<ServerResponse<List<Post>>>() {
                 }.getType();
@@ -195,6 +195,36 @@ public class Connection<T> {
         );
     }
 
+    public void getUserPosts(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) {
+        answerServerResponse = async;
+        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, "getUserListPosts",
+                ((isSuccess, answerString) -> {
+                    if (isSuccess) {
+                        Type typeAnswer = new TypeToken<ServerResponse<List<Post>>>() {
+                        }.getType();
+                        tryParsing(answerString, typeAnswer);
+                    } else {
+                        answerServerResponse.processFinish(false, null);
+                    }
+                })
+        );
+    }
+
+    public void getUserBookmarks(Integer userID, AnswerServerResponse<T> async) {
+        answerServerResponse = async;
+        new ManagerRetrofit<Integer>().sendRequest(userID, "getUserBookmarkListPosts",
+                ((isSuccess, answerString) -> {
+                    if (isSuccess) {
+                        Type typeAnswer = new TypeToken<ServerResponse<List<Post>>>() {
+                        }.getType();
+                        tryParsing(answerString, typeAnswer);
+                    } else {
+                        answerServerResponse.processFinish(false, null);
+                    }
+                })
+        );
+    }
+
     public void getFollowing(Integer userID, AnswerServerResponse<T> async){
         answerServerResponse = async;
         new ManagerRetrofit<Integer>().sendRequest(userID, "getListSubscriptions",
@@ -211,9 +241,9 @@ public class Connection<T> {
         );
     }
 
-    public void getUserByID(Integer userID, AnswerServerResponse<T> async){
+    public void getUserByID(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) {
         answerServerResponse = async;
-        new ManagerRetrofit<Integer>().sendRequest(userID, "getUser",
+        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, "getUser",
                 ((isSuccess, answerString) -> {
                     if(isSuccess){
                         Type typeAnswer = new TypeToken<ServerResponse<User>>(){
@@ -237,6 +267,21 @@ public class Connection<T> {
                         tryParsing(answerString, typeAnswer);
                     }
                     else{
+                        answerServerResponse.processFinish(false, null);
+                    }
+                })
+        );
+    }
+
+    public void addPostToBookmarks(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) {
+        answerServerResponse = async;
+        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, "addBookmark",
+                ((isSuccess, answerString) -> {
+                    if (isSuccess) {
+                        Type typeAnswer = new TypeToken<ServerResponse>() {
+                        }.getType();
+                        tryParsing(answerString, typeAnswer);
+                    } else {
                         answerServerResponse.processFinish(false, null);
                     }
                 })
@@ -300,6 +345,20 @@ public class Connection<T> {
                 });
     }
 
+    public void updateUser(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+        answerServerResponse = async;
+        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, "updateUserInfo",
+                (isSuccess, answerString) -> {
+                    if (isSuccess) {
+                        Type typeAnswer = new TypeToken<ServerResponse<User>>() {
+                        }.getType();
+                        tryParsing(answerString, typeAnswer);
+                    } else {
+                        answerServerResponse.processFinish(false, null);
+                    }
+                });
+    }
+
 //    public void updatePost(Context context, PostDTO postDTO, ArrayList<Uri> listUri, ArrayList<String> listDeletingFiles, AnswerServerResponse<T> async) {
 //        answerServerResponse = async;
 //        new ManagerRetrofit<PostDTO>().sendMultiPartWithTwoObj(postDTO, new Object() {// Change (type sending) / (data sending)
@@ -322,7 +381,7 @@ public class Connection<T> {
      */
 
     private List<MultipartBody.Part> generateMultiPartList(List<Uri> listFileUri, Context context) {
-        ArrayList<MultipartBody.Part> arrayListMulti = new ArrayList<>();
+        List<MultipartBody.Part> arrayListMulti = new ArrayList<>();
         for (int i = 0; i < listFileUri.size(); i++) {
             File file = new File(PathUtil.getPath(context, listFileUri.get(i)));
             arrayListMulti.add(MultipartBody.Part.createFormData("files[" + i + "]", file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file)));
@@ -330,8 +389,8 @@ public class Connection<T> {
         return arrayListMulti;
     }
 
-    private ArrayList<MultipartBody.Part> generateMultiPartList(Uri imageUri, Context context) {
-        ArrayList<MultipartBody.Part> arrayListMulti = new ArrayList<>();
+    private List<MultipartBody.Part> generateMultiPartList(Uri imageUri, Context context) {
+        List<MultipartBody.Part> arrayListMulti = new ArrayList<>();
         File file = new File(PathUtil.getPath(context, imageUri));
         arrayListMulti.add(MultipartBody.Part.createFormData("files[0]", file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file)));
         return arrayListMulti;

@@ -6,6 +6,13 @@ public class Ingredient {
     private String name;
     private int shop_id;
 
+    public Ingredient() {
+    }
+
+    public Ingredient(String name) {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

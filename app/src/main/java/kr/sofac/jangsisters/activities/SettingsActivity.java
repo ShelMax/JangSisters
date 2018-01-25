@@ -20,8 +20,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.config.ServersConfig;
 import kr.sofac.jangsisters.models.GlideApp;
+import kr.sofac.jangsisters.models.User;
+import kr.sofac.jangsisters.network.Connection;
+import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 
 public class SettingsActivity extends BaseActivity {
 
@@ -29,6 +33,7 @@ public class SettingsActivity extends BaseActivity {
     private static final int SELECT_PICTURE = 2;
 
     private Uri imageUri;
+    private User user;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.user_image) ImageView image;
@@ -66,7 +71,8 @@ public class SettingsActivity extends BaseActivity {
         GlideApp.with(this)
                 .load(data)
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
-                .apply(RequestOptions.bitmapTransform(new BlurTransformation(80)).centerCrop())
+                .apply(RequestOptions.centerCropTransform())
+                .apply(RequestOptions.bitmapTransform(new BlurTransformation(100)))
                 .into(backgroundAvatar);
     }
 
@@ -74,7 +80,6 @@ public class SettingsActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[], @NonNull int[] grantResults) {
         if (requestCode == REQUEST_PERMISSION) {
-            // If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 changeAvatar();
@@ -94,16 +99,21 @@ public class SettingsActivity extends BaseActivity {
 
     private void init() {
         initToolbar();
+        user = appPreference.getUser();
         GlideApp.with(this)
-                .load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR + appPreference.getUser().getAvatar())
-                .override(100, 100)
+                .load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR +
+                        user.getAvatar())
+                .override(200, 200)
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
                 .apply(RequestOptions.circleCropTransform())
                 .into(image);
         GlideApp.with(this)
-                .load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR + appPreference.getUser().getAvatar())
+                .load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR +
+                        user.getAvatar())
+                .override(400, 400)
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
-                .apply(RequestOptions.bitmapTransform(new BlurTransformation(80)).centerCrop())
+                .apply(RequestOptions.centerCropTransform())
+                .apply(RequestOptions.bitmapTransform(new BlurTransformation(30)))
                 .into(backgroundAvatar);
         emailNew.setText(appPreference.getUser().getEmail());
         usernameNew.setText(appPreference.getUser().getName());
@@ -120,16 +130,39 @@ public class SettingsActivity extends BaseActivity {
 
     @OnClick(R.id.save)
     public void save(){
-        //progressBar.
-//        new Connection<SenderContainerDTO>().updateUser(this, new SenderContainerDTO(),
-//                imageUri, (isSuccess, answerServerResponse) -> {
-//            if(isSuccess){
-//
-//            }
-//            else{
-//
-//            }
-//        });
+        progressBar.showView();
+        SenderContainerDTO senderContainerDTO = new SenderContainerDTO()
+                .setID(appPreference.getUser().getId())
+                .setName(usernameNew.getText().toString())
+                .setEmail(emailNew.getText().toString())
+                .setBlogName(blogNameNew.getText().toString())
+                .setBlogDescription(blogDescriptionNew.getText().toString());
+        if (imageUri != null) {
+            new Connection<User>().updateUser(this, senderContainerDTO,
+                    imageUri, (isSuccess, answerServerResponse) -> {
+                        updated(isSuccess, answerServerResponse.getDataTransferObject());
+                    });
+        } else {
+            new Connection<User>().updateUser(senderContainerDTO,
+                    (isSuccess, answerServerResponse) -> {
+                        updated(isSuccess, answerServerResponse.getDataTransferObject());
+                    });
+        }
+
+    }
+
+    private void updated(boolean isSuccess, User newUser) {
+        if (isSuccess) {
+            if (imageUri == null)
+                newUser.setAvatar(user.getAvatar());
+            appPreference.setUser(newUser);
+            startActivity(new Intent(SettingsActivity.this, MainActivity.class)
+                    .putExtra(EnumPreference.UPDATED_PROFILE.toString(), true));
+            finishAffinity();
+        } else {
+            showToast("Couldn't update profile info");
+        }
+        progressBar.dismissView();
     }
 
     @OnClick(R.id.camera)

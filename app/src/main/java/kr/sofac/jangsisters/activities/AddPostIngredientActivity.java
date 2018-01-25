@@ -1,18 +1,20 @@
 package kr.sofac.jangsisters.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -40,8 +42,6 @@ public class AddPostIngredientActivity extends BaseActivity {
     RecyclerView addedIngredientsList;
     @BindView(R.id.add_ingredient)
     Button addIngredient;
-    @BindView(R.id.add_own_ingredient)
-    TextView addOwnIngredient;
     @BindView(R.id.panel)
     SlidingUpPanelLayout panel;
     @BindView(R.id.empty)
@@ -51,6 +51,7 @@ public class AddPostIngredientActivity extends BaseActivity {
     private IngredientsPanelAdapter panelAdapter;
 
     private AddPostDTO postDTO;
+    private boolean addedOwn;
 
     //Список недобавленных ингридиентов
     private List<Ingredient> ingredients = new ArrayList<>();
@@ -63,8 +64,10 @@ public class AddPostIngredientActivity extends BaseActivity {
     public void onBackPressed() {
         if (panel.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED)
             panel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
-        else
+        else {
             super.onBackPressed();
+            overridePendingTransition(R.anim.backward_start, R.anim.backward_finish);
+        }
     }
 
     @Override
@@ -85,10 +88,13 @@ public class AddPostIngredientActivity extends BaseActivity {
             if (isSuccess) {
                 ingredients = answerServerResponse.getDataTransferObject();
                 panelAdapter = new IngredientsPanelAdapter(ingredients, (position, isChecked) -> {
-                    if (isChecked)
-                        ingredientsToAdd.add(ingredients.get(position));
+                    if (isChecked) {
+                        add();
+                    }
+
                     else
-                        ingredientsToAdd.remove(ingredients.get(position));
+                        remove();
+
                 });
                 adapter = new IngredientsAdapter(ingredientsAdded, position -> {
                     ingredients.add(ingredientsAdded.get(position));
@@ -106,6 +112,16 @@ public class AddPostIngredientActivity extends BaseActivity {
             progressBar.dismissView();
         });
 
+    }
+
+
+    //TODO TODO TODO
+    private void remove() {
+        //ingredientsToAdd.remove(ingredients.get(position));
+    }
+
+    private void add() {
+        //ingredientsToAdd.add(ingredients.get(position));
     }
 
     @OnClick(R.id.add_ingredient)
@@ -126,6 +142,31 @@ public class AddPostIngredientActivity extends BaseActivity {
         panel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
         updateList();
         updatePanel();
+    }
+
+    @OnClick(R.id.add_own_ingredient)
+    public void addOwnIngredient() {
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_ingredient, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        EditText text = view.findViewById(R.id.ingredient);
+        builder.setTitle("Enter your ingredient")
+                .setView(view)
+                .setPositiveButton("Add", (dialog, which) -> {
+                    addedOwn(text.getText().toString());
+                }).setNegativeButton("Close", (dialog, which) -> {
+
+        }).create();
+        builder.show();
+    }
+
+    private void addedOwn(String ingredient) {
+        if (!addedOwn) {
+            ingredientsToAdd.add(null);
+            addedOwn = true;
+        }
+        ingredientsToAdd.add(new Ingredient(ingredient));
+        updateList();
+        ingredientsToAdd.clear();
     }
 
     private void updateList() {
@@ -162,7 +203,8 @@ public class AddPostIngredientActivity extends BaseActivity {
                 List<Integer> temp = new ArrayList<>();
                 for (int i = 0; i < ingredientsAdded.size(); i++)
                     temp.add(ingredientsAdded.get(i).getShop_id());
-                postDTO.setShopIngredients(temp);
+                postDTO.setShopIngredients(temp)
+                        .setOwnIngredients("");
                 //TODO add own ingredients
                 startActivity(new Intent(AddPostIngredientActivity.this, AddPostBodyActivity.class)
                         .putExtra(EnumPreference.POST.toString(), postDTO)

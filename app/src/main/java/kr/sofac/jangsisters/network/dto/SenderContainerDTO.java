@@ -11,12 +11,28 @@ public class SenderContainerDTO implements Serializable {
     @SerializedName("id")
     private Integer id;
 
-    @SerializedName("customerID")
+    @SerializedName("user_id")
+    private Integer userID;
+
+    @SerializedName("subscribe_id")
+    private Integer subscribeID;
+
+    @SerializedName("current_user")
+    private Integer currentUser;
+
+    @SerializedName("customer_id")
     private Integer customerID;
+
     private String password;
 
     @SerializedName("post_id")
     private Integer postID;
+
+    @SerializedName("blog_name")
+    private String blogName;
+
+    @SerializedName("blog_description")
+    private String blogDescription;
 
     private String email;
     private String googleCloudKey;
@@ -32,12 +48,27 @@ public class SenderContainerDTO implements Serializable {
 
     private HashMap<Integer, Integer> filter;
 
-    public SenderContainerDTO setID(Integer id) {
+    public SenderContainerDTO setBlogName(String blogName) {
+        this.blogName = blogName;
+        return this;
+    }
+
+    public SenderContainerDTO setBlogDescription(String blogDescription) {
+        this.blogDescription = blogDescription;
+        return this;
+    }
+
+    public SenderContainerDTO setID(int id) {
         this.id = id;
         return this;
     }
 
-    public SenderContainerDTO setCustomerID(Integer customerID) {
+    public SenderContainerDTO setCurrentUser(int currentUser) {
+        this.currentUser = currentUser;
+        return this;
+    }
+
+    public SenderContainerDTO setCustomerID(int customerID) {
         this.customerID = customerID;
         return this;
     }
@@ -52,7 +83,7 @@ public class SenderContainerDTO implements Serializable {
         return this;
     }
 
-    public SenderContainerDTO setPostID(Integer postID) {
+    public SenderContainerDTO setPostID(int postID) {
         this.postID = postID;
         return this;
     }
@@ -74,6 +105,16 @@ public class SenderContainerDTO implements Serializable {
 
     public SenderContainerDTO setCode(String code) {
         this.code = code;
+        return this;
+    }
+
+    public SenderContainerDTO setUserID(int userID) {
+        this.userID = userID;
+        return this;
+    }
+
+    public SenderContainerDTO setSubscribeID(int subscribeID) {
+        this.subscribeID = subscribeID;
         return this;
     }
 

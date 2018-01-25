@@ -46,6 +46,12 @@ public class AddPostBodyActivity extends BaseActivity {
     private AddPostDTO postDTO;
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.backward_start, R.anim.backward_finish);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
@@ -166,7 +172,8 @@ public class AddPostBodyActivity extends BaseActivity {
             new Connection<SenderContainerDTO>().addPost(this, postDTO,
                     uris, (isSuccess, answerServerResponse) -> {
                         if (isSuccess) {
-
+                            startActivity(new Intent(AddPostBodyActivity.this, MainActivity.class));
+                            finishAffinity();
                         } else {
 
                         }

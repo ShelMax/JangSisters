@@ -36,6 +36,7 @@
     <color name="colorFacebookButtonBackgroundPressed">#314b80</color>
     <color name="colorFacebookButtonText">#ffffff</color>
 
+    <color name="underlineEditText">#E5E5E5</color>
 
 
 </resources>

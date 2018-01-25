@@ -54,6 +54,8 @@ public class DetailPostActivity extends BaseActivity {
     RecyclerView textViewContent;
 
     @BindView(R.id.like) Button like;
+    @BindView(R.id.bookmark)
+    Button bookmark;
     @BindView(R.id.comment) Button comment;
 
     @BindView(R.id.panel) SlidingUpPanelLayout panel;
@@ -64,7 +66,6 @@ public class DetailPostActivity extends BaseActivity {
     private ImageButton imageButtonClose;
 
     private Post post;
-    private LinearLayoutManager layoutManager;
     private int userID;
     private int postID;
     private CommentAdapter commentAdapter;
@@ -72,6 +73,7 @@ public class DetailPostActivity extends BaseActivity {
 
     private boolean wasLiked;
     private boolean isLiked;
+    private boolean isBoomarked;
 
     AlertDialog dialog;
 
@@ -169,6 +171,7 @@ public class DetailPostActivity extends BaseActivity {
         date.setText(post.getDate());
         author.setText(post.getAuthorName());
         isLiked = post.isLiked() > 0;
+        isBoomarked = post.isBookmarked() > 0;
         wasLiked = post.isLiked() > 0;
         if(isLiked){
             like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.heart_full, 0, 0, 0);
@@ -178,6 +181,9 @@ public class DetailPostActivity extends BaseActivity {
         }
         if(post.getCommentsCount() != 0){
             comment.setText(String.valueOf(post.getCommentsCount()));
+        }
+        if (isBoomarked) {
+            bookmark.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bookmark_full_white, 0, 0, 0);
         }
     }
 
@@ -251,7 +257,26 @@ public class DetailPostActivity extends BaseActivity {
 
     @OnClick(R.id.bookmark)
     public void bookmark(){
-
+        if (userID == 0) {
+            showToast(getString(R.string.you_must_login_first));
+            return;
+        }
+        progressBar.showView();
+        new Connection<ServerResponse>().addPostToBookmarks(new SenderContainerDTO()
+                .setCustomerID(userID)
+                .setPostID(postID), (isSuccess, answerServerResponse) -> {
+            if (isSuccess) {
+                isBoomarked = !isBoomarked;
+                if (isBoomarked) {
+                    bookmark.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bookmark_full_white, 0, 0, 0);
+                } else {
+                    bookmark.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bookmark_white, 0, 0, 0);
+                }
+            } else {
+                showToast("Couldn't add to bookmarks");
+            }
+            progressBar.dismissView();
+        });
     }
 
     @OnClick(R.id.comment_add_image)

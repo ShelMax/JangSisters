@@ -43,6 +43,9 @@ public class Post implements Serializable {
     @SerializedName("is_likes")
     private int isLiked;
 
+    @SerializedName("is_bookmark")
+    private int isBookmarked;
+
     private List<PostElement> body;
 
 
@@ -104,6 +107,10 @@ public class Post implements Serializable {
 
     public List<PostElement> getBody() {
         return body;
+    }
+
+    public int isBookmarked() {
+        return isBookmarked;
     }
 
     //-//

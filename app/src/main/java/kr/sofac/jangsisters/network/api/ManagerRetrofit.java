@@ -106,11 +106,10 @@ public class ManagerRetrofit<T> {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
 
-        Call<ResponseBody> call = serviceRetrofit.sendMultiPartRequest(
-                RequestBody.create(
-                        MediaType.parse("text/plain"),
+        Call<ResponseBody> call =
+                serviceRetrofit.sendMultiPartRequest(RequestBody.create(okhttp3.MultipartBody.FORM,
                         gson.toJson(serverRequest)),
-                partArrayList);
+                        partArrayList);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

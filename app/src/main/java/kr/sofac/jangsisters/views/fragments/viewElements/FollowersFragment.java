@@ -28,12 +28,14 @@ public class FollowersFragment extends BaseFragment{
     @BindView(R.id.recycler) RecyclerView recycler;
     private List<User> users;
     private ProgressBar progressBar;
+    private int userID;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_followers, null);
         ButterKnife.bind(this, view);
+        userID = getArguments().getInt(EnumPreference.USER_ID.toString(), 0);
         progressBar = new ProgressBar(getActivity());
         progressBar.showView();
         boolean isFollowers = getArguments().getBoolean(EnumPreference.FOLLOWERS.toString());
@@ -45,7 +47,7 @@ public class FollowersFragment extends BaseFragment{
     }
 
     private void loadFollowers() {
-        new Connection<List<User>>().getFollowers(1, (isSuccess, answerServerResponse) -> {
+        new Connection<List<User>>().getFollowers(userID, (isSuccess, answerServerResponse) -> {
             if(isSuccess){
                 users = answerServerResponse.getDataTransferObject();
                 recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -63,7 +65,7 @@ public class FollowersFragment extends BaseFragment{
     }
 
     private void loadFollowing() {
-        new Connection<List<User>>().getFollowing(1, (isSuccess, answerServerResponse) -> {
+        new Connection<List<User>>().getFollowing(userID, (isSuccess, answerServerResponse) -> {
             if(isSuccess){
                 users = answerServerResponse.getDataTransferObject();
                 recycler.setLayoutManager(new LinearLayoutManager(getActivity()));

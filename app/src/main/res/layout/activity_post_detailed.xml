@@ -131,16 +131,17 @@
             android:id="@+id/constraint_bottom"
             android:background="@color/navigation_back_uncheked">
 
-            <ImageButton
+            <Button
                 android:id="@+id/bookmark"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:paddingStart="38dp"
                 android:background="?attr/selectableItemBackground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/like"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bookmark_white" />
+                android:drawableStart="@drawable/bookmark_white" />
 
             <Button
                 android:id="@+id/like"

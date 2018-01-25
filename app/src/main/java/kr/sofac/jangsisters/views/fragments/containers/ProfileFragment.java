@@ -30,6 +30,7 @@ import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
+import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 import kr.sofac.jangsisters.utils.AppPreference;
 import kr.sofac.jangsisters.utils.ProgressBar;
 import kr.sofac.jangsisters.views.customview.ButtonLight;
@@ -87,7 +88,8 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void updateUI() {
-        GlideApp.with(this).load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR +
+        GlideApp.with(this)
+                .load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR +
                 user.getAvatar())
                 .override(200, 200)
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
@@ -109,7 +111,9 @@ public class ProfileFragment extends BaseFragment {
 
     private void getUser() {
         progressBar.showView();
-        new Connection<User>().getUserByID(userID, (isSuccess, answerServerResponse) -> {
+        new Connection<User>().getUserByID(new SenderContainerDTO()
+                .setCurrentUser(0)
+                .setUserID(userID), (isSuccess, answerServerResponse) -> {
             if(isSuccess){
                 user = answerServerResponse.getDataTransferObject();
                 updateUI();
@@ -122,16 +126,28 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void initFragments() {
-        posts = new GridViewPostFragment();
-        Bundle bundle = new Bundle();
-        Bundle bundle1 = new Bundle();
-        bundle.putBoolean(EnumPreference.FOLLOWERS.toString(), true);
-        bundle1.putBoolean(EnumPreference.FOLLOWERS.toString(), false);
+        Bundle bundleFollowers = new Bundle();
+        Bundle bundleFollowing = new Bundle();
+        Bundle bundlePosts = new Bundle();
+        Bundle bundleBookmarks = new Bundle();
+
+        bundleFollowers.putBoolean(EnumPreference.FOLLOWERS.toString(), true);
+        bundleFollowers.putInt(EnumPreference.USER_ID.toString(), 0);
+        bundleFollowing.putBoolean(EnumPreference.FOLLOWERS.toString(), false);
+        bundleBookmarks.putBoolean(EnumPreference.BOOKMARKS.toString(), true);
+        bundleFollowing.putInt(EnumPreference.USER_ID.toString(), 0);
+        bundlePosts.putInt(EnumPreference.USER_ID.toString(), 0);
+
         followers = new FollowersFragment();
         following = new FollowersFragment();
-        followers.setArguments(bundle);
-        following.setArguments(bundle1);
+        posts = new GridViewPostFragment();
+
+        followers.setArguments(bundleFollowers);
+        following.setArguments(bundleFollowing);
+        posts.setArguments(bundlePosts);
+
         bookmarks = new GridViewPostFragment();
+        bookmarks.setArguments(bundleBookmarks);
         fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.frame, posts).commit();
     }

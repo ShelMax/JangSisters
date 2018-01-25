@@ -34,8 +34,10 @@ public class SearchFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, view);
+        GridViewPostFragment postFragment = new GridViewPostFragment();
+        postFragment.setArguments(new Bundle());
         getFragmentManager().beginTransaction()
-                .add(R.id.frame_search, new GridViewPostFragment())
+                .add(R.id.frame_search, postFragment)
                 .commit();
         panel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
         panel.setTouchEnabled(false);

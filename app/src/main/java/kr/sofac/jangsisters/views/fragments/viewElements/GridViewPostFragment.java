@@ -31,6 +31,7 @@ public class GridViewPostFragment extends BaseFragment {
     private List<Post> posts;
     private GridViewPostAdapter adapter;
     private ProgressBar progressBar;
+    private int userID;
 
     @Nullable
     @Override
@@ -38,22 +39,55 @@ public class GridViewPostFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_grid_view_post, container, false);
         ButterKnife.bind(this, view);
         progressBar = new ProgressBar(getActivity());
-        loadPosts();
+        progressBar.showView();
+        userID = getArguments().getInt(EnumPreference.USER_ID.toString(), 0);
+        if (userID == 0) {
+            loadPosts();
+        } else if (getArguments().getBoolean(EnumPreference.BOOKMARKS.toString(), false)) {
+            loadBookmarks();
+        } else {
+            loadUserPosts();
+        }
         return view;
     }
 
+    private void loadBookmarks() {
+        new Connection<List<Post>>().getUserBookmarks(userID, (isSuccess, answerServerResponse) -> {
+            if(isSuccess){
+                postsLoaded(answerServerResponse.getDataTransferObject());
+            } else {
+                //todo handle error
+            }
+            progressBar.dismissView();
+        });
+    }
+
+    private void loadUserPosts() {
+        new Connection<List<Post>>().getUserPosts(new SenderContainerDTO(), (isSuccess, answerServerResponse) -> {
+            if (isSuccess) {
+                postsLoaded(answerServerResponse.getDataTransferObject());
+            } else {
+                //TODO handle error
+            }
+            progressBar.dismissView();
+        });
+    }
+
+    private void postsLoaded(List<Post> loadedPosts) {
+        posts = loadedPosts;
+        adapter = new GridViewPostAdapter(posts, position -> {
+            startActivity(new Intent(getActivity(), DetailPostActivity.class)
+                    .putExtra(EnumPreference.POST_ID.toString(), posts.get(position).getId()));
+        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+    }
+
     private void loadPosts() {
-        progressBar.showView();
         new Connection<List<Post>>().getListPosts(new SenderContainerDTO()
                 .setFilter(new HashMap<>()), (isSuccess, answerServerResponse) -> {
-            if(isSuccess){
-                posts = answerServerResponse.getDataTransferObject();
-                adapter = new GridViewPostAdapter(posts, position -> {
-                    startActivity(new Intent(getActivity(), DetailPostActivity.class)
-                        .putExtra(EnumPreference.POST_ID.toString(), posts.get(position).getId()));
-                });
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                recyclerView.setAdapter(adapter);
+            if (isSuccess) {
+                postsLoaded(answerServerResponse.getDataTransferObject());
             }else{
                 //todo handle error
             }

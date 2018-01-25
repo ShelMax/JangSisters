@@ -15,16 +15,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/image"
-        app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toTopOf="@id/image"
-        app:layout_constraintBottom_toTopOf="@id/image"
-        app:srcCompat="@drawable/close_circle" />
-
 </android.support.constraint.ConstraintLayout>

@@ -4,10 +4,9 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -21,7 +20,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.request.RequestOptions;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +36,7 @@ public class AddPostMainActivity extends BaseActivity {
 
     private static final int SELECT_PICTURE = 1;
     private static final int REQUEST_PERMISSION = 2;
-    private Bitmap bitmap;
+
     private AddPostDTO postDTO;
     private Uri imageUri;
 
@@ -50,21 +48,23 @@ public class AddPostMainActivity extends BaseActivity {
     EditText title;
     @BindView(R.id.description_text)
     EditText description;
+    @BindView(R.id.add)
+    ImageView add;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_PICTURE && resultCode == RESULT_OK &&
                 data != null && data.getData() != null) {
-            getBitmap(data);
+            imageLoaded(data);
         }
     }
+    //TODO выводить ингридиенты везде
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[], @NonNull int[] grantResults) {
         if (requestCode == REQUEST_PERMISSION) {
-            // If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 addImage();
@@ -79,20 +79,18 @@ public class AddPostMainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post_main);
         ButterKnife.bind(this);
+        title.getBackground().setColorFilter(getResources().getColor(R.color.underlineEditText), PorterDuff.Mode.SRC_IN);
+        description.getBackground().setColorFilter(getResources().getColor(R.color.underlineEditText), PorterDuff.Mode.SRC_IN);
         initToolbar();
     }
 
-    private void getBitmap(Intent data) {
-        try {
-            imageUri = data.getData();
-            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-            GlideApp.with(this).load(bitmap)
-                    .override(400, 400)
-                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(10)))
-                    .into(background);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void imageLoaded(Intent data) {
+        imageUri = data.getData();
+        GlideApp.with(this).load(data.getData())
+                .override(400, 400)
+                .apply(RequestOptions.bitmapTransform(new BlurTransformation(10)))
+                .into(background);
+        add.setImageResource(R.drawable.file_image);
     }
 
     @Override
@@ -107,7 +105,7 @@ public class AddPostMainActivity extends BaseActivity {
         if (item.getItemId() == R.id.menu_toolbar_add_post_next) {
             if (title.getText().toString().isEmpty() || description.getText().toString().isEmpty()) {
                 showToast("Please fill all fields");
-            } else if (bitmap == null) {
+            } else if (imageUri == null) {
                 showToast("Please load image");
             } else {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -122,7 +120,6 @@ public class AddPostMainActivity extends BaseActivity {
                         .setTitle(title.getText().toString())
                         .setDescription(description.getText().toString())
                         .setCategories(categories);
-                //TODO ADD IMAGE
                 startActivity(new Intent(AddPostMainActivity.this, AddPostIngredientActivity.class)
                         .putExtra(EnumPreference.POST.toString(), postDTO)
                         .putExtra(EnumPreference.URI.toString(), imageUri));

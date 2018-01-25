@@ -67,6 +67,10 @@ public class User implements Serializable {
         return blogDescription;
     }
 
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     @Override
     public String toString() {
         return "User{" +
