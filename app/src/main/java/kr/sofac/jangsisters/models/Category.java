@@ -10,6 +10,7 @@ public class Category {
     private int position;
     private int visible;
     private List<Category> submenu;
+    private boolean isSelectedCategory = false;
 
     public Category(int id, int parent_id, String name, int position, int visible, List<Category> submenu) {
         this.id = id;
@@ -18,6 +19,14 @@ public class Category {
         this.position = position;
         this.visible = visible;
         this.submenu = submenu;
+    }
+
+    public boolean isSelectedCategory() {
+        return isSelectedCategory;
+    }
+
+    public void setSelectedCategory(boolean selectedCategory) {
+        isSelectedCategory = selectedCategory;
     }
 
     public int getId() {
