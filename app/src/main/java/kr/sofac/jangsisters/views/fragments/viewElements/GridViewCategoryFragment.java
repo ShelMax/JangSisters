@@ -2,10 +2,11 @@ package kr.sofac.jangsisters.views.fragments.viewElements;
 
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import butterknife.Unbinder;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Category;
 import kr.sofac.jangsisters.utils.AppPreference;
+import kr.sofac.jangsisters.views.adapters.CategoryFoFilterAdapter;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
 public class GridViewCategoryFragment extends BaseFragment {
@@ -25,6 +27,7 @@ public class GridViewCategoryFragment extends BaseFragment {
     LinearLayout containerLinerLayout;
     Unbinder unbinder;
     private AppPreference appPreference;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,16 +45,28 @@ public class GridViewCategoryFragment extends BaseFragment {
 
     public void fillMainsCategories(List<Category> listAllCategory) {
         for (Category mainCategory : listAllCategory) {
+
             View ingredientsView = getLayoutInflater().inflate(R.layout.item_group_category, null);
+            RecyclerView recyclerViewSubCategory = ingredientsView.findViewById(R.id.recyclerViewSubCategory);
             ((TextView) ingredientsView.findViewById(R.id.textViewGroupTitle)).setText(mainCategory.getName());
-            for (Category subCategory : mainCategory.getSubmenu()) {
-                View itemView = getLayoutInflater().inflate(R.layout.item_category_with_background, null);
-                ((TextView) itemView.findViewById(R.id.categoryTitle)).setText(subCategory.getName());
-                ((GridLayout) ingredientsView.findViewById(R.id.gridView)).addView(itemView);
-            }
+            recyclerViewSubCategory.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+            CategoryFoFilterAdapter categoryAdapter = new CategoryFoFilterAdapter(mainCategory.getSubmenu(), true);
+            categoryAdapter.setCallbackFilter((view, position) -> {
+                mainCategory.getSubmenu().get(position).setSelectedCategory(true);
+                for (Category categoryMy : mainCategory.getSubmenu()) {
+                    if (mainCategory.getSubmenu().get(position).getId() != categoryMy.getId())
+                        categoryMy.setSelectedCategory(false);
+                }
+                categoryAdapter.notifyDataSetChanged();
+            });
+
+            recyclerViewSubCategory.setAdapter(categoryAdapter);
             containerLinerLayout.addView(ingredientsView);
         }
+
     }
+
 
     @Override
     public void onDestroyView() {
@@ -59,7 +74,8 @@ public class GridViewCategoryFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    public void getChoiceIngridients(){
+
+    public void getChoiceIngridients() {
 
     }
 
