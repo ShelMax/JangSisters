@@ -38,6 +38,7 @@ public class IngredientsPanelAdapter extends RecyclerView.Adapter<IngredientsPan
     @Override
     public void onBindViewHolder(IngredientsPanelAdapter.ViewHolder holder, int position) {
         holder.close.setVisibility(View.GONE);
+        holder.addedFromShop.setVisibility(View.GONE);
         Glide.with(holder.itemView)
                 .load("https://image.freepik.com/free-photo/food-background-food-concept-with-various-tasty-fresh-ingredients-for-cooking-italian-food-ingredients-view-from-above-with-copy-space_1220-1365.jpg")
                 .apply(RequestOptions.circleCropTransform())
@@ -63,6 +64,8 @@ public class IngredientsPanelAdapter extends RecyclerView.Adapter<IngredientsPan
         CheckBox checkBox;
         @BindView(R.id.close)
         ImageView close;
+        @BindView(R.id.added_from_shop)
+        ImageView addedFromShop;
 
 
         public ViewHolder(View itemView) {

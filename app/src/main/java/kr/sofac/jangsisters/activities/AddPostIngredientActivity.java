@@ -51,7 +51,6 @@ public class AddPostIngredientActivity extends BaseActivity {
     private IngredientsPanelAdapter panelAdapter;
 
     private AddPostDTO postDTO;
-    private boolean addedOwn;
 
     //Список недобавленных ингридиентов
     private List<Ingredient> ingredients = new ArrayList<>();
@@ -89,18 +88,19 @@ public class AddPostIngredientActivity extends BaseActivity {
                 ingredients = answerServerResponse.getDataTransferObject();
                 panelAdapter = new IngredientsPanelAdapter(ingredients, (position, isChecked) -> {
                     if (isChecked) {
-                        add();
+                        ingredientsToAdd.add(ingredients.get(position));
+                    } else {
+                        ingredientsToAdd.remove(ingredients.get(position));
                     }
-
-                    else
-                        remove();
-
                 });
                 adapter = new IngredientsAdapter(ingredientsAdded, position -> {
-                    ingredients.add(ingredientsAdded.get(position));
-                    panelAdapter.notifyDataSetChanged();
+                    if (ingredientsAdded.get(position).getShopID() != -1)
+                        ingredients.add(ingredientsAdded.get(position));
                     ingredientsAdded.remove(position);
+                    adapter.notifyDataSetChanged();
+                    panelAdapter.notifyDataSetChanged();
                     updateList();
+                    updatePanel();
                 });
                 ingredientsList.setAdapter(panelAdapter);
                 ingredientsList.setLayoutManager(new LinearLayoutManager(this));
@@ -114,20 +114,8 @@ public class AddPostIngredientActivity extends BaseActivity {
 
     }
 
-
-    //TODO TODO TODO
-    private void remove() {
-        //ingredientsToAdd.remove(ingredients.get(position));
-    }
-
-    private void add() {
-        //ingredientsToAdd.add(ingredients.get(position));
-    }
-
     @OnClick(R.id.add_ingredient)
     public void addIngredient() {
-        updateList();
-        updatePanel();
         panel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
     }
 
@@ -160,10 +148,8 @@ public class AddPostIngredientActivity extends BaseActivity {
     }
 
     private void addedOwn(String ingredient) {
-        if (!addedOwn) {
-            ingredientsToAdd.add(null);
-            addedOwn = true;
-        }
+        if (ingredient.isEmpty())
+            return;
         ingredientsToAdd.add(new Ingredient(ingredient));
         updateList();
         ingredientsToAdd.clear();
@@ -178,6 +164,7 @@ public class AddPostIngredientActivity extends BaseActivity {
         } else {
             addedIngredientsList.setVisibility(View.VISIBLE);
             empty.setVisibility(View.GONE);
+            addedIngredientsList.scrollToPosition(ingredientsAdded.size() - 1);
         }
     }
 
@@ -202,10 +189,13 @@ public class AddPostIngredientActivity extends BaseActivity {
             } else {
                 List<Integer> temp = new ArrayList<>();
                 for (int i = 0; i < ingredientsAdded.size(); i++)
-                    temp.add(ingredientsAdded.get(i).getShop_id());
+                    temp.add(ingredientsAdded.get(i).getShopID());
+                String ownIngredients = "";
+                for (int i = 0; i < ingredientsAdded.size(); i++)
+                    if (ingredientsAdded.get(i).getShopID() == -1)
+                        ownIngredients.concat(ingredientsAdded.get(i).getName().concat(";"));
                 postDTO.setShopIngredients(temp)
-                        .setOwnIngredients("");
-                //TODO add own ingredients
+                        .setOwnIngredients(ownIngredients);
                 startActivity(new Intent(AddPostIngredientActivity.this, AddPostBodyActivity.class)
                         .putExtra(EnumPreference.POST.toString(), postDTO)
                         .putExtra(EnumPreference.URI.toString(), (Uri) getIntent().getParcelableExtra(EnumPreference.URI.toString())));

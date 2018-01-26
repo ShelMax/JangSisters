@@ -1,16 +1,20 @@
 package kr.sofac.jangsisters.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Ingredient {
 
     private int id;
     private String name;
-    private int shop_id;
+    @SerializedName("shopID")
+    private int shopID;
 
     public Ingredient() {
     }
 
     public Ingredient(String name) {
         this.name = name;
+        this.shopID = -1;
     }
 
     public int getId() {
@@ -21,7 +25,7 @@ public class Ingredient {
         return name;
     }
 
-    public int getShop_id() {
-        return shop_id;
+    public int getShopID() {
+        return shopID;
     }
 }
