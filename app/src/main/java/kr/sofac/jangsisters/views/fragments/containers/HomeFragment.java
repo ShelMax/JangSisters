@@ -96,7 +96,8 @@ public class HomeFragment extends BaseFragment {
 
                     @Override
                     public void ingredientsClick(int position) {
-                        listView.setAdapter(new PostIngredientsAdapter(posts.get(position).getIngredients(), getActivity()));
+                        listView.setAdapter(new PostIngredientsAdapter(posts.get(position).getIngredients(),
+                                posts.get(position).getShopIngredients(), getActivity()));
                         dialog.show();
                     }
 

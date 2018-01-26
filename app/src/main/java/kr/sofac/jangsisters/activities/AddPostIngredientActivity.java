@@ -190,12 +190,12 @@ public class AddPostIngredientActivity extends BaseActivity {
                 List<Integer> temp = new ArrayList<>();
                 for (int i = 0; i < ingredientsAdded.size(); i++)
                     temp.add(ingredientsAdded.get(i).getShopID());
-                String ownIngredients = "";
+                StringBuilder ownIngredients = new StringBuilder();
                 for (int i = 0; i < ingredientsAdded.size(); i++)
                     if (ingredientsAdded.get(i).getShopID() == -1)
-                        ownIngredients.concat(ingredientsAdded.get(i).getName().concat(";"));
+                        ownIngredients.append(ingredientsAdded.get(i).getName().concat(";"));
                 postDTO.setShopIngredients(temp)
-                        .setOwnIngredients(ownIngredients);
+                        .setOwnIngredients(ownIngredients.toString());
                 startActivity(new Intent(AddPostIngredientActivity.this, AddPostBodyActivity.class)
                         .putExtra(EnumPreference.POST.toString(), postDTO)
                         .putExtra(EnumPreference.URI.toString(), (Uri) getIntent().getParcelableExtra(EnumPreference.URI.toString())));

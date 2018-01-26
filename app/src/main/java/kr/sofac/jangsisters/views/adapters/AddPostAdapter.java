@@ -51,6 +51,9 @@ public class AddPostAdapter extends RecyclerView.Adapter {
                 elements.get(i).setText(editTexts.get(j).getText().toString());
                 j++;
             }
+            else {
+                elements.get(i).setText(String.valueOf(elements.get(i).getUris().size()));
+            }
         }
     }
 

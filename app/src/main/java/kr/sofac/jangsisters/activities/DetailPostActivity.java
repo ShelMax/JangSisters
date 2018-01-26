@@ -110,7 +110,7 @@ public class DetailPostActivity extends BaseActivity {
         listView = ingredientsView.findViewById(R.id.post_ingredients_list);
         imageButtonClose = ingredientsView.findViewById(R.id.imageButtonClosePopup);
         imageButtonClose.setOnClickListener(view -> dialog.hide());
-        listView.setAdapter(new PostIngredientsAdapter(post.getIngredients(), this));
+        listView.setAdapter(new PostIngredientsAdapter(post.getIngredients(), post.getShopIngredients(), this));
     }
 
     private void loadPost() {
