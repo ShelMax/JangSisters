@@ -7,28 +7,34 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.models.Ingredient;
 
 public class PostIngredientsAdapter extends BaseAdapter {
 
-    private String[] ingredients;
+    private List<Ingredient> ingredients;
     private LayoutInflater inflater;
 
-    public PostIngredientsAdapter(String ingredients, Context context) {
-        this.ingredients = ingredients.split(";");
+    public PostIngredientsAdapter(String ownIngredients, List<Ingredient> shopIngredients, Context context) {
+        ingredients = new ArrayList<>();
+        String[] own = ownIngredients.split(";");
+        ingredients.addAll(shopIngredients);
+        for(int i =0;i<own.length;i++)
+            ingredients.add(new Ingredient(own[i]));
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        if (ingredients[0].isEmpty())
-            return 0;
-        return ingredients.length;
+        return ingredients.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return ingredients[i];
+        return ingredients.get(i);
     }
 
     @Override
@@ -40,7 +46,7 @@ public class PostIngredientsAdapter extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         convertView = inflater.inflate(R.layout.item_post_ingredient, null);
         TextView name = convertView.findViewById(R.id.item_post_ingredient_name);
-        name.setText(ingredients[i]);
+        name.setText(ingredients.get(i).getName());
         return convertView;
     }
 }
