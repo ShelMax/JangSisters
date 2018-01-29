@@ -1,8 +1,9 @@
 package kr.sofac.jangsisters.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Category {
+public class Category implements Serializable{
 
     private int id;
     private int parent_id;

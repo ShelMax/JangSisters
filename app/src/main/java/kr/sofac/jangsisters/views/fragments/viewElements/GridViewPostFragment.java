@@ -101,4 +101,15 @@ public class GridViewPostFragment extends BaseFragment {
         });
     }
 
+    private void loadPostsWithFilters() {
+        new Connection<List<Post>>().getListPosts(new SenderContainerDTO()
+                .setFilter(new HashMap<>()), (isSuccess, answerServerResponse) -> {
+            if (isSuccess) {
+                postsLoaded(answerServerResponse.getDataTransferObject());
+            }else{
+                //todo handle error
+            }
+            progressBar.dismissView();
+        });
+    }
 }

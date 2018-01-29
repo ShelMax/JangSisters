@@ -1,40 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#f4f1f1"
+        android:layout_height="wrap_content"
+        android:background="#e2e0e0"
         android:orientation="vertical"
-        android:padding="5dp">
+        >
 
         <TextView
             android:id="@+id/textViewGroupTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Wait..." />
-
-        <!--<GridLayout-->
-        <!--android:id="@+id/gridLayout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:columnCount="4"-->
-        <!--android:verticalSpacing="10dp"-->
-        <!--android:horizontalSpacing="10dp"-->
-        <!--android:stretchMode="spacingWidth"/>-->
+            android:text="Wait..."
+            android:layout_margin="5dp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewSubCategory"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"             />
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

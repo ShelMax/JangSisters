@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,17 +28,19 @@ public class GridViewCategoryFragment extends BaseFragment {
     LinearLayout containerLinerLayout;
     Unbinder unbinder;
     private AppPreference appPreference;
+    List<Category> allCategories;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
         appPreference = new AppPreference(getActivity());
+        allCategories = appPreference.getCategories();
+
         View view = inflater.inflate(R.layout.fragment_grid_view_category, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        fillMainsCategories(appPreference.getCategories());
+        fillMainsCategories(allCategories);
         return view;
 
     }
@@ -51,7 +54,7 @@ public class GridViewCategoryFragment extends BaseFragment {
             ((TextView) ingredientsView.findViewById(R.id.textViewGroupTitle)).setText(mainCategory.getName());
             recyclerViewSubCategory.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
-            CategoryFoFilterAdapter categoryAdapter = new CategoryFoFilterAdapter(mainCategory.getSubmenu(), true);
+            CategoryFoFilterAdapter categoryAdapter = new CategoryFoFilterAdapter(mainCategory.getSubmenu());
             categoryAdapter.setCallbackFilter((view, position) -> {
                 mainCategory.getSubmenu().get(position).setSelectedCategory(true);
                 for (Category categoryMy : mainCategory.getSubmenu()) {
@@ -75,8 +78,15 @@ public class GridViewCategoryFragment extends BaseFragment {
     }
 
 
-    public void getChoiceIngridients() {
-
+    public List<Integer> getSelectedCategory() {
+        ArrayList<Integer> listIDSelectedCategory = new ArrayList<>();
+        if(allCategories!=null)
+        for(Category categoryMain : allCategories){
+            for (Category subCategory : categoryMain.getSubmenu()){
+                if(subCategory.isSelectedCategory()) listIDSelectedCategory.add(subCategory.getId());
+            }
+        }
+        return listIDSelectedCategory;
     }
 
 

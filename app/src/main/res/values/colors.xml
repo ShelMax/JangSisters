@@ -22,7 +22,7 @@
 
     <!--main custom button on black background-->
     <color name="colorMainLightButtonBackground">#8C7242</color>
-    <color name="colorMainLightButtonBackgroundPressed">#ac8d52</color>
+    <color name="colorMainLightButtonBackgroundPressed">#d2ae69</color>
     <color name="colorMainLightButtonBackgroundSelected">#ab8c52</color>
     <color name="colorMainLightButtonText">#ffffff</color>
 
@@ -37,6 +37,9 @@
     <color name="colorFacebookButtonText">#ffffff</color>
 
     <color name="underlineEditText">#E5E5E5</color>
+
+    <color name="colorSelectedFilter">#cccccc</color>
+    <color name="colorUnselectedFilter">#8c8c8c</color>
 
 
 </resources>

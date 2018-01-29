@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
@@ -29,13 +30,15 @@ public class SearchFragment extends BaseFragment {
     SlidingUpPanelLayout panel;
     @BindView(R.id.frame_search)
     FrameLayout frame;
-//    @BindView(R.id.search)
-//    Button searchButton;
+    @BindView(R.id.search)
+    Button searchButton;
     @BindView(R.id.frame_filters)
     FrameLayout frameFilters;
 
     Unbinder unbinder;
     private EditText search;
+    GridViewCategoryFragment gridViewCategoryFragment = new GridViewCategoryFragment();
+    GridViewPostFragment gridViewPostFragment = new GridViewPostFragment();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -43,12 +46,22 @@ public class SearchFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        getFragmentManager().beginTransaction().add(R.id.frame_search, new GridViewPostFragment()).commit();
-        getFragmentManager().beginTransaction().add(R.id.frame_filters, new GridViewCategoryFragment()).commit();
+        getFragmentManager().beginTransaction().add(R.id.frame_search, gridViewPostFragment).commit();
+        getFragmentManager().beginTransaction().add(R.id.frame_filters, gridViewCategoryFragment).commit();
 
+
+//        Bundle bundleCategoriesID = new Bundle();
+//        bundleCategoriesID.putSerializable("listCategoryID", Arrays.gridViewCategoryFragment.getSelectedCategory());
+//        gridViewPostFragment = new GridViewPostFragment();
+//        gridViewPostFragment.setArguments(bundleCategoriesID);
+
+        //TODO FINISH
         panel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
         panel.setTouchEnabled(false);
-//        searchButton.setOnClickListener(v -> hideSlideUp());
+        searchButton.setOnClickListener(v -> {
+            getFragmentManager().beginTransaction().add(R.id.frame_search, gridViewPostFragment).commit();
+            hideSlideUp();
+        });
 
         return view;
     }

@@ -1,6 +1,7 @@
 package kr.sofac.jangsisters.views.adapters;
 
 import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,16 +24,17 @@ import static kr.sofac.jangsisters.config.ServersConfig.PART_CATEGORY_IMAGE;
 
 public class CategoryFoFilterAdapter extends RecyclerView.Adapter<CategoryFoFilterAdapter.ViewHolder> {
 
+
     private List<Category> categories;
     private Boolean isDetailView;
-    private CategoryFoFilterAdapter.CallbackFilter callbackFilter;
+    private CallbackFilter callbackFilter;
 
-    public CategoryFoFilterAdapter(List<Category> categories, Boolean isDetailView) {
+    public CategoryFoFilterAdapter(List<Category> categories) {
         this.categories = categories;
         this.isDetailView = isDetailView;
     }
 
-    public CategoryFoFilterAdapter(List<Category> categories, Boolean isDetailView, CallbackFilter callbackFilter) {
+    public CategoryFoFilterAdapter(List<Category> categories, CallbackFilter callbackFilter) {
         this.categories = categories;
         this.isDetailView = isDetailView;
         this.callbackFilter = callbackFilter;
@@ -47,18 +49,13 @@ public class CategoryFoFilterAdapter extends RecyclerView.Adapter<CategoryFoFilt
     }
 
     @Override
-    public CategoryFoFilterAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v;
-        if (isDetailView) {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_detail, parent, false);
-        } else {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
-        }
-        return new CategoryFoFilterAdapter.ViewHolder(v);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_with_background, parent, false);
+        return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(CategoryFoFilterAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         holder.setModel(categories.get(position), position);
 
     }
@@ -71,10 +68,12 @@ public class CategoryFoFilterAdapter extends RecyclerView.Adapter<CategoryFoFilt
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.item_category_image)
+        @BindView(R.id.imageViewCategoryIcon)
         ImageView image;
-        @BindView(R.id.item_category_name)
+        @BindView(R.id.categoryTitle)
         TextView name;
+        @BindView(R.id.cardViewCategoryItem)
+        CardView cardViewCategoryItem;
         View itemView;
 
         ViewHolder(View itemView) {
@@ -93,7 +92,12 @@ public class CategoryFoFilterAdapter extends RecyclerView.Adapter<CategoryFoFilt
                             .error(R.drawable.category))
                     .into(image);
             name.setText(categoryItem.getName());
-            if(categoryItem.isSelectedCategory()) itemView.setBackgroundColor(Color.RED); else itemView.setBackgroundColor(Color.GRAY);
+            if (categoryItem.isSelectedCategory())
+//                cardViewCategoryItem.setCardBackgroundColor(itemView.getContext().getResources().getColor(R.color.colorSelectedFilter));
+                cardViewCategoryItem.setCardBackgroundColor(Color.GRAY);
+            else
+//                cardViewCategoryItem.setCardBackgroundColor(itemView.getContext().getResources().getColor(R.color.colorSelectedFilter));
+                cardViewCategoryItem.setCardBackgroundColor(Color.LTGRAY);
 
         }
 
