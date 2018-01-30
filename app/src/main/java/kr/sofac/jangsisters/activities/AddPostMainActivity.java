@@ -20,9 +20,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.request.RequestOptions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,25 +28,21 @@ import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.network.dto.AddPostDTO;
+import kr.sofac.jangsisters.views.fragments.viewElements.GridViewCategoryFragment;
 
 public class AddPostMainActivity extends BaseActivity {
 
     private static final int SELECT_PICTURE = 1;
     private static final int REQUEST_PERMISSION = 2;
 
-    private AddPostDTO postDTO;
-    private Uri imageUri;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.background) ImageView background;
+    @BindView(R.id.title_text) EditText title;
+    @BindView(R.id.description_text) EditText description;
+    @BindView(R.id.add) ImageView add;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.background)
-    ImageView background;
-    @BindView(R.id.title_text)
-    EditText title;
-    @BindView(R.id.description_text)
-    EditText description;
-    @BindView(R.id.add)
-    ImageView add;
+    private Uri imageUri;
+    private GridViewCategoryFragment categoryFragment;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -82,14 +75,16 @@ public class AddPostMainActivity extends BaseActivity {
         title.getBackground().setColorFilter(getResources().getColor(R.color.underlineEditText), PorterDuff.Mode.SRC_IN);
         description.getBackground().setColorFilter(getResources().getColor(R.color.underlineEditText), PorterDuff.Mode.SRC_IN);
         initToolbar();
+        categoryFragment = new GridViewCategoryFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.categories, categoryFragment).commit();
     }
 
     private void imageLoaded(Intent data) {
-        imageUri = data.getData();
         GlideApp.with(this).load(data.getData())
                 .override(400, 400)
                 .apply(RequestOptions.bitmapTransform(new BlurTransformation(10)))
                 .into(background);
+        imageUri = data.getData();
         add.setImageResource(R.drawable.file_image);
     }
 
@@ -107,19 +102,18 @@ public class AddPostMainActivity extends BaseActivity {
                 showToast("Please fill all fields");
             } else if (imageUri == null) {
                 showToast("Please load image");
-            } else {
+            }
+            else if(categoryFragment.getSelectedCategory().size() != appPreference.getCategories().size()){
+                showToast("Please select " + appPreference.getCategories().size() +" categories");
+            }
+            else {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(), 0);
-                postDTO = new AddPostDTO();
-                List<Integer> categories = new ArrayList<>();
-                categories.add(2);
-                categories.add(15);
-                categories.add(26);
-                categories.add(37);
+                AddPostDTO postDTO = new AddPostDTO();
                 postDTO.setCustomer_id(appPreference.getUser().getId())
                         .setTitle(title.getText().toString())
                         .setDescription(description.getText().toString())
-                        .setCategories(categories);
+                        .setCategories(categoryFragment.getSelectedCategory());
                 startActivity(new Intent(AddPostMainActivity.this, AddPostIngredientActivity.class)
                         .putExtra(EnumPreference.POST.toString(), postDTO)
                         .putExtra(EnumPreference.URI.toString(), imageUri));
@@ -136,7 +130,7 @@ public class AddPostMainActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
-    @OnClick(R.id.cirle_add)
+    @OnClick(R.id.circle_add)
     public void addImage() {
         int permissionCheck = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE);

@@ -21,8 +21,7 @@ public class LaunchActivity extends BaseActivity {
     }
 
     public void requestCheckVersionCategories() {
-
-        new Connection<Version>().getCorrectVersion("", (isSuccess, answerServerResponse) -> {
+        new Connection<Version>().getCorrectVersion((isSuccess, answerServerResponse) -> {
             if (isSuccess) {
                 if (isCorrectVersion(answerServerResponse.getDataTransferObject())) {
                     requestLoadingCategories(answerServerResponse.getDataTransferObject());
@@ -39,7 +38,7 @@ public class LaunchActivity extends BaseActivity {
     }
 
     public void requestLoadingCategories(Version versionFromServer) {
-        new Connection<List<Category>>().getListCategories("", (isSuccess, answerServerResponse) -> {
+        new Connection<List<Category>>().getListCategories((isSuccess, answerServerResponse) -> {
             if (isSuccess) {
                 appPreference.saveCategories(answerServerResponse.getDataTransferObject());
                 appPreference.setVersionCategories(versionFromServer.getValue());

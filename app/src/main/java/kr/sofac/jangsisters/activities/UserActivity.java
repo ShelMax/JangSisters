@@ -1,5 +1,6 @@
 package kr.sofac.jangsisters.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
@@ -12,8 +13,7 @@ import kr.sofac.jangsisters.views.fragments.containers.ProfileFragment;
 
 public class UserActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class UserActivity extends BaseActivity {
         if (getIntent().getBooleanExtra(EnumPreference.MY_PROFILE.toString(), false)) {
             toolbar.setNavigationIcon(R.drawable.add);
             toolbar.setNavigationOnClickListener(v -> {
-                //todo add post
+                startActivity(new Intent(UserActivity.this, AddPostMainActivity.class));
             });
         } else {
             toolbar.setNavigationIcon(R.drawable.arrow_left_white);

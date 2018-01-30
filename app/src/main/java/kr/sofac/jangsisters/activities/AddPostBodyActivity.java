@@ -21,6 +21,8 @@ import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.BasePostElement;
 import kr.sofac.jangsisters.models.ImageCallback;
 import kr.sofac.jangsisters.models.ImageContainerCallback;
+import kr.sofac.jangsisters.models.VideoCallback;
+import kr.sofac.jangsisters.models.VideoContainerCallback;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.AddPostDTO;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
@@ -31,11 +33,12 @@ public class AddPostBodyActivity extends BaseActivity {
     private static final int SELECT_PICTURE_ADD_CONTAINER = 1;
     private static final int SELECT_PICTURE_TO_CONTAINER = 2;
     private static final int SELECT_PICTURE_REPLACE_IN_CONTAINER = 3;
+    private static final int SELECT_VIDEO_ADD_CONTAINER = 4;
+    private static final int SELECT_VIDEO_TO_CONTAINER = 5;
+    private static final int SELECT_VIDEO_REPLACE_IN_CONTAINER = 6;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.recycler)
-    RecyclerView recyclerView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.recycler) RecyclerView recyclerView;
 
     private List<BasePostElement> elements = new ArrayList<>();
     private AddPostAdapter adapter;
@@ -55,22 +58,37 @@ public class AddPostBodyActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imageLoaded(data.getData(), requestCode);
+            contentLoaded(data.getData(), requestCode);
         }
+
     }
 
-    private void imageLoaded(Uri uri, int requestCode) {
-        if (requestCode == SELECT_PICTURE_ADD_CONTAINER) {
-            List<Uri> list = new ArrayList<>();
-            list.add(uri);
-            elements.add(new BasePostElement("", elements.size(), "image", list));
-            adapter.notifyItemInserted(elements.size());
-            manager.scrollToPosition(elements.size() - 1);
-        } else if (requestCode == SELECT_PICTURE_TO_CONTAINER) {
-            elements.get(containerPosition).getUris().add(uri);
-            adapter.notifyItemChanged(containerPosition);
-        } else if (requestCode == SELECT_PICTURE_REPLACE_IN_CONTAINER) {
-
+    private void contentLoaded(Uri uri, int requestCode) {
+        switch (requestCode){
+            case SELECT_PICTURE_ADD_CONTAINER:
+                List<Uri> list = new ArrayList<>();
+                list.add(uri);
+                elements.add(new BasePostElement("", elements.size(), "image", list));
+                adapter.notifyItemInserted(elements.size());
+                manager.scrollToPosition(elements.size() - 1);
+                break;
+            case SELECT_PICTURE_TO_CONTAINER:
+                elements.get(containerPosition).getUris().add(uri);
+                adapter.notifyItemChanged(containerPosition);
+                break;
+            case SELECT_PICTURE_REPLACE_IN_CONTAINER:
+                break;
+            case SELECT_VIDEO_ADD_CONTAINER:
+                List<Uri> list1 = new ArrayList<>();
+                list1.add(uri);
+                elements.add(new BasePostElement("", elements.size(), "video", list1));
+                adapter.notifyItemInserted(elements.size());
+                manager.scrollToPosition(elements.size() - 1);
+                break;
+            case SELECT_VIDEO_TO_CONTAINER:
+                break;
+            case SELECT_VIDEO_REPLACE_IN_CONTAINER:
+                break;
         }
     }
 
@@ -81,7 +99,7 @@ public class AddPostBodyActivity extends BaseActivity {
         ButterKnife.bind(this);
         initToolbar();
         postDTO = (AddPostDTO) getIntent().getSerializableExtra(EnumPreference.POST.toString());
-        adapter = new AddPostAdapter(elements, this::deleteContainer,
+        adapter = new AddPostAdapter(this, elements, this::deleteContainer,
                 new ImageCallback() {
                     @Override
                     public void delete(int imagePosition, int containerPosition) {
@@ -103,7 +121,30 @@ public class AddPostBodyActivity extends BaseActivity {
                     public void addImage(int position) {
                         addImageToContainer(position);
                     }
-                });
+
+                    },
+                new VideoCallback() {
+                    @Override
+                    public void delete(int videoPosition, int containerPosition) {
+
+                    }
+
+                    @Override
+                    public void addVideo(int videoPosition, int containerPosition) {
+
+                    }
+                },
+                new VideoContainerCallback() {
+                    @Override
+                    public void delete(int position) {
+
+                    }
+
+                    @Override
+                    public void addVideo(int position) {
+
+                    }
+        });
         recyclerView.setAdapter(adapter);
         manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
@@ -148,7 +189,15 @@ public class AddPostBodyActivity extends BaseActivity {
 
     @OnClick(R.id.add_video)
     public void addVideo() {
+        addVideo(SELECT_VIDEO_ADD_CONTAINER);
+    }
 
+    //TODO isAuth поменять, где user == null
+
+    private void addVideo(int requestType){
+        Intent intent = new Intent();
+        intent.setType("video/*").setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select video"), requestType);
     }
 
     @Override

@@ -58,10 +58,10 @@ public class SearchFragment extends BaseFragment {
         //TODO FINISH
         panel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
         panel.setTouchEnabled(false);
-        searchButton.setOnClickListener(v -> {
-            getFragmentManager().beginTransaction().add(R.id.frame_search, gridViewPostFragment).commit();
-            hideSlideUp();
-        });
+//        searchButton.setOnClickListener(v -> {
+//            getFragmentManager().beginTransaction().add(R.id.frame_search, gridViewPostFragment).commit();
+//            hideSlideUp();
+//        });
 
         return view;
     }

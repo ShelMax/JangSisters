@@ -224,8 +224,6 @@ public class DetailPostActivity extends BaseActivity {
             if(isSuccess){
                 isLiked = !isLiked;
                 if(isLiked) {
-                    //TODO after server update
-                    //like.setText();
                     like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.heart_full, 0, 0, 0);
                     like.setText(String.valueOf(post.getLikesCount()));
                     if (!wasLiked)

@@ -1,6 +1,5 @@
 package kr.sofac.jangsisters.views.fragments.viewElements;
 
-
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,16 +23,14 @@ import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
 public class GridViewCategoryFragment extends BaseFragment {
 
-    @BindView(R.id.containerLinerLayout)
-    LinearLayout containerLinerLayout;
-    Unbinder unbinder;
+    @BindView(R.id.containerLinerLayout) LinearLayout containerLinerLayout;
+    private Unbinder unbinder;
     private AppPreference appPreference;
     List<Category> allCategories;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         appPreference = new AppPreference(getActivity());
         allCategories = appPreference.getCategories();
 

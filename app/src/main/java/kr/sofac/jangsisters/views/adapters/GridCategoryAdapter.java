@@ -19,10 +19,6 @@ import kr.sofac.jangsisters.models.GlideApp;
 import static kr.sofac.jangsisters.config.ServersConfig.BASE_URL;
 import static kr.sofac.jangsisters.config.ServersConfig.PART_CATEGORY_IMAGE;
 
-/**
- * Created by Maxim on 26.01.2018.
- */
-
 public class GridCategoryAdapter extends BaseAdapter {
 
     private final Context mContext;

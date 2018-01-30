@@ -31,8 +31,7 @@
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/background"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/toolbar">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/background_avatar"
@@ -210,7 +209,7 @@
                 android:id="@+id/save"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="80dp"
                 android:layout_marginEnd="88dp"
                 android:layout_marginStart="88dp"
                 android:layout_marginTop="24dp"

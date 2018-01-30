@@ -1,13 +1,9 @@
 package kr.sofac.jangsisters.models;
 
-/**
- * Created by Maxim on 17.01.2018.
- */
-
 public class Version {
 
-    String name;
-    int value;
+    private String name;
+    private int value;
 
     public Version(String name, int value) {
         this.name = name;

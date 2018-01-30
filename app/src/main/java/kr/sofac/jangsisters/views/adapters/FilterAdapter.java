@@ -83,8 +83,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
             itemView.setOnClickListener(view -> callbackFilter.onClickFilterListener(itemView, position));
         }
 
-        void setModelSubFilter(Category categoryItem, int position) {
-            filterTitle.setText(categoryItem.getName());
+        void setModelSubFilter(Category categoryItem, int position){
             GlideApp.with(itemView)
                     .load(BASE_URL + PART_CATEGORY_IMAGE + categoryItem.getId() + ".png")
                     .override(80, 80)
@@ -92,6 +91,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
                             .placeholder(R.drawable.arrow_left_grey)
                             .error(R.drawable.arrow_left_grey))
                     .into(imageView2);
+            filterTitle.setText(categoryItem.getName());
             itemView.setOnClickListener(view -> callbackFilter.onClickFilterListener(itemView, position));
         }
 

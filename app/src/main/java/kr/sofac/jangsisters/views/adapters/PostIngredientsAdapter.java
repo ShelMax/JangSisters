@@ -20,10 +20,12 @@ public class PostIngredientsAdapter extends BaseAdapter {
 
     public PostIngredientsAdapter(String ownIngredients, List<Ingredient> shopIngredients, Context context) {
         ingredients = new ArrayList<>();
-        String[] own = ownIngredients.split(";");
         ingredients.addAll(shopIngredients);
-        for(int i =0;i<own.length;i++)
-            ingredients.add(new Ingredient(own[i]));
+        if(!ownIngredients.isEmpty()) {
+            String[] own = ownIngredients.split(";");
+            for (int i = 0; i < own.length; i++)
+                ingredients.add(new Ingredient(own[i]));
+        }
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 

@@ -63,9 +63,6 @@ public class Connection<T> {
         });
     }
 
-
-
-
     public void signUpCustomer(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
         answerServerResponse = async;
         new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, new Object() {// Change type Object sending / Change data sending
@@ -96,8 +93,8 @@ public class Connection<T> {
 
     public void getPost(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
         answerServerResponse = async;
-        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, new Object() {// Change type Object sending / Change data sending
-        }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
+        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, "getPost",
+                (isSuccess, answerString) -> {
             if (isSuccess) {
                 Type typeAnswer = new TypeToken<ServerResponse<Post>>() { //Change type response
                 }.getType();
@@ -137,10 +134,10 @@ public class Connection<T> {
         });
     }
 
-    public void getListCategories(String emptyString, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void getListCategories(AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
         answerServerResponse = async;
-        new ManagerRetrofit<String>().sendRequest(emptyString, new Object() {// Change type Object sending / Change data sending
-        }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
+        new ManagerRetrofit<String>().sendRequest("", "getListCategories",
+                (isSuccess, answerString) -> {
             if (isSuccess) {
                 Type typeAnswer = new TypeToken<ServerResponse<List<Category>>>() { //Change type response
                 }.getType();
@@ -302,10 +299,9 @@ public class Connection<T> {
         });
     }
 
-    public void getCorrectVersion(String empty, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void getCorrectVersion(AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
         answerServerResponse = async;
-        new ManagerRetrofit<String>().sendRequest(empty, new Object() {// Change type Object sending / Change data sending
-        }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
+        new ManagerRetrofit<String>().sendRequest("", "getCorrectVersion", (isSuccess, answerString) -> {
             if (isSuccess) {
                 Type typeAnswer = new TypeToken<ServerResponse<Version>>() { //Change type response
                 }.getType();
@@ -409,7 +405,6 @@ public class Connection<T> {
         try {
             return new Gson().fromJson(string, type);
         } catch (JsonSyntaxException e) {
-
             Log.e("ERROR_PARSING_JSON","Не соответствующий тип данных для парсинга JSON");
             e.printStackTrace();
             return null;

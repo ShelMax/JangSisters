@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
@@ -63,7 +62,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void imageLoaded(Uri data) {
-        Glide.with(this)
+        GlideApp.with(this)
                 .load(data)
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
                 .apply(RequestOptions.circleCropTransform())

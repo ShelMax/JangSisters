@@ -43,10 +43,8 @@ public class ProfileFragment extends BaseFragment {
     @BindView(R.id.user_image) ImageView userImage;
     @BindView(R.id.username) TextView username;
     @BindView(R.id.tabLayout) TabLayout tabLayout;
-    @BindView(R.id.description)
-    TextView blogDescription;
-    @BindView(R.id.blog_name)
-    TextView blogName;
+    @BindView(R.id.description) TextView blogDescription;
+    @BindView(R.id.blog_name) TextView blogName;
     @BindView(R.id.user_balance) TextView userBalance;
     @BindView(R.id.message) ButtonLight message;
     @BindView(R.id.follow) ButtonLight follow;

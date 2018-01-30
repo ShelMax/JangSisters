@@ -55,7 +55,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(CategoryAdapter.ViewHolder holder, int position) {
         holder.setModel(categories.get(position), position);
-
     }
 
     @Override
@@ -66,15 +65,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.item_category_image)
-        ImageView image;
-        @BindView(R.id.item_category_name)
-        TextView name;
-        View itemView;
+        @BindView(R.id.item_category_image) ImageView image;
+        @BindView(R.id.item_category_name) TextView name;
 
         ViewHolder(View itemView) {
             super(itemView);
-            this.itemView = itemView;
             ButterKnife.bind(this, itemView);
         }
 
@@ -89,8 +84,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     .into(image);
             name.setText(categoryItem.getName());
         }
-
     }
-
 
 }
