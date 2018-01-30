@@ -29,16 +29,17 @@
                 <EditText
                     android:id="@+id/search"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="9dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="9dp"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/rounded_edittext"
                     android:drawablePadding="5dp"
                     android:drawableStart="@drawable/magnify_selected"
                     android:inputType="text"
                     android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
                     android:visibility="gone" />
 
             </android.support.v7.widget.Toolbar>
@@ -73,6 +74,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:tabIndicatorColor="@color/colorTransparent"
+            app:tabGravity="fill"
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/colorTransparent" />
 

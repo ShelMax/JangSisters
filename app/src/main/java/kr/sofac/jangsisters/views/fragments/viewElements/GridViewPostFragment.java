@@ -27,11 +27,13 @@ import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
 public class GridViewPostFragment extends BaseFragment {
 
-    @BindView(R.id.recycler) RecyclerView recyclerView;
+    @BindView(R.id.recycler)
+    RecyclerView recyclerView;
     private List<Post> posts;
     private GridViewPostAdapter adapter;
     private ProgressBar progressBar;
     private int userID;
+
 
     @Nullable
     @Override
@@ -40,8 +42,8 @@ public class GridViewPostFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         progressBar = new ProgressBar(getActivity());
         progressBar.showView();
-        userID = getArguments().getInt(EnumPreference.USER_ID.toString(), 0);
-        switch ((EnumPreference)getArguments().getSerializable(EnumPreference.GRID_ACTION.toString())){
+
+        switch (getTypeLoadingPostAndUserID()) {
             case BOOKMARKS:
                 loadBookmarks();
                 break;
@@ -55,9 +57,19 @@ public class GridViewPostFragment extends BaseFragment {
         return view;
     }
 
+    private EnumPreference getTypeLoadingPostAndUserID() {
+        if (getArguments() != null) {
+            userID = getArguments().getInt(EnumPreference.USER_ID.toString(), 0);
+            return (EnumPreference) this.getArguments().getSerializable(EnumPreference.GRID_ACTION.toString());
+        } else {
+            return EnumPreference.SEARCH;
+        }
+    }
+
+
     private void loadBookmarks() {
         new Connection<List<Post>>().getUserBookmarks(userID, (isSuccess, answerServerResponse) -> {
-            if(isSuccess){
+            if (isSuccess) {
                 postsLoaded(answerServerResponse.getDataTransferObject());
             } else {
                 //todo handle error
@@ -92,22 +104,22 @@ public class GridViewPostFragment extends BaseFragment {
                 .setFilter(new HashMap<>()), (isSuccess, answerServerResponse) -> {
             if (isSuccess) {
                 postsLoaded(answerServerResponse.getDataTransferObject());
-            }else{
+            } else {
                 //todo handle error
             }
             progressBar.dismissView();
         });
     }
 
-    private void loadPostsWithFilters() {
-        new Connection<List<Post>>().getListPosts(new SenderContainerDTO()
-                .setFilter(new HashMap<>()), (isSuccess, answerServerResponse) -> {
-            if (isSuccess) {
-                postsLoaded(answerServerResponse.getDataTransferObject());
-            }else{
-                //todo handle error
-            }
-            progressBar.dismissView();
-        });
-    }
+//    private void loadPostsWithFilters() {
+//        new Connection<List<Post>>().getListPosts(new SenderContainerDTO()
+//                .setFilter(new HashMap<>()), (isSuccess, answerServerResponse) -> {
+//            if (isSuccess) {
+//                postsLoaded(answerServerResponse.getDataTransferObject());
+//            } else {
+//                //todo handle error
+//            }
+//            progressBar.dismissView();
+//        });
+//    }
 }
