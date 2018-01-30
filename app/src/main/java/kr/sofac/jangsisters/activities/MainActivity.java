@@ -121,7 +121,6 @@ public class MainActivity extends BaseActivity {
         if (isLogged) {
             ProfileFragment profileFragment = new ProfileFragment();
             Bundle bundle = new Bundle();
-            bundle.putInt(EnumPreference.USER_ID.toString(), appPreference.getUser().getId());
             bundle.putBoolean(EnumPreference.MY_PROFILE.toString(), true);
             profileFragment.setArguments(bundle);
             adapter.addFragment(profileFragment);

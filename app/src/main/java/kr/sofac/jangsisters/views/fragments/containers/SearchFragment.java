@@ -19,33 +19,31 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.config.EnumPreference;
 import kr.sofac.jangsisters.models.TabManager;
+import kr.sofac.jangsisters.utils.AppPreference;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
 import kr.sofac.jangsisters.views.fragments.viewElements.GridViewCategoryFragment;
 import kr.sofac.jangsisters.views.fragments.viewElements.GridViewPostFragment;
 
 public class SearchFragment extends BaseFragment {
 
-    @BindView(R.id.panel)
-    SlidingUpPanelLayout panel;
-    @BindView(R.id.frame_search)
-    FrameLayout frame;
-    @BindView(R.id.search)
-    Button searchButton;
-    @BindView(R.id.frame_filters)
-    FrameLayout frameFilters;
+    @BindView(R.id.panel) SlidingUpPanelLayout panel;
+    @BindView(R.id.frame_search) FrameLayout frame;
+    @BindView(R.id.search) Button searchButton;
+    @BindView(R.id.frame_filters) FrameLayout frameFilters;
 
     Unbinder unbinder;
     private EditText search;
-    GridViewCategoryFragment gridViewCategoryFragment = new GridViewCategoryFragment();
-    GridViewPostFragment gridViewPostFragment = new GridViewPostFragment();
+    private GridViewCategoryFragment gridViewCategoryFragment = new GridViewCategoryFragment();
+    private GridViewPostFragment gridViewPostFragment = new GridViewPostFragment();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         unbinder = ButterKnife.bind(this, view);
-
+        initGridFragment();
         getFragmentManager().beginTransaction().add(R.id.frame_search, gridViewPostFragment).commit();
         getFragmentManager().beginTransaction().add(R.id.frame_filters, gridViewCategoryFragment).commit();
 
@@ -64,6 +62,19 @@ public class SearchFragment extends BaseFragment {
 //        });
 
         return view;
+    }
+
+    private void initGridFragment() {
+        AppPreference appPreference = new AppPreference(getActivity());
+        Bundle bundle = new Bundle();
+        if(appPreference.isUserLogged()) {
+            bundle.putInt(EnumPreference.USER_ID.toString(), appPreference.getUser().getId());
+        }
+        else {
+            bundle.putInt(EnumPreference.USER_ID.toString(), 0);
+        }
+        bundle.putSerializable(EnumPreference.GRID_ACTION.toString(), EnumPreference.SEARCH);
+        gridViewPostFragment.setArguments(bundle);
     }
 
     @Override

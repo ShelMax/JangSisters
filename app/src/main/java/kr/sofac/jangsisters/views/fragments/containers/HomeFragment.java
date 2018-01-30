@@ -63,7 +63,7 @@ public class HomeFragment extends BaseFragment {
         appPreference = new AppPreference(getActivity());
         progressBar = new ProgressBar(getActivity());
         progressBar.showView();
-        loadPosts(new HashMap<Integer, Integer>());
+        loadPosts(new HashMap<>());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View ingredientsView = getLayoutInflater().inflate(R.layout.dialog_post_ingredients, null);
@@ -75,7 +75,7 @@ public class HomeFragment extends BaseFragment {
         listView = ingredientsView.findViewById(R.id.post_ingredients_list);
         swipeRefresh.setOnRefreshListener(() -> {
             swipeRefresh.setRefreshing(false);
-            loadPosts(new HashMap<Integer, Integer>());
+            loadPosts(new HashMap<>());
         });
         return view;
     }

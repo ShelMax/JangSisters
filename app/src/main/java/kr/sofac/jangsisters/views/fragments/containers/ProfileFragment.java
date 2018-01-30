@@ -51,7 +51,7 @@ public class ProfileFragment extends BaseFragment {
     @BindView(R.id.balance) ButtonLight balance;
 
     private FragmentManager fragmentManager;
-    private int userID;
+    private int userID; // ID загружаемого юзера, не свой
     private boolean myProfile;
 
     private GridViewPostFragment posts;
@@ -69,7 +69,7 @@ public class ProfileFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         progressBar = new ProgressBar(getActivity());
         appPreference = new AppPreference(getActivity());
-        userID = getArguments().getInt(EnumPreference.USER_ID.toString());
+
         myProfile = getArguments().getBoolean(EnumPreference.MY_PROFILE.toString());
         if(myProfile){
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.your_profile);
@@ -80,6 +80,7 @@ public class ProfileFragment extends BaseFragment {
         } else {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.profile);
             balance.setVisibility(View.GONE);
+            userID = getArguments().getInt(EnumPreference.USER_ID.toString());
             getUser();
         }
         return view;
@@ -110,7 +111,7 @@ public class ProfileFragment extends BaseFragment {
     private void getUser() {
         progressBar.showView();
         new Connection<User>().getUserByID(new SenderContainerDTO()
-                .setCurrentUser(0)
+                .setCurrentUser(appPreference.getUser().getId())
                 .setUserID(userID), (isSuccess, answerServerResponse) -> {
             if(isSuccess){
                 user = answerServerResponse.getDataTransferObject();
@@ -129,12 +130,14 @@ public class ProfileFragment extends BaseFragment {
         Bundle bundlePosts = new Bundle();
         Bundle bundleBookmarks = new Bundle();
 
-        bundleFollowers.putBoolean(EnumPreference.FOLLOWERS.toString(), true);
-        bundleFollowers.putInt(EnumPreference.USER_ID.toString(), 0);
+        bundleFollowers.putSerializable(EnumPreference.FOLLOWERS.toString(), true);
+        bundleFollowers.putInt(EnumPreference.USER_ID.toString(), userID);
         bundleFollowing.putBoolean(EnumPreference.FOLLOWERS.toString(), false);
-        bundleBookmarks.putBoolean(EnumPreference.BOOKMARKS.toString(), true);
-        bundleFollowing.putInt(EnumPreference.USER_ID.toString(), 0);
-        bundlePosts.putInt(EnumPreference.USER_ID.toString(), 0);
+        bundleBookmarks.putSerializable(EnumPreference.GRID_ACTION.toString(), EnumPreference.BOOKMARKS);
+        bundleBookmarks.putInt(EnumPreference.USER_ID.toString(), userID);
+        bundleFollowing.putInt(EnumPreference.USER_ID.toString(), userID);
+        bundlePosts.putInt(EnumPreference.USER_ID.toString(), userID);
+        bundlePosts.putSerializable(EnumPreference.GRID_ACTION.toString(), EnumPreference.USER_POSTS);
 
         followers = new FollowersFragment();
         following = new FollowersFragment();

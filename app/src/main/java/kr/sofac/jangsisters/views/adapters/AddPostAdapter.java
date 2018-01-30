@@ -33,14 +33,15 @@ public class AddPostAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_TEXT = 1;
     private static final int VIEW_TYPE_IMAGE = 2;
     private static final int VIEW_TYPE_VIDEO = 3;
+
     private ImageContainerCallback imageContainerCallback;
     private ImageCallback imageCallback;
     private VideoCallback videoCallback;
     private VideoContainerCallback videoContainerCallback;
+    private SimpleListCallback textCallback;
+
     private List<EditText> editTexts = new ArrayList<>();
     private Context context;
-
-    private SimpleListCallback textCallback;
 
     private List<BasePostElement> elements;
 
@@ -118,10 +119,8 @@ public class AddPostAdapter extends RecyclerView.Adapter {
 
     class TextHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.text)
-        EditText text;
-        @BindView(R.id.close)
-        ImageView close;
+        @BindView(R.id.text) EditText text;
+        @BindView(R.id.close) ImageView close;
 
         TextHolder(View itemView) {
             super(itemView);
@@ -129,6 +128,7 @@ public class AddPostAdapter extends RecyclerView.Adapter {
         }
 
         private void bind(BasePostElement element) {
+            text.setText("");
             editTexts.add(text);
             close.setOnClickListener(v -> {
                 editTexts.remove(text);

@@ -32,7 +32,7 @@ public class AppPreference {
         editor = preferences.edit();
     }
 
-    public Boolean getAuthorization() {
+    public Boolean isUserLogged() {
         return preferences.getBoolean(IS_AUTHORIZATION.toString(), false);
     }
 

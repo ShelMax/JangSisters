@@ -45,6 +45,7 @@ public class AddPostBodyActivity extends BaseActivity {
     private LinearLayoutManager manager;
 
     private int containerPosition;
+    private int contentPosition;
 
     private AddPostDTO postDTO;
 
@@ -66,9 +67,9 @@ public class AddPostBodyActivity extends BaseActivity {
     private void contentLoaded(Uri uri, int requestCode) {
         switch (requestCode){
             case SELECT_PICTURE_ADD_CONTAINER:
-                List<Uri> list = new ArrayList<>();
-                list.add(uri);
-                elements.add(new BasePostElement("", elements.size(), "image", list));
+                List<Uri> imageList = new ArrayList<>();
+                imageList.add(uri);
+                elements.add(new BasePostElement("", elements.size(), "image", imageList));
                 adapter.notifyItemInserted(elements.size());
                 manager.scrollToPosition(elements.size() - 1);
                 break;
@@ -77,17 +78,23 @@ public class AddPostBodyActivity extends BaseActivity {
                 adapter.notifyItemChanged(containerPosition);
                 break;
             case SELECT_PICTURE_REPLACE_IN_CONTAINER:
+                elements.get(containerPosition).getUris().set(contentPosition, uri);
+                adapter.notifyItemChanged(containerPosition);
                 break;
             case SELECT_VIDEO_ADD_CONTAINER:
-                List<Uri> list1 = new ArrayList<>();
-                list1.add(uri);
-                elements.add(new BasePostElement("", elements.size(), "video", list1));
+                List<Uri> videoList = new ArrayList<>();
+                videoList.add(uri);
+                elements.add(new BasePostElement("", elements.size(), "video", videoList));
                 adapter.notifyItemInserted(elements.size());
                 manager.scrollToPosition(elements.size() - 1);
                 break;
             case SELECT_VIDEO_TO_CONTAINER:
+                elements.get(containerPosition).getUris().add(uri);
+                adapter.notifyItemChanged(containerPosition);
                 break;
             case SELECT_VIDEO_REPLACE_IN_CONTAINER:
+                elements.get(containerPosition).getUris().set(contentPosition, uri);
+                adapter.notifyItemChanged(containerPosition);
                 break;
         }
     }
@@ -126,23 +133,23 @@ public class AddPostBodyActivity extends BaseActivity {
                 new VideoCallback() {
                     @Override
                     public void delete(int videoPosition, int containerPosition) {
-
+                        deleteVideo(videoPosition, containerPosition);
                     }
 
                     @Override
                     public void addVideo(int videoPosition, int containerPosition) {
-
+                        replaceVideoInContainer(videoPosition, containerPosition);
                     }
                 },
                 new VideoContainerCallback() {
                     @Override
                     public void delete(int position) {
-
+                        deleteContainer(position);
                     }
 
                     @Override
                     public void addVideo(int position) {
-
+                        addVideoToContainer(position);
                     }
         });
         recyclerView.setAdapter(adapter);
@@ -150,8 +157,26 @@ public class AddPostBodyActivity extends BaseActivity {
         recyclerView.setLayoutManager(manager);
     }
 
-    private void replaceImageInContainer(int imagePosition, int containerPosition) {
+    private void addVideoToContainer(int position) {
+        containerPosition = position;
+        addVideo(SELECT_VIDEO_TO_CONTAINER);
+    }
 
+    private void replaceVideoInContainer(int videoPosition, int containerPos) {
+        contentPosition = videoPosition;
+        contentPosition = containerPos;
+        addVideo(SELECT_VIDEO_REPLACE_IN_CONTAINER);
+    }
+
+    private void deleteVideo(int videoPosition, int containerPosition) {
+        elements.get(containerPosition).getUris().remove(videoPosition);
+        adapter.notifyItemChanged(containerPosition);
+    }
+
+    private void replaceImageInContainer(int imagePosition, int containerPos) {
+        contentPosition = imagePosition;
+        contentPosition = containerPos;
+        addVideo(SELECT_PICTURE_REPLACE_IN_CONTAINER);
     }
 
     private void addImageToContainer(int position) {
@@ -210,24 +235,29 @@ public class AddPostBodyActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_toolbar_add_post_done) {
-            progressBar.showView();
-            List<Uri> uris = new ArrayList<>();
-            uris.add(getIntent().getParcelableExtra(EnumPreference.URI.toString()));
-            for (int i = 0; i < elements.size(); i++) {
-                uris.addAll(elements.get(i).getUris());
+            if(!elements.isEmpty()) {
+                progressBar.showView();
+                List<Uri> uris = new ArrayList<>();
+                uris.add(getIntent().getParcelableExtra(EnumPreference.URI.toString()));
+                for (int i = 0; i < elements.size(); i++) {
+                    uris.addAll(elements.get(i).getUris());
+                }
+                adapter.saveItems();
+                postDTO.setElementsBody(elements);
+                new Connection<SenderContainerDTO>().addPost(this, postDTO,
+                        uris, (isSuccess, answerServerResponse) -> {
+                            if (isSuccess) {
+                                startActivity(new Intent(AddPostBodyActivity.this, MainActivity.class));
+                                finishAffinity();
+                            } else {
+                                // TODO handle error
+                            }
+                            progressBar.dismissView();
+                        });
             }
-            adapter.saveItems();
-            postDTO.setElementsBody(elements);
-            new Connection<SenderContainerDTO>().addPost(this, postDTO,
-                    uris, (isSuccess, answerServerResponse) -> {
-                        if (isSuccess) {
-                            startActivity(new Intent(AddPostBodyActivity.this, MainActivity.class));
-                            finishAffinity();
-                        } else {
-
-                        }
-                        progressBar.dismissView();
-                    });
+            else {
+                showToast("You should add at least 1 element");
+            }
         }
         return super.onOptionsItemSelected(item);
     }

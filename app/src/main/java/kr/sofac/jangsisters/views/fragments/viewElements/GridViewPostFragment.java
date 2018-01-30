@@ -31,7 +31,7 @@ public class GridViewPostFragment extends BaseFragment {
     private List<Post> posts;
     private GridViewPostAdapter adapter;
     private ProgressBar progressBar;
-    private int userID = 0;
+    private int userID;
 
     @Nullable
     @Override
@@ -40,19 +40,17 @@ public class GridViewPostFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         progressBar = new ProgressBar(getActivity());
         progressBar.showView();
-
-        try {
-            userID = getArguments().getInt(EnumPreference.USER_ID.toString(), 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (userID == 0) {
-            loadPosts();
-        } else if (getArguments().getBoolean(EnumPreference.BOOKMARKS.toString(), false)) {
-            loadBookmarks();
-        } else {
-            loadUserPosts();
+        userID = getArguments().getInt(EnumPreference.USER_ID.toString(), 0);
+        switch ((EnumPreference)getArguments().getSerializable(EnumPreference.GRID_ACTION.toString())){
+            case BOOKMARKS:
+                loadBookmarks();
+                break;
+            case SEARCH:
+                loadPosts();
+                break;
+            case USER_POSTS:
+                loadUserPosts();
+                break;
         }
         return view;
     }

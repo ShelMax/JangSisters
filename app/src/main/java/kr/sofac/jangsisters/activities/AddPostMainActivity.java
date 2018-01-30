@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 
 import com.bumptech.glide.request.RequestOptions;
 
@@ -40,6 +41,7 @@ public class AddPostMainActivity extends BaseActivity {
     @BindView(R.id.title_text) EditText title;
     @BindView(R.id.description_text) EditText description;
     @BindView(R.id.add) ImageView add;
+    @BindView(R.id.scrollView) ScrollView scrollView;
 
     private Uri imageUri;
     private GridViewCategoryFragment categoryFragment;
@@ -52,7 +54,6 @@ public class AddPostMainActivity extends BaseActivity {
             imageLoaded(data);
         }
     }
-    //TODO выводить ингридиенты везде
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -104,11 +105,12 @@ public class AddPostMainActivity extends BaseActivity {
                 showToast("Please load image");
             }
             else if(categoryFragment.getSelectedCategory().size() != appPreference.getCategories().size()){
+                hideKeyboard();
                 showToast("Please select " + appPreference.getCategories().size() +" categories");
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
             }
             else {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(), 0);
+                hideKeyboard();
                 AddPostDTO postDTO = new AddPostDTO();
                 postDTO.setCustomer_id(appPreference.getUser().getId())
                         .setTitle(title.getText().toString())
@@ -153,5 +155,10 @@ public class AddPostMainActivity extends BaseActivity {
                 .setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select picture"),
                 SELECT_PICTURE);
+    }
+
+    private void hideKeyboard(){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(), 0);
     }
 }
