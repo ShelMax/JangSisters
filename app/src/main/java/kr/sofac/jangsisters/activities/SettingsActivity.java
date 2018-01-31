@@ -38,10 +38,8 @@ public class SettingsActivity extends BaseActivity {
     @BindView(R.id.user_image) ImageView image;
     @BindView(R.id.username_change) EditText usernameNew;
     @BindView(R.id.email_change) EditText emailNew;
-    @BindView(R.id.blog_name_change)
-    EditText blogNameNew;
-    @BindView(R.id.blog_description_change)
-    EditText blogDescriptionNew;
+    @BindView(R.id.blog_name_change) EditText blogNameNew;
+    @BindView(R.id.blog_description_change) EditText blogDescriptionNew;
     @BindView(R.id.background_avatar)
     ImageView backgroundAvatar;
 
@@ -152,7 +150,7 @@ public class SettingsActivity extends BaseActivity {
 
     private void updated(boolean isSuccess, User newUser) {
         if (isSuccess) {
-            if (imageUri == null)
+            if (imageUri != null)
                 newUser.setAvatar(user.getAvatar());
             appPreference.setUser(newUser);
             startActivity(new Intent(SettingsActivity.this, MainActivity.class)

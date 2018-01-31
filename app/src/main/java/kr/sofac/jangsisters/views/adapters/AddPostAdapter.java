@@ -21,11 +21,11 @@ import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.BasePostElement;
 import kr.sofac.jangsisters.models.GlideApp;
-import kr.sofac.jangsisters.models.ImageCallback;
-import kr.sofac.jangsisters.models.ImageContainerCallback;
-import kr.sofac.jangsisters.models.SimpleListCallback;
-import kr.sofac.jangsisters.models.VideoCallback;
-import kr.sofac.jangsisters.models.VideoContainerCallback;
+import kr.sofac.jangsisters.models.callback.AddPostImageCallback;
+import kr.sofac.jangsisters.models.callback.AddPostImageContainerCallback;
+import kr.sofac.jangsisters.models.callback.AddPostVideoCallback;
+import kr.sofac.jangsisters.models.callback.AddPostVideoContainerCallback;
+import kr.sofac.jangsisters.models.callback.SimpleListCallback;
 import kr.sofac.jangsisters.utils.BitmapUtil;
 
 public class AddPostAdapter extends RecyclerView.Adapter {
@@ -34,10 +34,10 @@ public class AddPostAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_IMAGE = 2;
     private static final int VIEW_TYPE_VIDEO = 3;
 
-    private ImageContainerCallback imageContainerCallback;
-    private ImageCallback imageCallback;
-    private VideoCallback videoCallback;
-    private VideoContainerCallback videoContainerCallback;
+    private AddPostImageContainerCallback imageContainerCallback;
+    private AddPostImageCallback imageCallback;
+    private AddPostVideoCallback videoCallback;
+    private AddPostVideoContainerCallback videoContainerCallback;
     private SimpleListCallback textCallback;
 
     private List<EditText> editTexts = new ArrayList<>();
@@ -46,8 +46,8 @@ public class AddPostAdapter extends RecyclerView.Adapter {
     private List<BasePostElement> elements;
 
     public AddPostAdapter(Context context, List<BasePostElement> elements, SimpleListCallback textCallback,
-                          ImageCallback imageCallback, ImageContainerCallback imageContainerCallback,
-                          VideoCallback videoCallback, VideoContainerCallback videoContainerCallback) {
+                          AddPostImageCallback imageCallback, AddPostImageContainerCallback imageContainerCallback,
+                          AddPostVideoCallback videoCallback, AddPostVideoContainerCallback videoContainerCallback) {
         this.elements = elements;
         this.textCallback = textCallback;
         this.imageCallback = imageCallback;

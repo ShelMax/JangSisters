@@ -18,7 +18,7 @@ import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.ServerConfig;
 import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.models.Post;
-import kr.sofac.jangsisters.models.SimpleListCallback;
+import kr.sofac.jangsisters.models.callback.SimpleListCallback;
 
 public class GridViewPostAdapter extends RecyclerView.Adapter<GridViewPostAdapter.ViewHolder> {
 

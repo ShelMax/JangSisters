@@ -1,4 +1,4 @@
-package kr.sofac.jangsisters.models;
+package kr.sofac.jangsisters.models.callback;
 
 public interface PostCallback {
 

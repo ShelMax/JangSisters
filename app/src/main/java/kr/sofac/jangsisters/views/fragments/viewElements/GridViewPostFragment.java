@@ -28,8 +28,7 @@ import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
 public class GridViewPostFragment extends BaseFragment {
 
-    @BindView(R.id.recycler)
-    RecyclerView recyclerView;
+    @BindView(R.id.recycler) RecyclerView recyclerView;
     private List<Post> posts;
     private GridViewPostAdapter adapter;
     private ProgressBar progressBar;

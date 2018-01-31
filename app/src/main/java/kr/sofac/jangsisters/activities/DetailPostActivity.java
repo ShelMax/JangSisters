@@ -30,6 +30,7 @@ import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.KeyTransferFlag;
 import kr.sofac.jangsisters.config.KeyTransferObj;
+import kr.sofac.jangsisters.config.ServerConfig;
 import kr.sofac.jangsisters.models.Comment;
 import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.models.Post;
@@ -295,7 +296,11 @@ public class DetailPostActivity extends BaseActivity {
         LinearLayoutManager managerVideos = new LinearLayoutManager(this);
         managerImages.setOrientation(LinearLayoutManager.HORIZONTAL);
         managerVideos.setOrientation(LinearLayoutManager.HORIZONTAL);
-        adapter = new DetailPostAdapter(post);
+        adapter = new DetailPostAdapter(post, (videoPosition, containerPosition) ->
+                startActivity(new Intent(DetailPostActivity.this, VideoActivity.class)
+                        .putExtra(KeyTransferObj.URI.toString(), ServerConfig.BASE_URL +
+                                ServerConfig.PART_VIDEO + post.getBody()
+                                .get(containerPosition).getFiles().get(videoPosition).getName())));
         textViewContent.setAdapter(adapter);
         textViewContent.setLayoutManager(new LinearLayoutManager(this));
     }

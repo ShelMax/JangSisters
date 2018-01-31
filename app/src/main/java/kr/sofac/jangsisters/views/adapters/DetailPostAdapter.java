@@ -1,5 +1,6 @@
 package kr.sofac.jangsisters.views.adapters;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,21 +23,28 @@ import kr.sofac.jangsisters.models.File;
 import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.PostElement;
+import kr.sofac.jangsisters.models.callback.VideoCallback;
+import kr.sofac.jangsisters.utils.BitmapUtil;
 
 public class DetailPostAdapter extends RecyclerView.Adapter {
+
+    //TODO сервис
 
     private static final int VIEW_TYPE_TEXT = 1;
     private static final int VIEW_TYPE_IMAGE = 2;
     private static final int VIEW_TYPE_VIDEO = 3;
     private static final int VIEW_TYPE_CATEGORIES = 4;
 
+    private VideoCallback videoCallback;
+
 
     private List<PostElement> postElements;
     private List<Category> postCategories;
 
-    public DetailPostAdapter(Post post) {
+    public DetailPostAdapter(Post post, VideoCallback videoCallback) {
         this.postElements = post.getBody();
         this.postCategories = post.getCategories();
+        this.videoCallback = videoCallback;
     }
 
     @Override
@@ -129,7 +137,7 @@ public class DetailPostAdapter extends RecyclerView.Adapter {
 
             @Override
             public void onBindViewHolder(VideoAdapterHolder holder, int position) {
-
+                holder.bind(position);
             }
 
             @Override
@@ -139,9 +147,25 @@ public class DetailPostAdapter extends RecyclerView.Adapter {
 
             class VideoAdapterHolder extends RecyclerView.ViewHolder {
 
+                @BindView(R.id.video_background) ImageView videoBackground;
+
                 VideoAdapterHolder(View itemView) {
                     super(itemView);
                     ButterKnife.bind(this, itemView);
+                }
+
+                public void bind(int position) {
+                    //TODO show animation
+                    new Thread(() -> {
+                        Bitmap bitmap = BitmapUtil.getVideoThumbnailByUrl(ServerConfig.BASE_URL +
+                                ServerConfig.PART_VIDEO + videos.get(position).getName());
+                        itemView.post(() -> GlideApp.with(itemView)
+                                .load(bitmap)
+                                .apply(new RequestOptions().placeholder(R.drawable.placeholder_image))
+                                .apply(RequestOptions.centerCropTransform())
+                                .into(videoBackground));
+                    }).start();
+                    itemView.setOnClickListener(v -> videoCallback.videoClick(getLayoutPosition(), position));
                 }
             }
         }
@@ -149,8 +173,7 @@ public class DetailPostAdapter extends RecyclerView.Adapter {
 
     class ImageHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.image_recycler)
-        RecyclerView imagesRecycler;
+        @BindView(R.id.image_recycler) RecyclerView imagesRecycler;
 
         ImageHolder(View itemView) {
             super(itemView);

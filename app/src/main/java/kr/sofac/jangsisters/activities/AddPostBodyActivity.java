@@ -1,5 +1,6 @@
 package kr.sofac.jangsisters.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,10 +20,10 @@ import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.models.BasePostElement;
-import kr.sofac.jangsisters.models.ImageCallback;
-import kr.sofac.jangsisters.models.ImageContainerCallback;
-import kr.sofac.jangsisters.models.VideoCallback;
-import kr.sofac.jangsisters.models.VideoContainerCallback;
+import kr.sofac.jangsisters.models.callback.AddPostImageCallback;
+import kr.sofac.jangsisters.models.callback.AddPostImageContainerCallback;
+import kr.sofac.jangsisters.models.callback.AddPostVideoCallback;
+import kr.sofac.jangsisters.models.callback.AddPostVideoContainerCallback;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.AddPostDTO;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
@@ -48,6 +49,7 @@ public class AddPostBodyActivity extends BaseActivity {
     private int contentPosition;
 
     private AddPostDTO postDTO;
+    private AlertDialog.Builder builder;
 
     @Override
     public void onBackPressed() {
@@ -61,7 +63,6 @@ public class AddPostBodyActivity extends BaseActivity {
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
             contentLoaded(data.getData(), requestCode);
         }
-
     }
 
     private void contentLoaded(Uri uri, int requestCode) {
@@ -107,7 +108,7 @@ public class AddPostBodyActivity extends BaseActivity {
         initToolbar();
         postDTO = (AddPostDTO) getIntent().getSerializableExtra(KeyTransferObj.POST.toString());
         adapter = new AddPostAdapter(this, elements, this::deleteContainer,
-                new ImageCallback() {
+                new AddPostImageCallback() {
                     @Override
                     public void delete(int imagePosition, int containerPosition) {
                         deleteImage(imagePosition, containerPosition);
@@ -118,7 +119,7 @@ public class AddPostBodyActivity extends BaseActivity {
                         replaceImageInContainer(imagePosition, containerPosition);
                     }
                 },
-                new ImageContainerCallback() {
+                new AddPostImageContainerCallback() {
                     @Override
                     public void delete(int position) {
                         deleteContainer(position);
@@ -130,7 +131,7 @@ public class AddPostBodyActivity extends BaseActivity {
                     }
 
                     },
-                new VideoCallback() {
+                new AddPostVideoCallback() {
                     @Override
                     public void delete(int videoPosition, int containerPosition) {
                         deleteVideo(videoPosition, containerPosition);
@@ -141,7 +142,7 @@ public class AddPostBodyActivity extends BaseActivity {
                         replaceVideoInContainer(videoPosition, containerPosition);
                     }
                 },
-                new VideoContainerCallback() {
+                new AddPostVideoContainerCallback() {
                     @Override
                     public void delete(int position) {
                         deleteContainer(position);
@@ -155,6 +156,17 @@ public class AddPostBodyActivity extends BaseActivity {
         recyclerView.setAdapter(adapter);
         manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
+        initDialog();
+    }
+
+    private void initDialog() {
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle("Important")
+                .setMessage("Only videos in mp4 format are supported.\n" +
+                        "Max file size is 40 MB.")
+                .setPositiveButton("Ok", (dialog, which) -> {
+                    addVideo(SELECT_VIDEO_ADD_CONTAINER);
+                }).create();
     }
 
     private void addVideoToContainer(int position) {
@@ -214,10 +226,12 @@ public class AddPostBodyActivity extends BaseActivity {
 
     @OnClick(R.id.add_video)
     public void addVideo() {
-        addVideo(SELECT_VIDEO_ADD_CONTAINER);
+        builder.show();
     }
 
     //TODO isAuth поменять, где user == null
+
+    // TODO вынести пермишны в BaseActivity
 
     private void addVideo(int requestType){
         Intent intent = new Intent();

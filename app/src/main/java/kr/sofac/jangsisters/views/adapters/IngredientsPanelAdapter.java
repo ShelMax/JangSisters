@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Ingredient;
-import kr.sofac.jangsisters.models.IngredientsPanelCallback;
+import kr.sofac.jangsisters.models.callback.IngredientsPanelCallback;
 
 public class IngredientsPanelAdapter extends RecyclerView.Adapter<IngredientsPanelAdapter.ViewHolder> {
 

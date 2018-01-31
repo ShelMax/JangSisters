@@ -6,15 +6,16 @@ public class Ingredient {
 
     private int id;
     private String name;
-    @SerializedName("shopID")
-    private int shop_id;
+
+    @SerializedName("shop_id")
+    private int shopID;
 
     public Ingredient() {
     }
 
     public Ingredient(String name) {
         this.name = name;
-        this.shop_id = -1;
+        this.shopID = -1;
     }
 
     public int getId() {
@@ -26,6 +27,6 @@ public class Ingredient {
     }
 
     public int getShopID() {
-        return shop_id;
+        return shopID;
     }
 }

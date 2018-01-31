@@ -19,7 +19,7 @@ import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.ServerConfig;
 import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.models.Post;
-import kr.sofac.jangsisters.models.PostCallback;
+import kr.sofac.jangsisters.models.callback.PostCallback;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 

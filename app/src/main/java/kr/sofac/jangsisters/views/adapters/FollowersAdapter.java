@@ -16,8 +16,8 @@ import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.ServerConfig;
 import kr.sofac.jangsisters.models.GlideApp;
-import kr.sofac.jangsisters.models.SimpleListCallback;
 import kr.sofac.jangsisters.models.User;
+import kr.sofac.jangsisters.models.callback.SimpleListCallback;
 
 public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.ViewHolder> {
 
