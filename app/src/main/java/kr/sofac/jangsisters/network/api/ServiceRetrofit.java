@@ -13,7 +13,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
-import static kr.sofac.jangsisters.config.ServersConfig.PART_CONTROLLER;
+import static kr.sofac.jangsisters.config.ServerConfig.PART_CONTROLLER;
 
 public interface ServiceRetrofit {
 

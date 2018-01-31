@@ -8,7 +8,8 @@ import android.support.v7.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.config.EnumPreference;
+import kr.sofac.jangsisters.config.KeyTransferFlag;
+import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.views.fragments.containers.ProfileFragment;
 
 public class UserActivity extends BaseActivity {
@@ -23,10 +24,10 @@ public class UserActivity extends BaseActivity {
         initToolbar();
         FragmentManager fragmentManager = getSupportFragmentManager();
         Bundle bundle = new Bundle();
-        bundle.putInt(EnumPreference.USER_ID.toString(),
-                getIntent().getIntExtra(EnumPreference.USER_ID.toString(),0));
-        bundle.putBoolean(EnumPreference.MY_PROFILE.toString(),
-                getIntent().getBooleanExtra(EnumPreference.MY_PROFILE.toString(), false));
+        bundle.putInt(KeyTransferObj.USER_ID.toString(),
+                getIntent().getIntExtra(KeyTransferObj.USER_ID.toString(),0));
+        bundle.putBoolean(KeyTransferFlag.IS_MY_PROFILE.toString(),
+                getIntent().getBooleanExtra(KeyTransferFlag.IS_MY_PROFILE.toString(), false));
         ProfileFragment profileFragment = new ProfileFragment();
         profileFragment.setArguments(bundle);
         fragmentManager.beginTransaction()
@@ -36,7 +37,7 @@ public class UserActivity extends BaseActivity {
 
     private void initToolbar() {
         setSupportActionBar(toolbar);
-        if (getIntent().getBooleanExtra(EnumPreference.MY_PROFILE.toString(), false)) {
+        if (getIntent().getBooleanExtra(KeyTransferFlag.IS_MY_PROFILE.toString(), false)) {
             toolbar.setNavigationIcon(R.drawable.add);
             toolbar.setNavigationOnClickListener(v -> {
                 startActivity(new Intent(UserActivity.this, AddPostMainActivity.class));

@@ -9,18 +9,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 
-import static kr.sofac.jangsisters.config.EnumPreference.MY_USER;
-
 public class LoginActivity extends BaseActivity {
+
 
     @BindView(R.id.editTextEmail)
     TextInputEditText editTextEmail;
     @BindView(R.id.editTextPassword)
     TextInputEditText editTextPassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
     }
+
 
     @OnClick({R.id.buttonLogin, R.id.buttonKakoTalk, R.id.buttonFacebook, R.id.TextViewRegister})
     public void onViewClicked(View view) {
@@ -46,6 +48,7 @@ public class LoginActivity extends BaseActivity {
                 break;
         }
     }
+
 
     public void requestAuthorization(String email, String password) {
         if (!email.isEmpty() && !password.isEmpty()) {
@@ -72,14 +75,16 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+
     public void startLaunchActivity() {
         startActivity(new Intent(LoginActivity.this, LaunchActivity.class));
         finishAffinity();
     }
 
+
     public void startVerificationUserActivity(User user) {
         if (0 != user.getId()) {
-            startActivity(new Intent(LoginActivity.this, VerificationActivity.class).putExtra(MY_USER.toString(), user));
+            startActivity(new Intent(LoginActivity.this, VerificationActivity.class).putExtra(KeyTransferObj.MY_USER.toString(), user));
         } else {
             showToast(getString(R.string.you_not_registered_user_or_not_correct_email));
         }

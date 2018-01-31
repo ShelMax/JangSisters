@@ -28,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.config.EnumPreference;
+import kr.sofac.jangsisters.config.KeyTransferFlag;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.views.adapters.FilterAdapter;
 import kr.sofac.jangsisters.views.fragments.containers.HelpFragment;
@@ -102,7 +102,7 @@ public class MainActivity extends BaseActivity {
         setupViewPager();
         initTabLayout();
         initDrawerEndPosition();
-        if (getIntent().getBooleanExtra(EnumPreference.UPDATED_PROFILE.toString(), false))
+        if (getIntent().getBooleanExtra(KeyTransferFlag.IS_UPDATED_PROFILE.toString(), false))
             tabLayout.getTabAt(4).select();
         else
             tabLayout.getTabAt(2).select();
@@ -121,7 +121,7 @@ public class MainActivity extends BaseActivity {
         if (isLogged) {
             ProfileFragment profileFragment = new ProfileFragment();
             Bundle bundle = new Bundle();
-            bundle.putBoolean(EnumPreference.MY_PROFILE.toString(), true);
+            bundle.putBoolean(KeyTransferFlag.IS_MY_PROFILE.toString(), true);
             profileFragment.setArguments(bundle);
             adapter.addFragment(profileFragment);
         } else {

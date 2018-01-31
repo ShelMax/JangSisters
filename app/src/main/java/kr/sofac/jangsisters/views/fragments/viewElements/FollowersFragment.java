@@ -16,7 +16,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.activities.UserActivity;
-import kr.sofac.jangsisters.config.EnumPreference;
+import kr.sofac.jangsisters.config.KeyTransferFlag;
+import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.utils.ProgressBar;
@@ -35,10 +36,10 @@ public class FollowersFragment extends BaseFragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_followers, null);
         ButterKnife.bind(this, view);
-        userID = getArguments().getInt(EnumPreference.USER_ID.toString(), 0);
+        userID = getArguments().getInt(KeyTransferObj.USER_ID.toString(), 0);
         progressBar = new ProgressBar(getActivity());
         progressBar.showView();
-        boolean isFollowers = getArguments().getBoolean(EnumPreference.FOLLOWERS.toString());
+        boolean isFollowers = getArguments().getBoolean(KeyTransferFlag.IS_SHOWING_FOLLOWERS.toString());
         if(isFollowers)
             loadFollowers();
         else
@@ -53,8 +54,8 @@ public class FollowersFragment extends BaseFragment{
                 recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recycler.setAdapter(new FollowersAdapter(users, position -> {
                     startActivity(new Intent(getActivity(), UserActivity.class)
-                            .putExtra(EnumPreference.USER_ID.toString(), users.get(position).getId())
-                            .putExtra(EnumPreference.MY_PROFILE.toString(), false));
+                            .putExtra(KeyTransferObj.USER_ID.toString(), users.get(position).getId())
+                            .putExtra(KeyTransferFlag.IS_MY_PROFILE.toString(), false));
                 }));
             }
             else{
@@ -71,8 +72,8 @@ public class FollowersFragment extends BaseFragment{
                 recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recycler.setAdapter(new FollowersAdapter(users, position -> {
                     startActivity(new Intent(getActivity(), UserActivity.class)
-                            .putExtra(EnumPreference.USER_ID.toString(), users.get(position).getId())
-                            .putExtra(EnumPreference.MY_PROFILE.toString(), false));
+                            .putExtra(KeyTransferObj.USER_ID.toString(), users.get(position).getId())
+                            .putExtra(KeyTransferFlag.IS_MY_PROFILE.toString(), false));
                 }));
             }
             else{

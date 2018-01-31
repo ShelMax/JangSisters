@@ -25,7 +25,8 @@ import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.activities.DetailPostActivity;
 import kr.sofac.jangsisters.activities.UserActivity;
-import kr.sofac.jangsisters.config.EnumPreference;
+import kr.sofac.jangsisters.config.KeyTransferFlag;
+import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.models.PostCallback;
 import kr.sofac.jangsisters.models.TabManager;
@@ -90,8 +91,8 @@ public class HomeFragment extends BaseFragment {
                     public void postClick(int position) {
                         int userID = appPreference.getUser() == null ? 0 : appPreference.getUser().getId();
                         startActivity(new Intent(getActivity(), DetailPostActivity.class)
-                                .putExtra(EnumPreference.POST_ID.toString(), posts.get(position).getId())
-                                .putExtra(EnumPreference.USER_ID.toString(), userID));
+                                .putExtra(KeyTransferObj.POST_ID.toString(), posts.get(position).getId())
+                                .putExtra(KeyTransferObj.USER_ID.toString(), userID));
                     }
 
                     @Override
@@ -105,12 +106,12 @@ public class HomeFragment extends BaseFragment {
                     public void userClick(int position) {
                         boolean isLogged = appPreference.getUser() != null;
                         Intent intent = new Intent(getActivity(), UserActivity.class);
-                        intent.putExtra(EnumPreference.USER_ID.toString(), posts.get(position).getAuthorID());
+                        intent.putExtra(KeyTransferObj.USER_ID.toString(), posts.get(position).getAuthorID());
                         if (isLogged)
-                            intent.putExtra(EnumPreference.MY_PROFILE.toString(),
+                            intent.putExtra(KeyTransferFlag.IS_MY_PROFILE.toString(),
                                     appPreference.getUser().getId() == posts.get(position).getAuthorID());
                         else
-                            intent.putExtra(EnumPreference.MY_PROFILE.toString(),
+                            intent.putExtra(KeyTransferFlag.IS_MY_PROFILE.toString(),
                                     false);
                         startActivity(intent);
                     }

@@ -28,7 +28,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.config.EnumPreference;
+import kr.sofac.jangsisters.config.KeyTransferFlag;
+import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.models.Comment;
 import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.models.Post;
@@ -39,9 +40,9 @@ import kr.sofac.jangsisters.views.adapters.CommentAdapter;
 import kr.sofac.jangsisters.views.adapters.DetailPostAdapter;
 import kr.sofac.jangsisters.views.adapters.PostIngredientsAdapter;
 
-import static kr.sofac.jangsisters.config.ServersConfig.BASE_URL;
-import static kr.sofac.jangsisters.config.ServersConfig.PART_AVATAR;
-import static kr.sofac.jangsisters.config.ServersConfig.PART_POST;
+import static kr.sofac.jangsisters.config.ServerConfig.BASE_URL;
+import static kr.sofac.jangsisters.config.ServerConfig.PART_AVATAR;
+import static kr.sofac.jangsisters.config.ServerConfig.PART_POST;
 
 public class DetailPostActivity extends BaseActivity {
 
@@ -98,7 +99,7 @@ public class DetailPostActivity extends BaseActivity {
         if(appPreference.getUser() != null)
             userID = appPreference.getUser().getId();
 
-        postID = getIntent().getIntExtra(EnumPreference.POST_ID.toString(), 1);
+        postID = getIntent().getIntExtra(KeyTransferObj.POST_ID.toString(), 1);
         loadPost();
     }
 
@@ -159,12 +160,12 @@ public class DetailPostActivity extends BaseActivity {
         authorImage.setOnClickListener(v -> {
             boolean isLogged = appPreference.getUser() != null;
             Intent intent = new Intent(DetailPostActivity.this, UserActivity.class);
-            intent.putExtra(EnumPreference.USER_ID.toString(), post.getAuthorID());
+            intent.putExtra(KeyTransferObj.USER_ID.toString(), post.getAuthorID());
             if (isLogged)
-                intent.putExtra(EnumPreference.MY_PROFILE.toString(),
+                intent.putExtra(KeyTransferFlag.IS_MY_PROFILE.toString(),
                         appPreference.getUser().getId() == post.getAuthorID());
             else
-                intent.putExtra(EnumPreference.MY_PROFILE.toString(),
+                intent.putExtra(KeyTransferFlag.IS_MY_PROFILE.toString(),
                         false);
             startActivity(intent);
         });

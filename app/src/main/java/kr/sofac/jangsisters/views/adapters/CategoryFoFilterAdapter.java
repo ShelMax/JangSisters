@@ -19,8 +19,8 @@ import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Category;
 import kr.sofac.jangsisters.models.GlideApp;
 
-import static kr.sofac.jangsisters.config.ServersConfig.BASE_URL;
-import static kr.sofac.jangsisters.config.ServersConfig.PART_CATEGORY_IMAGE;
+import static kr.sofac.jangsisters.config.ServerConfig.BASE_URL;
+import static kr.sofac.jangsisters.config.ServerConfig.PART_CATEGORY_IMAGE;
 
 public class CategoryFoFilterAdapter extends RecyclerView.Adapter<CategoryFoFilterAdapter.ViewHolder> {
 

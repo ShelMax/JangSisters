@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.config.ServersConfig;
+import kr.sofac.jangsisters.config.ServerConfig;
 import kr.sofac.jangsisters.models.Category;
 import kr.sofac.jangsisters.models.File;
 import kr.sofac.jangsisters.models.GlideApp;
@@ -181,7 +181,7 @@ public class DetailPostAdapter extends RecyclerView.Adapter {
             @Override
             public void onBindViewHolder(ImageAdapterHolder holder, int position) {
                 GlideApp.with(holder.itemView)
-                        .load(ServersConfig.BASE_URL + ServersConfig.PART_POST + images.get(position).getName())
+                        .load(ServerConfig.BASE_URL + ServerConfig.PART_POST + images.get(position).getName())
                         .apply(new RequestOptions().placeholder(R.drawable.placeholder_image))
                         .apply(RequestOptions.centerCropTransform())
                         .into(holder.image);

@@ -25,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.config.EnumPreference;
+import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.models.Ingredient;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.AddPostDTO;
@@ -78,7 +78,7 @@ public class AddPostIngredientActivity extends BaseActivity {
         panel.setTouchEnabled(false);
         initToolbar();
         loadIngredients();
-        postDTO = (AddPostDTO) getIntent().getSerializableExtra(EnumPreference.POST.toString());
+        postDTO = (AddPostDTO) getIntent().getSerializableExtra(KeyTransferObj.POST.toString());
     }
 
     private void loadIngredients() {
@@ -197,8 +197,8 @@ public class AddPostIngredientActivity extends BaseActivity {
                 postDTO.setShopIngredients(temp)
                         .setOwnIngredients(ownIngredients.toString());
                 startActivity(new Intent(AddPostIngredientActivity.this, AddPostBodyActivity.class)
-                        .putExtra(EnumPreference.POST.toString(), postDTO)
-                        .putExtra(EnumPreference.URI.toString(), (Uri) getIntent().getParcelableExtra(EnumPreference.URI.toString())));
+                        .putExtra(KeyTransferObj.POST.toString(), postDTO)
+                        .putExtra(KeyTransferObj.URI.toString(), (Uri) getIntent().getParcelableExtra(KeyTransferObj.URI.toString())));
                 overridePendingTransition(R.anim.forward_start, R.anim.forward_finish);
             }
         }

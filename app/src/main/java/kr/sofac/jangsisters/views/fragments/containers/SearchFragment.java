@@ -19,7 +19,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.config.EnumPreference;
+import kr.sofac.jangsisters.config.KeyActionLoading;
+import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.utils.AppPreference;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
@@ -68,12 +69,12 @@ public class SearchFragment extends BaseFragment {
         AppPreference appPreference = new AppPreference(getActivity());
         Bundle bundle = new Bundle();
         if(appPreference.isUserLogged()) {
-            bundle.putInt(EnumPreference.USER_ID.toString(), appPreference.getUser().getId());
+            bundle.putInt(KeyTransferObj.USER_ID.toString(), appPreference.getUser().getId());
         }
         else {
-            bundle.putInt(EnumPreference.USER_ID.toString(), 0);
+            bundle.putInt(KeyTransferObj.USER_ID.toString(), 0);
         }
-        bundle.putSerializable(EnumPreference.GRID_ACTION.toString(), EnumPreference.SEARCH);
+        bundle.putSerializable(KeyTransferObj.GRID_ACTION.toString(), KeyActionLoading.SEARCH);
         gridViewPostFragment.setArguments(bundle);
     }
 

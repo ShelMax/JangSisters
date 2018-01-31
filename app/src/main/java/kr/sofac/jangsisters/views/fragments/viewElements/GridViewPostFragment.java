@@ -17,7 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.activities.DetailPostActivity;
-import kr.sofac.jangsisters.config.EnumPreference;
+import kr.sofac.jangsisters.config.KeyActionLoading;
+import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.models.Post;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
@@ -57,12 +58,12 @@ public class GridViewPostFragment extends BaseFragment {
         return view;
     }
 
-    private EnumPreference getTypeLoadingPostAndUserID() {
+    private KeyActionLoading getTypeLoadingPostAndUserID() {
         if (getArguments() != null) {
-            userID = getArguments().getInt(EnumPreference.USER_ID.toString(), 0);
-            return (EnumPreference) this.getArguments().getSerializable(EnumPreference.GRID_ACTION.toString());
+            userID = getArguments().getInt(KeyTransferObj.USER_ID.toString(), 0);
+            return (KeyActionLoading) this.getArguments().getSerializable(KeyTransferObj.GRID_ACTION.toString());
         } else {
-            return EnumPreference.SEARCH;
+            return KeyActionLoading.SEARCH;
         }
     }
 
@@ -93,7 +94,7 @@ public class GridViewPostFragment extends BaseFragment {
         posts = loadedPosts;
         adapter = new GridViewPostAdapter(posts, position -> {
             startActivity(new Intent(getActivity(), DetailPostActivity.class)
-                    .putExtra(EnumPreference.POST_ID.toString(), posts.get(position).getId()));
+                    .putExtra(KeyTransferObj.POST_ID.toString(), posts.get(position).getId()));
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);

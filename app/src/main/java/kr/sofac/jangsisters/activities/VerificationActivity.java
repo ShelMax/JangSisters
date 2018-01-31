@@ -9,11 +9,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 
-import static kr.sofac.jangsisters.config.EnumPreference.MY_USER;
 
 public class VerificationActivity extends BaseActivity {
 
@@ -26,7 +26,7 @@ public class VerificationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification);
         ButterKnife.bind(this);
-        user = (User) getIntent().getSerializableExtra(MY_USER.toString());
+        user = (User) getIntent().getSerializableExtra(KeyTransferObj.MY_USER.toString());
     }
 
     @OnClick({R.id.buttonSendCode, R.id.buttonTextResendCode})

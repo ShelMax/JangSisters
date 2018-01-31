@@ -2,9 +2,13 @@ package kr.sofac.jangsisters.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.models.Category;
 import kr.sofac.jangsisters.models.Version;
@@ -12,11 +16,14 @@ import kr.sofac.jangsisters.network.Connection;
 
 public class LaunchActivity extends BaseActivity {
 
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
-
+        ButterKnife.bind(this);
         requestCheckVersionCategories();
     }
 
@@ -24,30 +31,26 @@ public class LaunchActivity extends BaseActivity {
         new Connection<Version>().getCorrectVersion((isSuccess, answerServerResponse) -> {
             if (isSuccess) {
                 if (isCorrectVersion(answerServerResponse.getDataTransferObject())) {
-                    requestLoadingCategories(answerServerResponse.getDataTransferObject());
-//                    startMainActivity();
+                    startMainActivity();
                 } else {
-                    requestLoadingCategories(answerServerResponse.getDataTransferObject());
+                    new Connection<List<Category>>().getListCategories((isSuccess1, answerServerResponse1) -> {
+                        if (isSuccess1) {
+                            appPreference.saveCategories(answerServerResponse1.getDataTransferObject());
+                            appPreference.setVersionCategories(answerServerResponse.getDataTransferObject().getValue());
+                            startMainActivity();
+                        } else {
+                            showToast(getString(R.string.connection_error));
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    });
                 }
             } else {
                 showToast(getString(R.string.connection_error));
-                finish();
-                //TODO better solution
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
 
-    public void requestLoadingCategories(Version versionFromServer) {
-        new Connection<List<Category>>().getListCategories((isSuccess, answerServerResponse) -> {
-            if (isSuccess) {
-                appPreference.saveCategories(answerServerResponse.getDataTransferObject());
-                appPreference.setVersionCategories(versionFromServer.getValue());
-                startMainActivity();
-            } else {
-                showToast(getString(R.string.connection_error));
-            }
-        });
-    }
 
     public boolean isCorrectVersion(Version versionFromServer) {
         return versionFromServer.getValue() == appPreference.getVersionCategories();

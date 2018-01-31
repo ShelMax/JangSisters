@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.config.EnumPreference;
+import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.models.BasePostElement;
 import kr.sofac.jangsisters.models.ImageCallback;
 import kr.sofac.jangsisters.models.ImageContainerCallback;
@@ -105,7 +105,7 @@ public class AddPostBodyActivity extends BaseActivity {
         setContentView(R.layout.activity_add_post_body);
         ButterKnife.bind(this);
         initToolbar();
-        postDTO = (AddPostDTO) getIntent().getSerializableExtra(EnumPreference.POST.toString());
+        postDTO = (AddPostDTO) getIntent().getSerializableExtra(KeyTransferObj.POST.toString());
         adapter = new AddPostAdapter(this, elements, this::deleteContainer,
                 new ImageCallback() {
                     @Override
@@ -238,7 +238,7 @@ public class AddPostBodyActivity extends BaseActivity {
             if(!elements.isEmpty()) {
                 progressBar.showView();
                 List<Uri> uris = new ArrayList<>();
-                uris.add(getIntent().getParcelableExtra(EnumPreference.URI.toString()));
+                uris.add(getIntent().getParcelableExtra(KeyTransferObj.URI.toString()));
                 for (int i = 0; i < elements.size(); i++) {
                     uris.addAll(elements.get(i).getUris());
                 }

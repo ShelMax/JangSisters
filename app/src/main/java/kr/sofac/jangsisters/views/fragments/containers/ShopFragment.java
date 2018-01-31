@@ -20,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.config.ServersConfig;
+import kr.sofac.jangsisters.config.ServerConfig;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
 
@@ -78,7 +78,7 @@ public class ShopFragment extends BaseFragment {
                 }
             }
         });
-        webView.loadUrl(ServersConfig.SHOP_URL);
+        webView.loadUrl(ServerConfig.SHOP_URL);
         refresh.setOnRefreshListener(this::refreshClick);
         return view;
     }
@@ -147,7 +147,7 @@ public class ShopFragment extends BaseFragment {
     public void homeClick() {
         refresh.setRefreshing(true);
         fromNavigation = true;
-        webView.loadUrl(ServersConfig.SHOP_URL);
+        webView.loadUrl(ServerConfig.SHOP_URL);
     }
 
     public void setOpened(boolean opened) {

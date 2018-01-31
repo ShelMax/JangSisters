@@ -19,8 +19,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.config.EnumPreference;
-import kr.sofac.jangsisters.config.ServersConfig;
+import kr.sofac.jangsisters.config.KeyTransferFlag;
+import kr.sofac.jangsisters.config.ServerConfig;
 import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
@@ -100,14 +100,14 @@ public class SettingsActivity extends BaseActivity {
         initToolbar();
         user = appPreference.getUser();
         GlideApp.with(this)
-                .load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR +
+                .load(ServerConfig.BASE_URL + ServerConfig.PART_AVATAR +
                         user.getAvatar())
                 .override(200, 200)
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
                 .apply(RequestOptions.circleCropTransform())
                 .into(image);
         GlideApp.with(this)
-                .load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR +
+                .load(ServerConfig.BASE_URL + ServerConfig.PART_AVATAR +
                         user.getAvatar())
                 .override(400, 400)
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
@@ -156,7 +156,7 @@ public class SettingsActivity extends BaseActivity {
                 newUser.setAvatar(user.getAvatar());
             appPreference.setUser(newUser);
             startActivity(new Intent(SettingsActivity.this, MainActivity.class)
-                    .putExtra(EnumPreference.UPDATED_PROFILE.toString(), true));
+                    .putExtra(KeyTransferFlag.IS_UPDATED_PROFILE.toString(), true));
             finishAffinity();
         } else {
             showToast("Couldn't update profile info");

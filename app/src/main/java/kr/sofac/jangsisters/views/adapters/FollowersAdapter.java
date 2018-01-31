@@ -14,7 +14,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.config.ServersConfig;
+import kr.sofac.jangsisters.config.ServerConfig;
 import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.models.SimpleListCallback;
 import kr.sofac.jangsisters.models.User;
@@ -37,7 +37,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        GlideApp.with(holder.itemView).load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR +
+        GlideApp.with(holder.itemView).load(ServerConfig.BASE_URL + ServerConfig.PART_AVATAR +
                 followers.get(position).getAvatar())
                 .override(100, 100)
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder))

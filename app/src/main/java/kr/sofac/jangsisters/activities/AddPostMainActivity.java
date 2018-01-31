@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import kr.sofac.jangsisters.R;
-import kr.sofac.jangsisters.config.EnumPreference;
+import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.network.dto.AddPostDTO;
 import kr.sofac.jangsisters.views.fragments.viewElements.GridViewCategoryFragment;
@@ -117,8 +117,8 @@ public class AddPostMainActivity extends BaseActivity {
                         .setDescription(description.getText().toString())
                         .setCategories(categoryFragment.getSelectedCategory());
                 startActivity(new Intent(AddPostMainActivity.this, AddPostIngredientActivity.class)
-                        .putExtra(EnumPreference.POST.toString(), postDTO)
-                        .putExtra(EnumPreference.URI.toString(), imageUri));
+                        .putExtra(KeyTransferObj.POST.toString(), postDTO)
+                        .putExtra(KeyTransferObj.URI.toString(), imageUri));
                 overridePendingTransition(R.anim.forward_start, R.anim.forward_finish);
             }
         }

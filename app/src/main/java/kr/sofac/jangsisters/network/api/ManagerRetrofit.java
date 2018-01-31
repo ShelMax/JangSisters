@@ -26,7 +26,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static kr.sofac.jangsisters.config.ServersConfig.BASE_URL;
+import static kr.sofac.jangsisters.config.ServerConfig.BASE_URL;
 
 
 public class ManagerRetrofit<T> {

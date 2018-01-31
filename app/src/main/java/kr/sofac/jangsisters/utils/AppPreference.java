@@ -14,11 +14,11 @@ import kr.sofac.jangsisters.models.User;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.Context.USER_SERVICE;
-import static kr.sofac.jangsisters.config.EnumPreference.APP_PREFERENCES;
-import static kr.sofac.jangsisters.config.EnumPreference.CATEGORY_PREF;
-import static kr.sofac.jangsisters.config.EnumPreference.GOOGLE_CLOUD_PREFERENCE;
-import static kr.sofac.jangsisters.config.EnumPreference.IS_AUTHORIZATION;
-import static kr.sofac.jangsisters.config.EnumPreference.VERSION_CATEGORIES;
+import static kr.sofac.jangsisters.config.KeyPreference.APP_PREFERENCES;
+import static kr.sofac.jangsisters.config.KeyPreference.CATEGORY_PREF;
+import static kr.sofac.jangsisters.config.KeyPreference.GOOGLE_CLOUD_PREFERENCE;
+import static kr.sofac.jangsisters.config.KeyPreference.IS_AUTHORIZATION;
+import static kr.sofac.jangsisters.config.KeyPreference.VERSION_CATEGORIES;
 
 public class AppPreference {
 

@@ -8,11 +8,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.sofac.jangsisters.R;
+import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.models.User;
 import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
-
-import static kr.sofac.jangsisters.config.EnumPreference.MY_USER;
 
 public class RegistrationActivity extends BaseActivity {
 
@@ -61,7 +60,7 @@ public class RegistrationActivity extends BaseActivity {
 
     public void startVerificationUserActivity(User user) {
         Intent intent = new Intent(this, VerificationActivity.class);
-        intent.putExtra(MY_USER.toString(), user);
+        intent.putExtra(KeyTransferObj.MY_USER.toString(), user);
         startActivity(intent);
     }
 

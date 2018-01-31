@@ -24,8 +24,10 @@ import butterknife.ButterKnife;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.activities.LoginActivity;
 import kr.sofac.jangsisters.activities.SettingsActivity;
-import kr.sofac.jangsisters.config.EnumPreference;
-import kr.sofac.jangsisters.config.ServersConfig;
+import kr.sofac.jangsisters.config.KeyActionLoading;
+import kr.sofac.jangsisters.config.KeyTransferFlag;
+import kr.sofac.jangsisters.config.KeyTransferObj;
+import kr.sofac.jangsisters.config.ServerConfig;
 import kr.sofac.jangsisters.models.GlideApp;
 import kr.sofac.jangsisters.models.TabManager;
 import kr.sofac.jangsisters.models.User;
@@ -70,7 +72,7 @@ public class ProfileFragment extends BaseFragment {
         progressBar = new ProgressBar(getActivity());
         appPreference = new AppPreference(getActivity());
 
-        myProfile = getArguments().getBoolean(EnumPreference.MY_PROFILE.toString());
+        myProfile = getArguments().getBoolean(KeyTransferFlag.IS_MY_PROFILE.toString());
         if(myProfile){
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.your_profile);
             follow.setVisibility(View.GONE);
@@ -80,7 +82,7 @@ public class ProfileFragment extends BaseFragment {
         } else {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.profile);
             balance.setVisibility(View.GONE);
-            userID = getArguments().getInt(EnumPreference.USER_ID.toString());
+            userID = getArguments().getInt(KeyTransferObj.USER_ID.toString());
             getUser();
         }
         return view;
@@ -88,7 +90,7 @@ public class ProfileFragment extends BaseFragment {
 
     private void updateUI() {
         GlideApp.with(this)
-                .load(ServersConfig.BASE_URL + ServersConfig.PART_AVATAR +
+                .load(ServerConfig.BASE_URL + ServerConfig.PART_AVATAR +
                 user.getAvatar())
                 .override(200, 200)
                 .apply(new RequestOptions().placeholder(R.drawable.avatar_holder).error(R.drawable.avatar_holder))
@@ -130,14 +132,14 @@ public class ProfileFragment extends BaseFragment {
         Bundle bundlePosts = new Bundle();
         Bundle bundleBookmarks = new Bundle();
 
-        bundleFollowers.putSerializable(EnumPreference.FOLLOWERS.toString(), true);
-        bundleFollowers.putInt(EnumPreference.USER_ID.toString(), userID);
-        bundleFollowing.putBoolean(EnumPreference.FOLLOWERS.toString(), false);
-        bundleBookmarks.putSerializable(EnumPreference.GRID_ACTION.toString(), EnumPreference.BOOKMARKS);
-        bundleBookmarks.putInt(EnumPreference.USER_ID.toString(), userID);
-        bundleFollowing.putInt(EnumPreference.USER_ID.toString(), userID);
-        bundlePosts.putInt(EnumPreference.USER_ID.toString(), userID);
-        bundlePosts.putSerializable(EnumPreference.GRID_ACTION.toString(), EnumPreference.USER_POSTS);
+        bundleFollowers.putSerializable(KeyTransferFlag.IS_SHOWING_FOLLOWERS.toString(), true);
+        bundleFollowers.putInt(KeyTransferObj.USER_ID.toString(), userID);
+        bundleFollowing.putBoolean(KeyTransferFlag.IS_SHOWING_FOLLOWERS.toString(), false);
+        bundleBookmarks.putSerializable(KeyTransferObj.GRID_ACTION.toString(), KeyActionLoading.BOOKMARKS);
+        bundleBookmarks.putInt(KeyTransferObj.USER_ID.toString(), userID);
+        bundleFollowing.putInt(KeyTransferObj.USER_ID.toString(), userID);
+        bundlePosts.putInt(KeyTransferObj.USER_ID.toString(), userID);
+        bundlePosts.putSerializable(KeyTransferObj.GRID_ACTION.toString(), KeyActionLoading.USER_POSTS);
 
         followers = new FollowersFragment();
         following = new FollowersFragment();
