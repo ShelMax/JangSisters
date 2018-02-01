@@ -24,21 +24,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     private List<Category> categories;
     private Boolean isDetailView;
-    private CategoryAdapter.CallbackFilter callbackFilter;
 
     public CategoryAdapter(List<Category> categories, Boolean isDetailView) {
         this.categories = categories;
         this.isDetailView = isDetailView;
-    }
-
-    public CategoryAdapter(List<Category> categories, Boolean isDetailView, CallbackFilter callbackFilter) {
-        this.categories = categories;
-        this.isDetailView = isDetailView;
-        this.callbackFilter = callbackFilter;
-    }
-
-    public interface CallbackFilter {
-        void onClickFilterListener(View view, int position);
     }
 
     @Override
@@ -74,7 +63,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
 
         void setModel(Category categoryItem, int position) {
-            itemView.setOnClickListener(view -> callbackFilter.onClickFilterListener(itemView, position));
             GlideApp.with(itemView)
                     .load(BASE_URL + PART_CATEGORY_IMAGE + categoryItem.getId() + ".png")
                     .override(80, 80)
