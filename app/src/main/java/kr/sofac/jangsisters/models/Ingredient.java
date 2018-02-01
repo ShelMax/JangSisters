@@ -11,6 +11,7 @@ public class Ingredient {
     private int shopID;
 
     public Ingredient() {
+
     }
 
     public Ingredient(String name) {

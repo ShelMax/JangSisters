@@ -79,7 +79,9 @@ public class GridViewPostFragment extends BaseFragment {
     }
 
     private void loadUserPosts() {
-        new Connection<List<Post>>().getUserPosts(new SenderContainerDTO(), (isSuccess, answerServerResponse) -> {
+        new Connection<List<Post>>().getUserPosts(new SenderContainerDTO()
+                .setUserID(userID)
+                .setPage(1), (isSuccess, answerServerResponse) -> {
             if (isSuccess) {
                 postsLoaded(answerServerResponse.getDataTransferObject());
             } else {

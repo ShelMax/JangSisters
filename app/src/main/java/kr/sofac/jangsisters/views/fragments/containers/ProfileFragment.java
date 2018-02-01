@@ -78,6 +78,7 @@ public class ProfileFragment extends BaseFragment {
             follow.setVisibility(View.GONE);
             message.setVisibility(View.GONE);
             user = appPreference.getUser();
+            userID = user.getId();
             updateUI();
         } else {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.profile);

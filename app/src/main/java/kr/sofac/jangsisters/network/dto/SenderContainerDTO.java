@@ -14,6 +14,8 @@ public class SenderContainerDTO implements Serializable {
     @SerializedName("user_id")
     private Integer userID;
 
+    private Integer page;
+
     @SerializedName("subscribe_id")
     private Integer subscribeID;
 
@@ -50,6 +52,11 @@ public class SenderContainerDTO implements Serializable {
 
     public SenderContainerDTO setBlogName(String blogName) {
         this.blogName = blogName;
+        return this;
+    }
+
+    public SenderContainerDTO setPage(Integer page) {
+        this.page = page;
         return this;
     }
 

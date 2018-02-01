@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        isLogged = appPreference.getUser() != null;
+        isLogged = appPreference.isUserLogged();
         tabManager = TabManager.getTabManager();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
