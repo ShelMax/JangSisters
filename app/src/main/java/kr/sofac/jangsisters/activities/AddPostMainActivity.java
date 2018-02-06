@@ -112,7 +112,7 @@ public class AddPostMainActivity extends BaseActivity {
             else {
                 hideKeyboard();
                 AddPostDTO postDTO = new AddPostDTO();
-                postDTO.setCustomer_id(appPreference.getUser().getId())
+                postDTO.setCustomerID(appPreference.getUser().getId())
                         .setTitle(title.getText().toString())
                         .setDescription(description.getText().toString())
                         .setCategories(categoryFragment.getSelectedCategory());

@@ -13,6 +13,9 @@ public class User implements Serializable {
     private String avatar;
     private int balance;
 
+    @SerializedName("is_follower")
+    private int isFollower;
+
     @SerializedName("blog_name")
     private String blogName;
 
@@ -69,6 +72,14 @@ public class User implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public int isFollower() {
+        return isFollower;
+    }
+
+    public void setIsFollower(int isFollower) {
+        this.isFollower = isFollower;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package kr.sofac.jangsisters.models;
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -46,6 +48,7 @@ public class Post implements Serializable {
     @SerializedName("is_bookmark")
     private int isBookmarked;
 
+    @Nullable
     private List<PostElement> body;
 
 

@@ -17,6 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import kr.sofac.jangsisters.AddPostService;
 import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.models.BasePostElement;
@@ -24,9 +25,7 @@ import kr.sofac.jangsisters.models.callback.AddPostImageCallback;
 import kr.sofac.jangsisters.models.callback.AddPostImageContainerCallback;
 import kr.sofac.jangsisters.models.callback.AddPostVideoCallback;
 import kr.sofac.jangsisters.models.callback.AddPostVideoContainerCallback;
-import kr.sofac.jangsisters.network.Connection;
 import kr.sofac.jangsisters.network.dto.AddPostDTO;
-import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 import kr.sofac.jangsisters.views.adapters.AddPostAdapter;
 
 public class AddPostBodyActivity extends BaseActivity {
@@ -106,7 +105,7 @@ public class AddPostBodyActivity extends BaseActivity {
         setContentView(R.layout.activity_add_post_body);
         ButterKnife.bind(this);
         initToolbar();
-        postDTO = (AddPostDTO) getIntent().getSerializableExtra(KeyTransferObj.POST.toString());
+        postDTO = getIntent().getParcelableExtra(KeyTransferObj.POST.toString());
         adapter = new AddPostAdapter(this, elements, this::deleteContainer,
                 new AddPostImageCallback() {
                     @Override
@@ -250,24 +249,12 @@ public class AddPostBodyActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_toolbar_add_post_done) {
             if(!elements.isEmpty()) {
-                progressBar.showView();
-                List<Uri> uris = new ArrayList<>();
-                uris.add(getIntent().getParcelableExtra(KeyTransferObj.URI.toString()));
-                for (int i = 0; i < elements.size(); i++) {
-                    uris.addAll(elements.get(i).getUris());
-                }
                 adapter.saveItems();
                 postDTO.setElementsBody(elements);
-                new Connection<SenderContainerDTO>().addPost(this, postDTO,
-                        uris, (isSuccess, answerServerResponse) -> {
-                            if (isSuccess) {
-                                startActivity(new Intent(AddPostBodyActivity.this, MainActivity.class));
-                                finishAffinity();
-                            } else {
-                                // TODO handle error
-                            }
-                            progressBar.dismissView();
-                        });
+                startService(new Intent(this, AddPostService.class)
+                .putExtra(KeyTransferObj.POST.toString(), postDTO)
+                .putExtra(KeyTransferObj.AVATAR_URI.toString(), (Uri)getIntent().getParcelableExtra(KeyTransferObj.URI.toString())));
+                startActivity(new Intent(AddPostBodyActivity.this, MainActivity.class));
             }
             else {
                 showToast("You should add at least 1 element");
@@ -275,6 +262,7 @@ public class AddPostBodyActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     private void initToolbar() {
         toolbar.setTitle("Adding body");

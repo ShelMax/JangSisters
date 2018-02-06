@@ -23,7 +23,7 @@ import kr.sofac.jangsisters.network.api.ManagerRetrofit;
 import kr.sofac.jangsisters.network.api.type.ServerResponse;
 import kr.sofac.jangsisters.network.dto.AddPostDTO;
 import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
-import kr.sofac.jangsisters.utils.PathUtil;
+import kr.sofac.jangsisters.utils.FileUtil;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -36,12 +36,12 @@ public class Connection<T> {
         void processFinish(Boolean isSuccess, ServerResponse<T> answerServerResponse);
     }
 
-    public void signInCustomer(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void signInCustomer(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) {
         answerServerResponse = async;
-        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, new Object() {// Change type Object sending / Change data sending
+        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, new Object() {
         }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<ServerResponse<User>>() { //Change type response
+                Type typeAnswer = new TypeToken<ServerResponse<User>>() {
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {
@@ -63,12 +63,12 @@ public class Connection<T> {
         });
     }
 
-    public void signUpCustomer(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void signUpCustomer(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) {
         answerServerResponse = async;
-        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, new Object() {// Change type Object sending / Change data sending
+        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, new Object() {
         }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<ServerResponse<User>>() { //Change type response
+                Type typeAnswer = new TypeToken<ServerResponse<User>>() {
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {
@@ -77,12 +77,12 @@ public class Connection<T> {
         });
     }
 
-    public void signUpCustomerVerification(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void signUpCustomerVerification(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) {
         answerServerResponse = async;
-        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, new Object() {// Change type Object sending / Change data sending
+        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, new Object() {
         }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response
+                Type typeAnswer = new TypeToken<ServerResponse>() {
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {
@@ -91,12 +91,12 @@ public class Connection<T> {
         });
     }
 
-    public void getPost(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void getPost(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) {
         answerServerResponse = async;
         new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, "getPost",
                 (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<ServerResponse<Post>>() { //Change type response
+                Type typeAnswer = new TypeToken<ServerResponse<Post>>() {
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {
@@ -105,13 +105,27 @@ public class Connection<T> {
         });
     }
 
-
-    public void signUpCustomerResendVerification(Integer userID, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void subscribeToUser(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) {
         answerServerResponse = async;
-        new ManagerRetrofit<Integer>().sendRequest(userID, new Object() {// Change type Object sending / Change data sending
+        new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, "addSubscribe",
+                (isSuccess, answerString) -> {
+                    if (isSuccess) {
+                        Type typeAnswer = new TypeToken<ServerResponse>() {
+                        }.getType();
+                        tryParsing(answerString, typeAnswer);
+                    } else {
+                        answerServerResponse.processFinish(false, null);
+                    }
+                });
+    }
+
+
+    public void signUpCustomerResendVerification(Integer userID, AnswerServerResponse<T> async) {
+        answerServerResponse = async;
+        new ManagerRetrofit<Integer>().sendRequest(userID, new Object() {
         }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response
+                Type typeAnswer = new TypeToken<ServerResponse>() {
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {
@@ -120,7 +134,7 @@ public class Connection<T> {
         });
     }
 
-    public void getListPosts(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void getListPosts(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) {
         answerServerResponse = async;
         new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO,
                 "getListPosts", (isSuccess, answerString) -> {
@@ -134,12 +148,12 @@ public class Connection<T> {
         });
     }
 
-    public void getListCategories(AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void getListCategories(AnswerServerResponse<T> async) {
         answerServerResponse = async;
         new ManagerRetrofit<String>().sendRequest("", "getListCategories",
                 (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<ServerResponse<List<Category>>>() { //Change type response
+                Type typeAnswer = new TypeToken<ServerResponse<List<Category>>>() {
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {
@@ -148,12 +162,12 @@ public class Connection<T> {
         });
     }
 
-    public void addCommentToPost(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void addCommentToPost(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) {
         answerServerResponse = async;
         new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, "addComment",
                 (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<ServerResponse<Comment>>() { //Change type response
+                Type typeAnswer = new TypeToken<ServerResponse<Comment>>() {
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {
@@ -162,12 +176,12 @@ public class Connection<T> {
         });
     }
 
-    public void getPostComments(int postID, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void getPostComments(int postID, AnswerServerResponse<T> async) {
         answerServerResponse = async;
         new ManagerRetrofit<Integer>().sendRequest(postID, "getPostListComments",
                 (isSuccess, answerString) -> {
                     if (isSuccess) {
-                        Type typeAnswer = new TypeToken<ServerResponse<List<Comment>>>() { //Change type response
+                        Type typeAnswer = new TypeToken<ServerResponse<List<Comment>>>() {
                         }.getType();
                         tryParsing(answerString, typeAnswer);
                     } else {
@@ -285,12 +299,12 @@ public class Connection<T> {
         );
     }
 
-    public void getPostListComments(Integer postID, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void getPostListComments(Integer postID, AnswerServerResponse<T> async) {
         answerServerResponse = async;
-        new ManagerRetrofit<Integer>().sendRequest(postID, new Object() {// Change type Object sending / Change data sending
+        new ManagerRetrofit<Integer>().sendRequest(postID, new Object() {
         }.getClass().getEnclosingMethod().getName(), (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response
+                Type typeAnswer = new TypeToken<ServerResponse>() {
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {
@@ -299,11 +313,11 @@ public class Connection<T> {
         });
     }
 
-    public void getCorrectVersion(AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void getCorrectVersion(AnswerServerResponse<T> async) {
         answerServerResponse = async;
         new ManagerRetrofit<String>().sendRequest("", "getCorrectVersion", (isSuccess, answerString) -> {
             if (isSuccess) {
-                Type typeAnswer = new TypeToken<ServerResponse<Version>>() { //Change type response
+                Type typeAnswer = new TypeToken<ServerResponse<Version>>() {
                 }.getType();
                 tryParsing(answerString, typeAnswer);
             } else {
@@ -312,12 +326,13 @@ public class Connection<T> {
         });
     }
 
-    public void addPost(Context context, AddPostDTO postDTO, List<Uri> listUri, AnswerServerResponse<T> async) {
+    public void addPost(Context context, AddPostDTO postDTO, List<Uri> listUri, ProgressRequestBody.UploadCallback callback,
+                        AnswerServerResponse<T> async) {
         answerServerResponse = async;
         new ManagerRetrofit<AddPostDTO>().sendMultiPartRequest(postDTO, "addPost",
-                generateMultiPartList(listUri, context), (isSuccess, answerString) -> {
+                generateMultiPartList(listUri, context, callback), (isSuccess, answerString) -> {
                     if (isSuccess) {
-                        Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response(тип ответа)
+                        Type typeAnswer = new TypeToken<ServerResponse>() {
                         }.getType();
                         tryParsing(answerString, typeAnswer);
                     } else {
@@ -341,7 +356,7 @@ public class Connection<T> {
                 });
     }
 
-    public void updateUser(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) { //Change name request / Change data in method parameters
+    public void updateUser(SenderContainerDTO senderContainerDTO, AnswerServerResponse<T> async) {
         answerServerResponse = async;
         new ManagerRetrofit<SenderContainerDTO>().sendRequest(senderContainerDTO, "updateUserInfo",
                 (isSuccess, answerString) -> {
@@ -355,39 +370,28 @@ public class Connection<T> {
                 });
     }
 
-//    public void updatePost(Context context, PostDTO postDTO, ArrayList<Uri> listUri, ArrayList<String> listDeletingFiles, AnswerServerResponse<T> async) {
-//        answerServerResponse = async;
-//        new ManagerRetrofit<PostDTO>().sendMultiPartWithTwoObj(postDTO, new Object() {// Change (type sending) / (data sending)
-//        }.getClass().getEnclosingMethod().getTitle(), generateMultiPartList(listUri, context), listDeletingFiles, (isSuccess, answerString) -> {
-//            if (isSuccess) {
-//                Type typeAnswer = new TypeToken<ServerResponse>() { //Change type response(тип ответа)
-//                }.getType();
-//                tryParsing(answerString, typeAnswer);
-//            } else {
-//                answerServerResponse.processFinish(false, null);
-//            }
-//        });
-//
-//    }
-//
-
-
     /**
      * Supporting methods
      */
 
-    private List<MultipartBody.Part> generateMultiPartList(List<Uri> listFileUri, Context context) {
+    private List<MultipartBody.Part> generateMultiPartList(List<Uri> listFileUri, Context context, ProgressRequestBody.UploadCallback callback) {
         List<MultipartBody.Part> arrayListMulti = new ArrayList<>();
-        for (int i = 0; i < listFileUri.size(); i++) {
-            File file = new File(PathUtil.getPath(context, listFileUri.get(i)));
-            arrayListMulti.add(MultipartBody.Part.createFormData("files[" + i + "]", file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file)));
+        long totalFileSize = 0;
+        for(int i =0; i<listFileUri.size(); i++) {
+            totalFileSize += new File(listFileUri.get(i).getPath()).length();
         }
+        for (int i = 0; i < listFileUri.size(); i++) {
+            File file = new File(listFileUri.get(i).getPath());
+            ProgressRequestBody fileBody = new ProgressRequestBody(file, totalFileSize, callback);
+            arrayListMulti.add(MultipartBody.Part.createFormData("files[" + i + "]", file.getName(), fileBody));
+        }
+        Log.i("TAG", "Done generating files");
         return arrayListMulti;
     }
 
     private List<MultipartBody.Part> generateMultiPartList(Uri imageUri, Context context) {
         List<MultipartBody.Part> arrayListMulti = new ArrayList<>();
-        File file = new File(PathUtil.getPath(context, imageUri));
+        File file = new File(FileUtil.getPath(context, imageUri));
         arrayListMulti.add(MultipartBody.Part.createFormData("files[0]", file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file)));
         return arrayListMulti;
     }

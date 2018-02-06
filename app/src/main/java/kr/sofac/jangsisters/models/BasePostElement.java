@@ -1,15 +1,18 @@
 package kr.sofac.jangsisters.models;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class BasePostElement {
+public class BasePostElement implements Parcelable{
 
     protected String text;
     protected int position;
     protected String type;
-    private transient List<Uri> uris;
+    private List<Uri> uris;
 
     BasePostElement() {
     }
@@ -23,6 +26,10 @@ public class BasePostElement {
 
     public List<Uri> getUris() {
         return uris;
+    }
+
+    public void setUris(List<Uri> uris) {
+        this.uris = uris;
     }
 
     public void setText(String text) {
@@ -47,5 +54,37 @@ public class BasePostElement {
 
     public String getType() {
         return type;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(text);
+        dest.writeInt(position);
+        dest.writeString(type);
+        dest.writeList(uris);
+    }
+
+    public static final Parcelable.Creator<BasePostElement> CREATOR =
+            new Parcelable.Creator<BasePostElement>() {
+        public BasePostElement createFromParcel(Parcel in) {
+            return new BasePostElement(in);
+        }
+
+        public BasePostElement[] newArray(int size) {
+            return new BasePostElement[size];
+        }
+    };
+
+    private BasePostElement(Parcel in) {
+        text = in.readString();
+        position = in.readInt();
+        type = in.readString();
+        uris = new ArrayList<>();
+        uris = in.readArrayList(Uri.class.getClassLoader());
     }
 }

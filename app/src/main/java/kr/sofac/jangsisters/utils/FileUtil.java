@@ -7,8 +7,15 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 
-public class PathUtil {
+import java.io.File;
+
+public class FileUtil {
+
+    public static Uri getUriFromFilePath(String path){
+        return Uri.fromFile(new File(path));
+    }
 
     public static String getPath(final Context context, final Uri uri) {
         // ExternalStorageProvider
@@ -64,6 +71,25 @@ public class PathUtil {
                 cursor.close();
         }
         return null;
+    }
+
+    public static boolean deleteDirectory(File path) {
+        if (path.exists()) {
+            File[] files = path.listFiles();
+            if (files == null) {
+                return true;
+            }
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteDirectory(file);
+                } else {
+                    file.delete();
+                }
+            }
+        } else {
+            Log.i("TAG", "wrong path");
+        }
+        return (path.delete());
     }
 
     /**

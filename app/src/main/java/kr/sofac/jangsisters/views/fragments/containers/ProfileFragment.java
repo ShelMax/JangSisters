@@ -106,9 +106,36 @@ public class ProfileFragment extends BaseFragment {
             blogName.setVisibility(View.GONE);
         else
             blogName.setText(user.getBlogName());
-
+        if(user.isFollower() !=0){
+            follow.setText("Unfollow");
+            follow.setBackground(getResources().getDrawable(R.drawable.custom_button_light));
+        }
+        follow.setOnClickListener(v -> onSubscribe(user.isFollower()));
         initFragments();
         initTabLayout();
+    }
+
+    private void onSubscribe(int isSubscribed) {
+        progressBar.showView();
+        new Connection<SenderContainerDTO>().subscribeToUser(new SenderContainerDTO()
+                .setUserID(appPreference.getUser().getId()).setSubscribeID(user.getId()), (isSuccess, answerServerResponse) -> {
+            if(isSuccess){
+                if(isSubscribed > 0) {
+                    follow.setText("Follow");
+                    follow.setBackground(getResources().getDrawable(R.drawable.custom_button_light));
+                    user.setIsFollower(0);
+                }
+                else {
+                    follow.setText("Unfollow");
+                    follow.setBackground(getResources().getDrawable(R.drawable.custom_button_light));
+                    user.setIsFollower(1);
+                }
+            }
+            else{
+                //TODO HANDLE ERROR
+            }
+            progressBar.dismissView();
+        });
     }
 
     private void getUser() {

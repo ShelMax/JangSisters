@@ -2,9 +2,10 @@ package kr.sofac.jangsisters.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PostElement extends BasePostElement {
+public class PostElement extends BasePostElement implements Serializable{
 
     private int id;
 

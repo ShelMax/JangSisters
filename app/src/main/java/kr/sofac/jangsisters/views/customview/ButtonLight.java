@@ -6,10 +6,6 @@ import android.util.AttributeSet;
 
 import kr.sofac.jangsisters.R;
 
-/**
- * Created by Maxim on 26.12.2017.
- */
-
 public class ButtonLight extends AppCompatButton {
 
     public ButtonLight(Context context, AttributeSet attrs) {

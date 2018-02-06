@@ -78,7 +78,7 @@ public class AddPostIngredientActivity extends BaseActivity {
         panel.setTouchEnabled(false);
         initToolbar();
         loadIngredients();
-        postDTO = (AddPostDTO) getIntent().getSerializableExtra(KeyTransferObj.POST.toString());
+        postDTO = getIntent().getParcelableExtra(KeyTransferObj.POST.toString());
     }
 
     private void loadIngredients() {
