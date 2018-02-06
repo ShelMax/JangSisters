@@ -93,10 +93,8 @@ public class CategoryFoFilterAdapter extends RecyclerView.Adapter<CategoryFoFilt
                     .into(image);
             name.setText(categoryItem.getName());
             if (categoryItem.isSelectedCategory())
-//                cardViewCategoryItem.setCardBackgroundColor(itemView.getContext().getResources().getColor(R.color.colorSelectedFilter));
                 cardViewCategoryItem.setCardBackgroundColor(Color.GRAY);
             else
-//                cardViewCategoryItem.setCardBackgroundColor(itemView.getContext().getResources().getColor(R.color.colorSelectedFilter));
                 cardViewCategoryItem.setCardBackgroundColor(Color.LTGRAY);
 
         }
