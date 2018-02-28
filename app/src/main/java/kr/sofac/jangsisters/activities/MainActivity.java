@@ -84,7 +84,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.filter) {
+        if (item.getItemId() == R.id.category) {
             drawer.openDrawer(Gravity.END);
         }
         return super.onOptionsItemSelected(item);

@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/filter"
+        android:id="@+id/category"
         android:visible="true"
-        android:title="@string/filter"
+        android:title="@string/category"
         android:icon="@drawable/filter"
         android:enabled="true"
         app:showAsAction="always"/>

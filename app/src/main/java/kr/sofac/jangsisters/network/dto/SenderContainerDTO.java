@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 
 public class SenderContainerDTO implements Serializable {
 
@@ -33,12 +32,18 @@ public class SenderContainerDTO implements Serializable {
     @SerializedName("blog_name")
     private String blogName;
 
+    private String emailKakao;
+
     @SerializedName("blog_description")
     private String blogDescription;
 
     private String email;
     private String googleCloudKey;
     private String name;
+
+    private String authID;
+    private String type;
+
     private String code;
     private String title;
     private String description;
@@ -46,12 +51,27 @@ public class SenderContainerDTO implements Serializable {
     @SerializedName("body")
     private String stringBody;
 
-    private List<Integer> categories;
+    private String search;
 
-    private HashMap<Integer, Integer> filter;
+    private HashMap<Integer, Integer> category;
 
     public SenderContainerDTO setBlogName(String blogName) {
         this.blogName = blogName;
+        return this;
+    }
+
+    public SenderContainerDTO setAuthID(String authID) {
+        this.authID = authID;
+        return this;
+    }
+
+    public SenderContainerDTO setKakaoEmail(String kakaoEmail) {
+        this.emailKakao = kakaoEmail;
+        return this;
+    }
+
+    public SenderContainerDTO setType(String type) {
+        this.type = type;
         return this;
     }
 
@@ -82,6 +102,11 @@ public class SenderContainerDTO implements Serializable {
 
     public SenderContainerDTO setPassword(String password) {
         this.password = password;
+        return this;
+    }
+
+    public SenderContainerDTO setSearch(String search){
+        this.search = search;
         return this;
     }
 
@@ -125,8 +150,8 @@ public class SenderContainerDTO implements Serializable {
         return this;
     }
 
-    public SenderContainerDTO setFilter(HashMap<Integer, Integer> filter) {
-        this.filter = filter;
+    public SenderContainerDTO setCategory(HashMap<Integer, Integer> category) {
+        this.category = category;
         return this;
     }
 
@@ -141,8 +166,8 @@ public class SenderContainerDTO implements Serializable {
     }
 
 
-    public SenderContainerDTO setCategories(List<Integer> categories) {
-        this.categories = categories;
+    public SenderContainerDTO setCategories(HashMap<Integer, Integer> category) {
+        this.category = category;
         return this;
     }
 

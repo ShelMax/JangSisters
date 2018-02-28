@@ -2,7 +2,7 @@
 
     <string name="app_name">JangSisters</string>
 
-    <string name="filter">Filter</string>
+    <string name="category">Filter</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. \n \nCurabitur porta faucibus nisi eu ornare. \n \nFusce consequat, mauris id fringilla maximus, ligula velit luctus quam, et sodales nibh dui eget urna. </string>
@@ -70,6 +70,10 @@
     <string name="following">Following</string>
     <string name="followers">Followers</string>
     <string name="bookmarks">Bookmarks</string>
+
+    <string name="facebook_app_id">1345694118868247</string>
+    <string name="fb_login_protocol_scheme">fb1345694118868247</string>
+    <string name="kakao_app_key">e9ce50256e3d6695bc03e34b8efd7104</string>
 
 
 </resources>

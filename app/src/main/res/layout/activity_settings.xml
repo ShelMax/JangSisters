@@ -133,50 +133,28 @@
                 tools:text="Alex" />
 
             <TextView
-                android:id="@+id/email_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/email"
-                app:layout_constraintStart_toStartOf="@id/username_text"
-                app:layout_constraintTop_toBottomOf="@id/username_change" />
-
-            <EditText
-                android:id="@+id/email_change"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/rounded_edittext"
-                android:ems="10"
-                android:inputType="textEmailAddress"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp"
-                app:layout_constraintEnd_toEndOf="@id/username_change"
-                app:layout_constraintStart_toStartOf="@id/username_change"
-                app:layout_constraintTop_toBottomOf="@id/email_text"
-                tools:text="alex@a.com" />
-
-            <TextView
                 android:id="@+id/blog_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/blog_name"
-                app:layout_constraintStart_toStartOf="@id/email_change"
-                app:layout_constraintTop_toBottomOf="@id/email_change" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/username_change" />
 
             <EditText
                 android:id="@+id/blog_name_change"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
+                android:layout_marginEnd="24dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:paddingEnd="15dp"
                 android:paddingStart="15dp"
-                app:layout_constraintEnd_toEndOf="@id/email_change"
-                app:layout_constraintStart_toStartOf="@id/email_change"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/blog_name_text"
                 app:layout_constraintTop_toBottomOf="@id/blog_name_text"
                 tools:text="This is my blog" />
 
@@ -184,9 +162,10 @@
                 android:id="@+id/blog_description_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/blog_description"
-                app:layout_constraintStart_toStartOf="@+id/blog_description_change"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/blog_name_change" />
 
 
@@ -194,15 +173,15 @@
                 android:id="@+id/blog_description_change"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
+                android:layout_marginEnd="24dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:paddingEnd="15dp"
                 android:paddingStart="15dp"
-                app:layout_constraintEnd_toEndOf="@id/email_change"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@id/email_change"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/blog_description_text"
                 app:layout_constraintTop_toBottomOf="@+id/blog_description_text"
                 tools:text="Description about blog" />
 

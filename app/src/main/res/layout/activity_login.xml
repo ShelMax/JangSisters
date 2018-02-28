@@ -141,14 +141,21 @@
         android:layout_marginTop="8dp"
         android:text="OR"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/buttonKakoTalk"
+        app:layout_constraintBottom_toTopOf="@+id/buttonKakaoTalk"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
 
+    <com.kakao.usermgmt.LoginButton
+        android:id="@+id/kakaoLogin"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:visibility="gone"/>
+
+
     <kr.sofac.jangsisters.views.customview.ButtonKakaoTalk
-        android:id="@+id/buttonKakoTalk"
+        android:id="@+id/buttonKakaoTalk"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -161,6 +168,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/or" />
+
 
     <kr.sofac.jangsisters.views.customview.ButtonFacebook
         android:id="@+id/buttonFacebook"
@@ -175,7 +183,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonKakoTalk" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonKakaoTalk" />
 
     <TextView
         android:id="@+id/TextViewRegister"

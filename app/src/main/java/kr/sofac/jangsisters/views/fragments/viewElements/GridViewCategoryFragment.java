@@ -75,9 +75,9 @@ public class GridViewCategoryFragment extends BaseFragment {
     }
 
 
-    public List<Integer> getSelectedCategory() {
+    public ArrayList<Integer> getSelectedCategory() {
         ArrayList<Integer> listIDSelectedCategory = new ArrayList<>();
-        if(allCategories!=null)
+        if(allCategories != null)
         for(Category categoryMain : allCategories){
             for (Category subCategory : categoryMain.getSubmenu()){
                 if(subCategory.isSelectedCategory()) listIDSelectedCategory.add(subCategory.getId());

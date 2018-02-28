@@ -37,7 +37,6 @@ public class SettingsActivity extends BaseActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.user_image) ImageView image;
     @BindView(R.id.username_change) EditText usernameNew;
-    @BindView(R.id.email_change) EditText emailNew;
     @BindView(R.id.blog_name_change) EditText blogNameNew;
     @BindView(R.id.blog_description_change) EditText blogDescriptionNew;
     @BindView(R.id.background_avatar)
@@ -112,7 +111,6 @@ public class SettingsActivity extends BaseActivity {
                 .apply(RequestOptions.centerCropTransform())
                 .apply(RequestOptions.bitmapTransform(new BlurTransformation(30)))
                 .into(backgroundAvatar);
-        emailNew.setText(appPreference.getUser().getEmail());
         usernameNew.setText(appPreference.getUser().getName());
         blogNameNew.setText(appPreference.getUser().getBlogName());
         blogDescriptionNew.setText(appPreference.getUser().getBlogDescription());
@@ -131,7 +129,7 @@ public class SettingsActivity extends BaseActivity {
         SenderContainerDTO senderContainerDTO = new SenderContainerDTO()
                 .setID(appPreference.getUser().getId())
                 .setName(usernameNew.getText().toString())
-                .setEmail(emailNew.getText().toString())
+                .setEmail(appPreference.getUser().getEmail())
                 .setBlogName(blogNameNew.getText().toString())
                 .setBlogDescription(blogDescriptionNew.getText().toString());
         if (imageUri != null) {

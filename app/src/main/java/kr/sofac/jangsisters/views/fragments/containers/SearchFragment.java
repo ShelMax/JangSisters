@@ -15,6 +15,8 @@ import android.widget.FrameLayout;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -22,6 +24,7 @@ import kr.sofac.jangsisters.R;
 import kr.sofac.jangsisters.config.KeyActionLoading;
 import kr.sofac.jangsisters.config.KeyTransferObj;
 import kr.sofac.jangsisters.models.TabManager;
+import kr.sofac.jangsisters.network.dto.SenderContainerDTO;
 import kr.sofac.jangsisters.utils.AppPreference;
 import kr.sofac.jangsisters.views.fragments.BaseFragment;
 import kr.sofac.jangsisters.views.fragments.viewElements.GridViewCategoryFragment;
@@ -38,12 +41,14 @@ public class SearchFragment extends BaseFragment {
     private EditText search;
     private GridViewCategoryFragment gridViewCategoryFragment = new GridViewCategoryFragment();
     private GridViewPostFragment gridViewPostFragment = new GridViewPostFragment();
+    private AppPreference appPreference;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         unbinder = ButterKnife.bind(this, view);
+        appPreference = new AppPreference(getActivity());
         initGridFragment();
         getFragmentManager().beginTransaction().add(R.id.frame_search, gridViewPostFragment).commit();
         getFragmentManager().beginTransaction().add(R.id.frame_filters, gridViewCategoryFragment).commit();
@@ -57,12 +62,21 @@ public class SearchFragment extends BaseFragment {
         //TODO FINISH
         panel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
         panel.setTouchEnabled(false);
-//        searchButton.setOnClickListener(v -> {
-//            getFragmentManager().beginTransaction().add(R.id.frame_search, gridViewPostFragment).commit();
-//            hideSlideUp();
-//        });
+        searchButton.setOnClickListener(v -> {
+            onSearch();
+        });
 
         return view;
+    }
+
+    private void onSearch() {
+        HashMap<Integer, Integer> filters = new HashMap<>();
+        for(int i=0;i<gridViewCategoryFragment.getSelectedCategory().size();i++)
+            filters.put(i,gridViewCategoryFragment.getSelectedCategory().get(i));
+        gridViewPostFragment.searchPosts(new SenderContainerDTO()
+                .setCategory(filters)
+                .setSearch(search.getText().toString()));
+        hideSlideUp();
     }
 
     private void initGridFragment() {

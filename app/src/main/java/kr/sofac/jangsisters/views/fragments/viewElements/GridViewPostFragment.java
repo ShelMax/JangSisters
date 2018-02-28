@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,7 +47,7 @@ public class GridViewPostFragment extends BaseFragment {
                 loadBookmarks();
                 break;
             case SEARCH:
-                loadPosts();
+                searchPosts(new SenderContainerDTO());
                 break;
             case USER_POSTS:
                 loadUserPosts();
@@ -60,7 +59,7 @@ public class GridViewPostFragment extends BaseFragment {
     private KeyActionLoading getTypeLoadingPostAndUserID() {
         if (getArguments() != null) {
             userID = getArguments().getInt(KeyTransferObj.USER_ID.toString(), 0);
-            return (KeyActionLoading) this.getArguments().getSerializable(KeyTransferObj.GRID_ACTION.toString());
+            return (KeyActionLoading) getArguments().getSerializable(KeyTransferObj.GRID_ACTION.toString());
         } else {
             return KeyActionLoading.SEARCH;
         }
@@ -101,9 +100,9 @@ public class GridViewPostFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void loadPosts() {
-        new Connection<List<Post>>().getListPosts(new SenderContainerDTO()
-                .setFilter(new HashMap<>()), (isSuccess, answerServerResponse) -> {
+    public void searchPosts(SenderContainerDTO dto) {
+        new Connection<List<Post>>().getListPosts(dto,
+                (isSuccess, answerServerResponse) -> {
             if (isSuccess) {
                 postsLoaded(answerServerResponse.getDataTransferObject());
             } else {
@@ -115,7 +114,7 @@ public class GridViewPostFragment extends BaseFragment {
 
 //    private void loadPostsWithFilters() {
 //        new Connection<List<Post>>().getListPosts(new SenderContainerDTO()
-//                .setFilter(new HashMap<>()), (isSuccess, answerServerResponse) -> {
+//                .setCategory(new HashMap<>()), (isSuccess, answerServerResponse) -> {
 //            if (isSuccess) {
 //                postsLoaded(answerServerResponse.getDataTransferObject());
 //            } else {

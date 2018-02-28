@@ -83,7 +83,7 @@ public class HomeFragment extends BaseFragment {
 
     private void loadPosts(HashMap<Integer, Integer> hashMapFilter) {
         new Connection<List<Post>>().getListPosts(new SenderContainerDTO()
-                .setFilter(hashMapFilter), (isSuccess, answerServerResponse) -> {
+                .setCategories(hashMapFilter), (isSuccess, answerServerResponse) -> {
             if(isSuccess){
                 posts = answerServerResponse.getDataTransferObject();
                 adapter = new PostAdapter(posts, getActivity(), new PostCallback() {
