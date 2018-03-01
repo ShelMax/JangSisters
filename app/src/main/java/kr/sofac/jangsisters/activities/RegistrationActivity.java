@@ -42,9 +42,10 @@ public class RegistrationActivity extends BaseActivity {
         if (!email.isEmpty() && !password.isEmpty() && !name.isEmpty()) {
             progressBar.showView();
             new Connection<User>().signUpCustomer(new SenderContainerDTO()
-                    .setEmail(email)
+                    .setAuthID(email)
                     .setPassword(password)
                     .setName(name)
+                    .setType("email")
                     .setGoogleCloudKey(""), (isSuccess, answerServerResponse) -> {
                 if (isSuccess) {
                     startVerificationUserActivity(answerServerResponse.getDataTransferObject());
