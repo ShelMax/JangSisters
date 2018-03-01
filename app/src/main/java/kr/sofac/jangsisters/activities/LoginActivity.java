@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -117,20 +118,37 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void registerFacebookUser(JSONObject object) {
-        progressBar.showView();
+//        progressBar.showView();
         try {
+            String authID = object.getString("email");
             new Connection<User>().signUpCustomer(new SenderContainerDTO()
                     .setType("facebook")
                     .setName(object.getString("name"))
                     .setAuthID(object.getString("email"))
-                    .setGoogleCloudKey(""), (isSuccess, answerServerResponse) -> {
-                if(isSuccess){
+                    .setGoogleCloudKey("1234"), (isSuccess, answerServerResponse) -> {
+                if (isSuccess) {
                     startVerificationUserActivity(answerServerResponse.getDataTransferObject());
+                } else {
+                    new Connection<User>().signInCustomer(new SenderContainerDTO()
+                            .setAuthID(authID)
+                            .setType("facebook")
+                            .setPassword("")
+                            .setGoogleCloudKey("123"), (isSuccess1, answerServerResponse1) -> {
+                        if (isSuccess1) {
+                            if (0 == answerServerResponse1.getDataTransferObject().getVisible()) {
+                                startVerificationUserActivity(answerServerResponse1.getDataTransferObject());
+                            } else {
+                                appPreference.setUser(answerServerResponse1.getDataTransferObject());
+                                appPreference.setAuthorization(true);
+                                startLaunchActivity();
+                            }
+                        } else {
+                            showToast(getString(R.string.some_problems_with_sign_in));
+                        }
+//                        progressBar.dismissView();
+                    });
                 }
-                else{
-
-                }
-                progressBar.dismissView();
+//                progressBar.dismissView();
             });
         } catch (JSONException e) {
             e.printStackTrace();
@@ -142,7 +160,7 @@ public class LoginActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.buttonLogin:
-                requestAuthorization(editTextEmail.getText().toString(), editTextPassword.getText().toString());
+                requestAuthorization(editTextEmail.getText().toString(), editTextPassword.getText().toString(), "email");
                 break;
             case R.id.buttonKakaoTalk:
                 showToast(getString(R.string.kakaotalk_button));
@@ -157,11 +175,12 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    public void requestAuthorization(String email, String password) {
-        if (!email.isEmpty() && !password.isEmpty()) {
-            progressBar.showView();
+    public void requestAuthorization(String authID, String password, String type) {
+        if (!authID.isEmpty() && !password.isEmpty()) {
+//            progressBar.showView();
             new Connection<User>().signInCustomer(new SenderContainerDTO()
-                    .setEmail(email)
+                    .setAuthID(authID)
+                    .setType(type)
                     .setPassword(password)
                     .setGoogleCloudKey(""), (isSuccess, answerServerResponse) -> {
                 if (isSuccess) {
@@ -175,7 +194,7 @@ public class LoginActivity extends BaseActivity {
                 } else {
                     showToast(getString(R.string.some_problems_with_sign_in));
                 }
-                progressBar.dismissView();
+//                progressBar.dismissView();
             });
         } else {
             showToast(getString(R.string.need_fill_all_fields));
@@ -184,12 +203,14 @@ public class LoginActivity extends BaseActivity {
 
 
     public void startLaunchActivity() {
+//        progressBar.dismissView();
         startActivity(new Intent(LoginActivity.this, LaunchActivity.class));
         finishAffinity();
     }
 
 
     public void startVerificationUserActivity(User user) {
+//        progressBar.dismissView();
         Intent intent = new Intent(this, VerificationActivity.class);
         intent.putExtra(KeyTransferObj.MY_USER.toString(), user);
         startActivity(intent);
@@ -207,10 +228,12 @@ public class LoginActivity extends BaseActivity {
             UserManagement.requestMe(new MeResponseCallback() {
 
                 @Override
-                public void onFailure(ErrorResult errorResult) {}
+                public void onFailure(ErrorResult errorResult) {
+                }
 
                 @Override
-                public void onSessionClosed(ErrorResult errorResult) {}
+                public void onSessionClosed(ErrorResult errorResult) {
+                }
 
                 @Override
                 public void onNotSignedUp() {
@@ -219,20 +242,36 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void onSuccess(UserProfile userProfile) {
-                    progressBar.showView();
+//                    progressBar.showView();
                     new Connection<User>().signUpCustomer(new SenderContainerDTO()
                             .setType("kakao")
                             .setName(userProfile.getNickname())
-                            .setAuthID(userProfile.getEmail())
+                            .setAuthID(userProfile.getId()+"")
                             .setKakaoEmail(userProfile.getEmail())
-                            .setGoogleCloudKey(""), (isSuccess, answerServerResponse) -> {
-                        if(isSuccess){
+                            .setGoogleCloudKey("123"), (isSuccess, answerServerResponse) -> {
+                        if (isSuccess) {
                             startVerificationUserActivity(answerServerResponse.getDataTransferObject());
-                        }
-                        else{
+                        } else {
+                            new Connection<User>().signInCustomer(new SenderContainerDTO()
+                                    .setAuthID(userProfile.getId()+"")
+                                    .setType("kakao")
+                                    .setPassword("")
+                                    .setGoogleCloudKey("123"), (isSuccess1, answerServerResponse1) -> {
+                                if (isSuccess1) {
+                                    if (0 == answerServerResponse1.getDataTransferObject().getVisible()) {
+                                        startVerificationUserActivity(answerServerResponse1.getDataTransferObject());
+                                    } else {
+                                        appPreference.setUser(answerServerResponse1.getDataTransferObject());
+                                        appPreference.setAuthorization(true);
+                                        startLaunchActivity();
+                                    }
+                                } else {
+                                    showToast(getString(R.string.some_problems_with_sign_in));
+                                }
+                            });
 
                         }
-                        progressBar.dismissView();
+//                        progressBar.dismissView();
                     });
 
                 }
